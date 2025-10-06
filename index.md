@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: home
 title: "Ahmed Elsherif – Embedded Engineer"
 ---
 
