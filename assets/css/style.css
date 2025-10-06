@@ -167,3 +167,15 @@ html,body{
 /* small utility */
 .text-muted{color:var(--muted)}
 .center{text-align:center}
+.card > img, 
+.card .card-img img, 
+.project-card > img {
+  width: 100%;
+  height: 200px; /* ارتفاع موحد لكل الصور */
+  object-fit: cover; /* يقص الصورة تلقائياً ويخليها fill بدون تمدد */
+  object-position: center; /* يضمن تمركز أهم جزء من الصورة */
+  border-radius: 8px;
+  display: block;
+  flex: 0 0 auto;
+}
+
