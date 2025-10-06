@@ -20,7 +20,7 @@ I design and build embedded systems, PCBs, and IoT solutions with an emphasis on
 
 
 <p class="contact">
-📧 <a href="mailto:your-email@example.com">your-email@example.com</a> · 🔗 <a href="https://linkedin.com/in/your-linkedin">LinkedIn</a>
+📧 <a href="mailto:ahmedxelsherif@outlook.com">ahmedxelsherif@outlook.com</a> · 🔗 <a href="https://www.linkedin.com/in/ahmedxelsherif/">LinkedIn</a>
 </p>
 </div>
 </div>
@@ -31,7 +31,7 @@ I design and build embedded systems, PCBs, and IoT solutions with an emphasis on
 
 <div class="grid">
 <div class="card">
-<img src="/portfolio/_projects/voltage_guard_pro/images/top.png" alt="Voltage Guard Top"/>
+<img src="/portfolio/projects/voltage_guard_pro/images/top.png" alt="Voltage Guard Top"/>
 <h3><a href="/portfolio/projects/voltage_guard_pro/">Voltage Guard Pro</a></h3>
 <p>Smart power protector for household appliances (ATtiny85, ZMPT101B, 7-segment).</p>
 <a class="btn" href="/portfolio/projects/voltage_guard_pro/">View details</a>
@@ -39,7 +39,7 @@ I design and build embedded systems, PCBs, and IoT solutions with an emphasis on
 
 
 <div class="card">
-<img src="/portfolio/_projects/bottle_top_dispenser/images/top.png" alt="Bottle Top Top"/>
+<img src="/portfolio/projects/bottle_top_dispenser/images/top.png" alt="Bottle Top Top"/>
 <h3><a href="/portfolio/projects/bottle_top_dispenser/">Smart Bottle-Top Dispenser</a></h3>
 <p>Precision lab liquid dispenser with stepper-controlled pump and touch interface.</p>
 <a class="btn" href="/portfolio/projects/bottle_top_dispenser/">View details</a>
@@ -47,7 +47,7 @@ I design and build embedded systems, PCBs, and IoT solutions with an emphasis on
 
 
 <div class="card">
-<img src="/portfolio/_projects/smartmed_guardian/images/top.png" alt="SmartMed Top"/>
+<img src="/portfolio/projects/smartmed_guardian/images/top.png" alt="SmartMed Top"/>
 <h3><a href="/portfolio/projects/smartmed_guardian/">SmartMed Guardian</a></h3>
 <p>AI-based Smart Nursing System — continuous monitoring + automated medication delivery.</p>
 <a class="btn" href="/portfolio/projects/smartmed_guardian/">View details</a>
@@ -55,7 +55,7 @@ I design and build embedded systems, PCBs, and IoT solutions with an emphasis on
 
 
 <div class="card">
-<img src="/portfolio/_projects/industrial_monitoring_system/images/top.png" alt="Industrial Top"/>
+<img src="/portfolio/projects/industrial_monitoring_system/images/top.png" alt="Industrial Top"/>
 <h3><a href="/portfolio/projects/industrial_monitoring_system/">Real-Time Industrial Monitoring System</a></h3>
 <p>Edge-AI node for condition monitoring, vibration/temperature/current sensing and fault prediction.</p>
 <a class="btn" href="/portfolio/projects/industrial_monitoring_system/">View details</a>
@@ -66,7 +66,3 @@ I design and build embedded systems, PCBs, and IoT solutions with an emphasis on
 <footer class="site-footer">
 <p>© {{ site.time | date: "%Y" }} Ahmed Elsherif — Embedded Systems Portfolio</p>
 </footer>
-## 📞 Contact Me
-- 💼 LinkedIn: [@ahmedxelsherif](https://www.linkedin.com/in/ahmedxelsherif/)
-- 📧 Email:   ahmedxelsherif@outlook.com
-- 🌐 GitHub: [@ahmedxelsherif](https://github.com/ahmedxelsherif)
