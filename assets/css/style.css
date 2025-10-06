@@ -6,130 +6,83 @@
   --white: #1A1A1A; /* نص رئيسي داكن */
 }
 
-/* Reset & Base */
-*{box-sizing:border-box}
-body{
+/* ----------------------------- */
+/* عام للجسم والمحتوى */
+* { box-sizing: border-box; }
+body {
   font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  background:var(--bg);
-  color:var(--white);
-  margin:0;
+  background: var(--bg);
+  color: var(--white);
+  margin: 0;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
 }
 
-.container{
-  max-width:1000px;
-  margin:0 auto;
-  padding:24px;
+/* ----------------------------- */
+/* الهيدر */
+.site-header {
+  background: linear-gradient(90deg,#071126 0%, #0b1630 100%);
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
 }
+.brand { font-weight:700; color:var(--white); text-decoration:none; font-size:18px; }
+.nav a { color: var(--muted); margin-left:16px; text-decoration:none; }
 
-/* Header & Navigation */
-.site-header{
-  background:linear-gradient(90deg,#0A84FF 0%, #0066CC 100%);
-  padding:12px 0;
-  border-bottom:1px solid rgba(0,0,0,0.05);
-}
-.brand{
-  font-weight:700;
-  color:#fff;
-  text-decoration:none;
-  font-size:18px;
-}
-.nav a{
-  color:var(--white);
-  margin-left:16px;
-  text-decoration:none;
-  font-weight:500;
-  transition: color 0.3s ease;
-}
-.nav a:hover{
-  color:var(--accent);
-}
+/* ----------------------------- */
+/* hero */
+.hero { display:flex; gap:20px; align-items:center; margin:24px 0; }
+.avatar { width:110px; height:110px; object-fit:cover; border-radius:14px; border:3px solid rgba(255,255,255,0.06); }
+.hero-text h1 { margin:0; font-size:26px; }
+.hero-text h2 { margin:6px 0; color:var(--accent); font-weight:600; }
+.hero-text p { color:var(--muted); line-height:1.5; }
+.skills{ margin-top:10px; }
+.contact a{ color:var(--accent); }
 
-/* Hero Section */
-.hero{
-  display:flex;
-  gap:20px;
-  align-items:center;
-  margin:24px 0;
-}
-.avatar{
-  width:110px;
-  height:110px;
-  object-fit:cover;
-  border-radius:50%; /* دائرة أنيقة */
-  border:3px solid rgba(0,0,0,0.05);
-}
-.hero-text h1{
-  margin:0;
-  font-size:26px;
-  color:var(--white);
-}
-.hero-text h2{
-  margin:6px 0;
-  color:var(--accent);
-  font-weight:600;
-}
-.hero-text p{
-  color:var(--muted);
-  line-height:1.5;
-}
-.skills{margin-top:10px}
-.contact a{
-  color:var(--accent);
-}
-
-/* Projects Grid */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:18px;
-  margin-top:18px;
-}
-.card{
-  background:var(--card);
+/* ----------------------------- */
+/* كروت المشاريع */
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; margin-top:18px; }
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   padding:12px;
   border-radius:12px;
-  border:1px solid rgba(0,0,0,0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border:1px solid rgba(255,255,255,0.03);
 }
-.card:hover{
-  transform: translateY(-5px);
-  box-shadow:0 8px 24px rgba(0,0,0,0.08);
-}
-/* ----------------------------- */
-/* صور المشاريع في الكروت */
 .card img {
-  width: 100%;             /* تاخد كامل عرض الكارت */
-  height: 180px;           /* ارتفاع موحد لكل الكروت */
-  object-fit: cover;       /* تغطي المساحة بدون تشويه */
-  border-radius: 8px;      /* حواف ناعمة */
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08); /* ظل خفيف */
-  transition: transform 0.3s ease;
-}
-
-.card img:hover {
-  transform: scale(1.05);  /* تكبير بسيط عند hover */
-}
-
-/* صور المشاريع داخل صفحة المشروع */
-.project-page img,
-.project-content img {
-  width: 100%;            /* تاخد كامل عرض الحاوية */
-  max-width: 800px;       /* أقصى عرض للصور الكبيرة */
-  height: auto;           /* يحافظ على النسبة */
-  border-radius: 8px;     /* حواف ناعمة */
+  width: 100%;
+  height: 180px;           /* ارتفاع موحد للكروت */
+  object-fit: cover;
+  border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  margin-bottom: 1rem;
-  object-fit: cover;      /* تغطي المساحة بدون تشويه */
   transition: transform 0.3s ease;
 }
-
-.project-page img:hover,
-.project-content img:hover {
-  transform: scale(1.02); /* تكبير خفيف عند hover */
-}
+.card img:hover { transform: scale(1.05); }
+.card h3 { margin:10px 0 6px; }
+.card p { color: var(--muted); font-size:14px; }
 
 /* ----------------------------- */
-/* أزرار المشاريع */
+/* صفحة المشروع (Markdown content) */
+.project-page img,
+.project-content img,
+.markdown-body img {
+  width: 100% !important;
+  max-width: 800px !important;
+  height: auto !important;
+  display: block;
+  margin: 0 auto 1rem auto;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+}
+.project-page img:hover,
+.project-content img:hover,
+.markdown-body img:hover { transform: scale(1.02); }
+
+/* ----------------------------- */
+/* الأزرار */
 .btn {
   display: inline-block;
   margin-top: 10px;
@@ -141,28 +94,15 @@ body{
   font-weight: 600;
   transition: background 0.3s ease, transform 0.2s ease;
 }
+.btn:hover { background: #0066CC; transform: translateY(-2px); }
 
-.btn:hover {
-  background: #0066CC;
-  transform: translateY(-2px);
-}
+/* ----------------------------- */
+/* الفوتر */
+.site-footer { margin:40px 0; text-align:center; color:var(--muted); font-size:14px; }
 
+/* ----------------------------- */
+/* استجابة الموبايل */
+@media(max-width:640px){
+  .hero{ flex-direction:column; align-items:flex-start; }
+  .avatar{ width:86px; height:86px; }
 }
-.card h3{
-  margin:10px 0 6px;
-  color:var(--accent);
-}
-.card p{
-  color:var(--muted);
-  font-size:14px;
-}
-
-/* Buttons */
-.btn{
-  display:inline-block;
-  margin-top:10px;
-  padding:8px 14px;
-  background:var(--accent);
-  color:#fff;
-  border-radius:12px;
-  text-decoration:n
