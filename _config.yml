@@ -1,5 +1,9 @@
 title: "Ahmed Elsherif | Embedded Systems Engineer"
 description: "Embedded systems, PCB design, and electronics projects portfolio."
 theme: minima
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
 baseurl: "/portfolio"
 url: "https://ahmedxelsherif.github.io"
