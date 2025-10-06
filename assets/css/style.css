@@ -119,3 +119,19 @@ body{
   color:#fff;
   border-radius:12px;
   text-decoration:n
+
+/* صور المشاريع داخل صفحة المشروع */
+.project-page img {
+  width: 100%;         /* تاخد كامل عرض الحاوية */
+  max-width: 800px;    /* أقصى عرض للصور الكبيرة */
+  height: auto;        /* يحافظ على النسبة بدون تشويه */
+  border-radius: 8px;  /* حواف دائرية لطيفة */
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08); /* ظل خفيف للصور */
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.project-page img:hover {
+  transform: scale(1.02); /* تكبير بسيط عند المرور */
+}
+
