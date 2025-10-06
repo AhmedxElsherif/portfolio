@@ -6,6 +6,7 @@
   --white: #1A1A1A; /* نص رئيسي داكن */
 }
 
+
 /* ----------------------------- */
 /* عام للجسم والمحتوى */
 * { box-sizing: border-box; }
@@ -105,4 +106,8 @@ body {
 @media(max-width:640px){
   .hero{ flex-direction:column; align-items:flex-start; }
   .avatar{ width:86px; height:86px; }
+  .card img { height:160px; }  /* تصغير الصور في الكروت على الموبايل */
+  .project-page img,
+  .project-content img,
+  .markdown-body img { max-width:100% !important; } /* responsive كامل */
 }
