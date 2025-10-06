@@ -1,25 +1,18 @@
-# 🛠️ Ahmed Elsherif – Embedded Systems Portfolio
+# Ahmed Elsherif – Embedded Systems Portfolio
 
-Welcome to my personal portfolio!  
-Here you’ll find a collection of my electronics, embedded systems, and PCB design projects — from concept and schematic to final prototype.
+Welcome to my personal engineering portfolio showcasing embedded systems and hardware projects I've designed and built from scratch.
 
----
+## 🚀 Projects
 
-## 📂 Featured Projects
+### 1. [Voltage Guard Pro – Smart Power Protector](./projects/voltage_guard_pro/README.md)
+> A compact and cost-efficient smart voltage protection device for household appliances, built around the ATtiny85 microcontroller.
 
-### 🔧 [Temperature Sensor System](./Temperature_Sensor/README.md)
-![Temperature Sensor](./Temperature_Sensor/image1.png)
-- **Description:** Measures ambient temperature using LM35 sensor and displays it on a 16x2 LCD.
-- **Tech Used:** Arduino, LM35, LCD1602
+### 2. [Bottle-Top Dispenser – Automated Lab Liquid Handling](./projects/bottle_top_dispenser/README.md)
+> A precision lab device for automated liquid dispensing using stepper motor-driven peristaltic pump control.
 
----
+### 3. [SmartMed Guardian – AI-based Smart Nursing System](./projects/smartmed_guardian/README.md)
+> An IoT healthcare system for continuous patient monitoring and automated drug administration powered by dual ESP32-S3 modules.
 
-### 🔐 [Smart Lock System](./Smart_Lock/README.md)
-![Smart Lock](./Smart_Lock/demo.png)
-- **Description:** A password-protected smart lock system with relay and keypad.
-- **Tech Used:** AVR, Keypad, Relay Module
-
----
 
 ## 📞 Contact Me
 - 💼 LinkedIn: [@ahmedxelsherif](https://www.linkedin.com/in/ahmedxelsherif/)
