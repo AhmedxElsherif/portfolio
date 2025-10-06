@@ -95,11 +95,58 @@ body{
   transform: translateY(-5px);
   box-shadow:0 8px 24px rgba(0,0,0,0.08);
 }
-.card img{
-  width:100%;
-  height:140px;
-  object-fit:cover;
-  border-radius:8px;
+/* ----------------------------- */
+/* صور المشاريع في الكروت */
+.card img {
+  width: 100%;             /* تاخد كامل عرض الكارت */
+  height: 180px;           /* ارتفاع موحد لكل الكروت */
+  object-fit: cover;       /* تغطي المساحة بدون تشويه */
+  border-radius: 8px;      /* حواف ناعمة */
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08); /* ظل خفيف */
+  transition: transform 0.3s ease;
+}
+
+.card img:hover {
+  transform: scale(1.05);  /* تكبير بسيط عند hover */
+}
+
+/* صور المشاريع داخل صفحة المشروع */
+.project-page img,
+.project-content img {
+  width: 100%;            /* تاخد كامل عرض الحاوية */
+  max-width: 800px;       /* أقصى عرض للصور الكبيرة */
+  height: auto;           /* يحافظ على النسبة */
+  border-radius: 8px;     /* حواف ناعمة */
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+  object-fit: cover;      /* تغطي المساحة بدون تشويه */
+  transition: transform 0.3s ease;
+}
+
+.project-page img:hover,
+.project-content img:hover {
+  transform: scale(1.02); /* تكبير خفيف عند hover */
+}
+
+/* ----------------------------- */
+/* أزرار المشاريع */
+.btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 14px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background: #0066CC;
+  transform: translateY(-2px);
+}
+
 }
 .card h3{
   margin:10px 0 6px;
@@ -119,19 +166,3 @@ body{
   color:#fff;
   border-radius:12px;
   text-decoration:n
-
-/* صور المشاريع داخل صفحة المشروع */
-.project-page img {
-  width: 100%;         /* تاخد كامل عرض الحاوية */
-  max-width: 800px;    /* أقصى عرض للصور الكبيرة */
-  height: auto;        /* يحافظ على النسبة بدون تشويه */
-  border-radius: 8px;  /* حواف دائرية لطيفة */
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08); /* ظل خفيف للصور */
-  margin-bottom: 1rem;
-  transition: transform 0.3s ease;
-}
-
-.project-page img:hover {
-  transform: scale(1.02); /* تكبير بسيط عند المرور */
-}
-
