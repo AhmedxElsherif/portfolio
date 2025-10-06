@@ -22,6 +22,6 @@ Here you’ll find a collection of my electronics, embedded systems, and PCB des
 ---
 
 ## 📞 Contact Me
-- 💼 [LinkedIn](https://www.linkedin.com/in/ahmedxelsherif/)
+- 💼 LinkedIn: [@ahmedxelsherif](https://www.linkedin.com/in/ahmedxelsherif/)
 - 📧 Email: ahmedxelsherif@outlook.com
 - 🌐 GitHub: [@ahmedxelsherif](https://github.com/ahmedxelsherif)
