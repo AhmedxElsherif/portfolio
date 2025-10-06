@@ -8,7 +8,7 @@ title: "Ahmed Elsherif | Embedded Engineer"
 <img src="/portfolio/assets/images/personal_pic1.jpg" alt="Ahmed Elsherif" class="avatar"/>
 <div class="hero-text">
 <h1>Ahmed Elsherif</h1>
-<h2>Embedded Systems · PCB Design · Embedded Linux</h2>
+<h2>Embedded Systems · Embedded Linux · PCB Design</h2>
 <p>
 I design and build embedded systems, PCBs, and IoT solutions with an emphasis on reliability, manufacturability and clear documentation. My work covers hardware design, firmware, and edge-level AI integration for industrial and medical applications.
 </p>
