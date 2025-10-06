@@ -2,99 +2,130 @@
 const projects = [
     {
         id: 1,
-        title: "E-Commerce Platform",
-        description: "A full-featured online shopping platform with payment integration, user authentication, and admin dashboard.",
-        image: "project1.jpg",
-        tags: ["React", "Node.js", "MongoDB"],
+        title: "Smart Bottle-Top Dispenser",
+        description: "Precision lab liquid dispenser with stepper-controlled pump and touch interface.",
+        image: "projects/bottle_top_dispenser/pic.png",
+        tags: ["Embedded System", "PCB Design", "KiCAD"],
         fullDescription: `
             <h3>Project Overview</h3>
-            <p>This e-commerce platform is a comprehensive solution for online retail businesses. Built with modern web technologies, it provides a seamless shopping experience for customers and powerful management tools for administrators.</p>
+            <p>The Bottle-Top Dispenser is a precision laboratory device designed to automate the dispensing of controlled liquid volumes. It provides accuracy, repeatability, and safety for handling chemicals in lab environments.
+
+Developed as a modular system, it integrates peristaltic pump control, safety sensors, and a user-friendly interface for researchers, ensuring precise measurements with minimal human error.</p>
             
             <h3>Key Features</h3>
             <ul>
-                <li>User authentication and authorization system</li>
-                <li>Product catalog with search and filtering</li>
-                <li>Shopping cart and checkout process</li>
-                <li>Payment gateway integration (Stripe)</li>
-                <li>Order tracking and management</li>
-                <li>Admin dashboard for inventory management</li>
-                <li>Responsive design for all devices</li>
+                <li>Automated liquid dispensing with programmable volume selection</li>
+                <li>High-precision stepper motor control</li>
+                <li>Safety protections (over-voltage, over-travel, surge)</li>
+                <li>Automatic priming and refill</li>
+                <li>Custom volume presets (1 mL – 100 mL)</li>
+                <li>Compatible with multiple lab bottle sizes</li>
+
             </ul>
             
-            <h3>Technologies Used</h3>
-            <p>Frontend: React.js, Redux for state management, Material-UI for components</p>
-            <p>Backend: Node.js with Express.js framework</p>
-            <p>Database: MongoDB with Mongoose ODM</p>
-            <p>Payment: Stripe API integration</p>
+            <h3>Technical Specs</h3>
+            <p>Main Controller: Timer555 IC</p>
+            <p>Pump Mechanism: Stepper motor-driven peristaltic pump</p>
+            <p>Power Supply: 12V DC regulated</p>
+            <p>Sensors: Flow sensors, liquid level detection, pressure feedback</p>
+            <p>Power Supply: 12V DC regulated</p>
             
-            <h3>Challenges & Solutions</h3>
-            <p>One of the main challenges was implementing a secure payment system. I addressed this by using Stripe's secure payment processing and implementing proper error handling and validation throughout the checkout process.</p>
+
+            <h3>Applications</h3>
+            <p>Chemistry and biology labs</p>
+            <p>Pharmaceutical liquid handling</p>
+            <p>Research requiring repeatable dosing</p>
+
         `,
         github: "https://github.com",
         demo: "https://example.com"
     },
     {
         id: 2,
-        title: "Task Management App",
-        description: "A collaborative task management application with real-time updates, team collaboration features, and progress tracking.",
-        image: "project2.jpg",
-        tags: ["Vue.js", "Firebase", "Tailwind"],
+        title: "Voltage Guard Pro",
+        description: "Smart power protector for household appliances (ATtiny85, ZMPT101B, 7-segment).",
+        image: "projects/voltage_guard_pro/pic.png",
+        tags: ["Embedded System", "PCB Design", "KiCAD"],
         fullDescription: `
             <h3>Project Overview</h3>
-            <p>A modern task management application designed to help teams collaborate effectively and track project progress in real-time.</p>
+            <p>Voltage Guard Pro is a smart, low-cost power protection device designed to safeguard household appliances from dangerous voltage fluctuations.
+                Built around the ATtiny85 microcontroller, it continuously monitors the AC mains voltage and instantly disconnects connected devices when the voltage goes below 190V or exceeds 250V — protecting sensitive electronics from damage.
+
+                The device uses a ZMPT101B voltage sensor for accurate measurements and a SANYOU SRD relay for fast switching. It features a dual 7-segment display showing real-time voltage readings and automatically restores power once voltage returns to a safe range.
+
+                With its compact size and cost-effective design, Voltage Guard Pro is ideal for protecting TVs, refrigerators, air conditioners, and other sensitive electronics from Egypt’s frequent voltage instability..</p>
             
             <h3>Key Features</h3>
             <ul>
-                <li>Real-time task updates using Firebase</li>
-                <li>Team collaboration and task assignment</li>
-                <li>Project boards with drag-and-drop functionality</li>
-                <li>Progress tracking and analytics</li>
-                <li>File attachments and comments</li>
-                <li>Notifications and reminders</li>
+                <li>Automatic power cut-off below 190V or above 250V</li>
+                <li>Real-time voltage display on dual 7-segment modules</li>
+                <li>Fast response time with ATtiny85 microcontroller</li>
+                <li>Auto-restart when voltage returns to normal</li>
+                <li>Relay protection + surge protection (MOV)</li>
+                <li>Compact, affordable, and easy to install</li>
             </ul>
             
-            <h3>Technologies Used</h3>
-            <p>Frontend: Vue.js 3 with Composition API</p>
-            <p>Backend: Firebase (Firestore, Authentication, Storage)</p>
-            <p>Styling: Tailwind CSS</p>
+            <h3>Technical Specs</h3>
+            <p>Input Voltage: 	220V AC</p>
+            <p>BSafe Operating Range: 	190V – 250V</p>
+            <p>MCU: 	ATtiny85-20PU</p>
+            <p>Display: 	 7-Segment</p>
+            <p>Relay: 	SANYOU SRD-05VDC-SL-C</p>
+            <p>Sensor: 	ZMPT101B AC Voltage Sensor</p>
+            <p>Protection: 	MOV + Fuse + Flyback Diode</p>
+
             
-            <h3>Challenges & Solutions</h3>
-            <p>Implementing real-time synchronization across multiple users was challenging. I leveraged Firebase's real-time database capabilities and optimized the data structure to minimize reads and writes.</p>
+            <h3>Applications</h3>
+            <p>Protecting refrigerators, AC compressors, and motors</p>
+            <p>Safeguarding sensitive electronics (TVs, PCs, routers)</p>
+            <p>Small households and office appliances</p>
+
         `,
         github: "https://github.com",
         demo: "https://example.com"
     },
     {
         id: 3,
-        title: "Weather Dashboard",
-        description: "An interactive weather dashboard that displays current conditions, forecasts, and weather maps with beautiful visualizations.",
-        image: "project3.jpg",
-        tags: ["JavaScript", "API", "Chart.js"],
+        title: "SmartMed Guardian",
+        description: "AI-based Smart Nursing System — continuous monitoring + automated medication delivery.",
+        image: "projects/smartmed_guardian/pic.png",
+        tags: ["Embedded System", "PCB Design", "KiCAD"],
         fullDescription: `
             <h3>Project Overview</h3>
-            <p>A comprehensive weather dashboard that provides detailed weather information with beautiful data visualizations and an intuitive user interface.</p>
+            <p>SmartMed Guardian is an AI-enabled, IoT-capable nursing system that combines continuous patient monitoring with precision automated medication delivery. The system is composed of two cooperating units — a Sensor Unit for real-time physiological data acquisition, and a Control Unit for safe, 
+            programmable multi-channel medication administration. Data is synced to the cloud for remote monitoring and control.</p>
             
             <h3>Key Features</h3>
             <ul>
-                <li>Current weather conditions for any location</li>
-                <li>7-day weather forecast</li>
-                <li>Interactive weather maps</li>
-                <li>Temperature, humidity, and wind speed charts</li>
-                <li>Location search with autocomplete</li>
-                <li>Favorite locations saving</li>
+                <li>Continuous multi-parameter health monitoring with configurable sampling rates</li>
+                <li>Edge AI anomaly detection for early-warning alerts and trend analysis.</li>
+                <li>Cloud dashboard for clinicians: real-time view, historical trends, and remote programming of medication schedules.</li>
+                <li>Multi-layer safety: hardware and software checks, emergency stop, and delivery confirmation.</li>
+                <li>Local UI (OLED) and audible/visual alerts for patient/caregiver.</li>
+                
             </ul>
             
-            <h3>Technologies Used</h3>
-            <p>Frontend: Vanilla JavaScript, HTML5, CSS3</p>
-            <p>API: OpenWeatherMap API</p>
-            <p>Visualization: Chart.js for data charts</p>
+            <h3>Technical Specs</h3>
+            <p>Primary MCUs: 	Dual ESP32-S3-WROOM-1 (240 MHz, dual core)</p>
+            <p>Connectivity: 	Wi-Fi 802.11 b/g/n (cloud sync)</p>
+            <p>Cloud Platform: 	Firebase Realtime Database (bidirectional sync)</p>
+            <p>Power: 	12 V DC input, battery backup supported</p>
+            <p>Monitoring Sensors: 	MAX30102, AD8232, MPX5050DP, DS18B20, BME280, MPU6050</p>
+            <p>Medication Control: 	5 × peristaltic pumps, ACS712 current sensing, YF-S201 flow sensors</p>
+            <p>Safety: 	Optical isolation, overcurrent protection, level sensing, watchdog & heartbeat</p>
+
             
-            <h3>Challenges & Solutions</h3>
-            <p>Handling API rate limits and caching data efficiently was a key challenge. I implemented a smart caching system using localStorage to reduce API calls while keeping data fresh.</p>
+            <h3>Clinical Applications</h3>
+            <p>Chronic disease management (diabetes, hypertension, cardiac care)</p>
+            <p>Post-operative monitoring & medication delivery</p>
+            <p>Elderly care and assisted living</p>
+            <p>Remote clinics and telehealth deployments</p>
+
         `,
         github: "https://github.com",
         demo: "https://example.com"
     },
+    /*
     {
         id: 4,
         title: "Portfolio Website Builder",
@@ -191,6 +222,7 @@ const projects = [
         github: "https://github.com",
         demo: "https://example.com"
     }
+        */
 ];
 
 // Load projects on page load
