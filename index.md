@@ -1,3 +1,8 @@
+---
+layout: default
+title: "Ahmed Elsherif – Embedded Engineer"
+---
+
 # Ahmed Elsherif – Embedded Engineer  Portfolio
 
 Welcome to my personal engineering portfolio showcasing embedded systems and hardware projects I've designed and built from scratch.
