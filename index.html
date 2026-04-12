@@ -1,48 +1,451 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Ahmed Hassan | Embedded Systems Engineer Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f1f5f9; color: #0f172a; line-height: 1.5; padding: 2rem 1.5rem; }
+    .container { max-width: 1300px; margin: 0 auto; }
+    .profile-card { background: white; border-radius: 2rem; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.05); transition: all 0.2s; }
+    .profile-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .profile-main { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .profile-avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #2563eb; background: #e2e8f0; }
+    .name-title h1 { font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, #1e3c72, #2a5298); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .name-title p { font-size: 1.2rem; color: #334155; font-weight: 500; margin-top: 0.25rem; }
+    .contact-info { display: flex; flex-wrap: wrap; gap: 1rem; background: #f8fafc; padding: 0.8rem 1.2rem; border-radius: 2rem; }
+    .contact-info span { font-size: 0.9rem; color: #1e293b; }
+    .contact-info i { margin-right: 0.4rem; color: #2563eb; }
+    .details-grid { display: flex; flex-wrap: wrap; gap: 1.8rem; margin-top: 1.2rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem; }
+    .summary, .education, .skills { flex: 1; min-width: 200px; }
+    .details-grid h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.6rem; color: #0f172a; border-left: 4px solid #2563eb; padding-left: 0.75rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+    .skill-tags span { background: #e6f0ff; padding: 0.25rem 0.8rem; border-radius: 30px; font-size: 0.8rem; font-weight: 500; color: #1e40af; }
+    .auth-panel { background: white; border-radius: 1.5rem; padding: 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .login-form { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; }
+    .login-form input { padding: 0.6rem 1rem; border-radius: 2rem; border: 1px solid #cbd5e1; font-family: inherit; }
+    .login-btn, .logout-btn, .edit-avatar-btn, .add-project-btn { background: #2563eb; border: none; padding: 0.6rem 1.2rem; border-radius: 40px; color: white; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: 0.2s; }
+    .logout-btn { background: #dc2626; }
+    .edit-avatar-btn { background: #475569; font-size: 0.8rem; padding: 0.4rem 1rem; }
+    .admin-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .status { font-size: 0.9rem; color: #166534; background: #dcfce7; padding: 0.3rem 1rem; border-radius: 30px; }
+    .projects-section h2 { font-size: 1.8rem; margin-bottom: 1.5rem; font-weight: 700; }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.8rem; }
+    .project-card { background: white; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s; display: flex; flex-direction: column; }
+    .project-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
+    .project-img { width: 100%; height: 200px; object-fit: cover; background: #cbd5e1; }
+    .project-content { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .project-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .project-desc { color: #334155; font-size: 0.9rem; margin-bottom: 1.2rem; line-height: 1.5; flex: 1; max-height: 180px; overflow-y: auto; }
+    .card-actions { display: flex; gap: 0.8rem; margin-top: 0.5rem; }
+    .edit-btn, .delete-btn { border: none; padding: 0.4rem 1rem; border-radius: 30px; font-weight: 500; cursor: pointer; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.4rem; }
+    .edit-btn { background: #fef9c3; color: #854d0e; }
+    .delete-btn { background: #fee2e2; color: #b91c1c; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1000; }
+    .modal-content { background: white; max-width: 550px; width: 90%; border-radius: 1.5rem; padding: 1.8rem; max-height: 90vh; overflow-y: auto; }
+    .modal-content input, .modal-content textarea { width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid #cbd5e1; border-radius: 1rem; font-family: inherit; }
+    .modal-content textarea { min-height: 120px; }
+    .image-preview { width: 100%; max-height: 160px; object-fit: cover; border-radius: 1rem; margin: 0.5rem 0; background: #eef2ff; }
+    .modal-buttons { display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1rem; }
+    .save-btn, .cancel-btn, .remove-img-btn { padding: 0.5rem 1.2rem; border-radius: 2rem; border: none; cursor: pointer; font-weight: 500; }
+    .save-btn { background: #2563eb; color: white; }
+    .cancel-btn { background: #e2e8f0; }
+    .remove-img-btn { background: #f1f5f9; color: #b91c1c; border: 1px solid #ddd; margin-bottom: 0.5rem; }
+    footer { margin-top: 3rem; text-align: center; color: #475569; font-size: 0.8rem; }
+    @media (max-width: 680px) { body { padding: 1rem; } .profile-header { flex-direction: column; align-items: flex-start; } }
+  </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header class="header">
-        <div class="container">
-            <div class="profile-section">
-                <div class="profile-image-container">
-                    <img src="profile.jpg" alt="Profile Picture" class="profile-image">
-                </div>
-                <div class="profile-info">
-                    <h1 class="name">Ahmed ElSherif</h1>
-                    <p class="bio">
-                        <h3>Embedded Systems | Embedded Linux | PCB Design</h3>
-                        I design and build embedded systems, PCBs, and IoT solutions with an emphasis on reliability, manufacturability and clear documentation. 
-                        My work covers hardware design, firmware, and edge-level AI integration for industrial and medical applications.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </header>
+<div class="container">
+  <!-- Authentication Panel -->
+  <div id="authPanel" class="auth-panel">
+    <div id="loginSection">
+      <div class="login-form">
+        <input type="email" id="loginEmail" placeholder="Email" value="admin@example.com">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button id="loginBtn" class="login-btn"><i class="fas fa-sign-in-alt"></i> Admin Login</button>
+      </div>
+    </div>
+    <div id="adminControls" style="display: none;">
+      <div class="admin-actions">
+        <span class="status"><i class="fas fa-user-shield"></i> Admin mode</span>
+        <button id="addProjectBtn" class="add-project-btn"><i class="fas fa-plus-circle"></i> New Project</button>
+        <button id="editAvatarBtn" class="edit-avatar-btn"><i class="fas fa-user-edit"></i> Change Picture</button>
+        <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </div>
+    </div>
+  </div>
 
-    <!-- Projects Section -->
-    <section class="projects-section">
-        <div class="container">
-            <h2 class="section-title">My Projects</h2>
-            <div class="projects-grid" id="projectsGrid">
-                <!-- Projects will be loaded dynamically -->
-            </div>
+  <!-- Profile Card -->
+  <div class="profile-card">
+    <div class="profile-header">
+      <div class="profile-main">
+        <div class="avatar-container">
+          <img id="profileAvatar" class="profile-avatar" src="/pic.jpg" alt="Avatar">
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Ahmed ElSherif's Portfolio.</p>
+        <div class="name-title">
+          <h1>Ahmed Hassan Muhamad</h1>
+          <p><i class="fas fa-microchip"></i> Embedded Systems Engineer</p>
         </div>
-    </footer>
+      </div>
+      <div class="contact-info">
+        <span><i class="fas fa-phone-alt"></i> +201024254110</span>
+        <span><i class="fas fa-map-marker-alt"></i> Cairo, Egypt</span>
+        <span><i class="fas fa-envelope"></i> ahmedxelsherif@outlook.com</span>
+        <span><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/ahmedxelsherif/" target="_blank" style="text-decoration:none;">ahmedxelsherif</a></span>
+      </div>
+    </div>
+    <div class="details-grid">
+      <div class="summary"><h3><i class="fas fa-user-astronaut"></i> Summary</h3><p>Embedded Systems Engineer with strong experience in embedded Linux, PCB design, analog circuits, and product development. Skilled in designing end-to-end embedded solutions from concept to production, with additional expertise in R&D and IoT systems.</p></div>
+      <div class="education"><h3><i class="fas fa-graduation-cap"></i> Education</h3><p>B.Sc. in Electronics and Communications Engineering - Thebes Academy (2019 – 2025)<br><strong>Military status:</strong> In Progress</p></div>
+      <div class="skills"><h3><i class="fas fa-code"></i> Technical Skills</h3><div class="skill-tags"><span>Embedded C/C++</span><span>Embedded Linux</span><span>PCB Design (KiCad)</span><span>UART/I²C/SPI</span><span>C/C++/Python/Bash</span><span>ESP32/AVR/RPi</span><span>IoT Systems</span><span>AI Integration</span></div></div>
+    </div>
+  </div>
 
-    <script src="script.js"></script>
+  <!-- Projects Section -->
+  <div class="projects-section">
+    <h2><i class="fas fa-project-diagram"></i> My Projects</h2>
+    <div id="projectsGrid" class="projects-grid">Loading projects...</div>
+  </div>
+  <footer>© 2025 Ahmed Hassan — Secure Firebase Admin Panel | <span id="authStateInfo"></span></footer>
+</div>
+
+<!-- Modal for Add/Edit Project -->
+<div id="projectModal" class="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle">Add Project</h3>
+    <input type="text" id="projectTitle" placeholder="Project Title" required>
+    <textarea id="projectDesc" placeholder="Project description (full details)"></textarea>
+    <label><i class="fas fa-image"></i> Project Image</label>
+    <input type="file" id="projectImageInput" accept="image/*">
+    <div id="imagePreviewContainer"></div>
+    <button type="button" id="removeImageBtn" class="remove-img-btn"><i class="fas fa-trash-alt"></i> Remove Image</button>
+    <div class="modal-buttons">
+      <button id="modalSaveBtn" class="save-btn">Save</button>
+      <button id="modalCancelBtn" class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Avatar Edit Modal -->
+<div id="avatarModal" class="modal">
+  <div class="modal-content">
+    <h3>Update Profile Picture</h3>
+    <input type="file" id="avatarInput" accept="image/*">
+    <div id="avatarPreviewContainer"></div>
+    <div class="modal-buttons">
+      <button id="avatarSaveBtn" class="save-btn">Upload & Save</button>
+      <button id="avatarCancelBtn" class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, addDoc, updateDoc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  
+  // Firebase configuration (your real project)
+  const firebaseConfig = {
+    apiKey: "AIzaSyAX9NdeEUNmfCyJoZG7K9OxNlIKWCPwtPE",
+    authDomain: "myportfolio-b2023.firebaseapp.com",
+    databaseURL: "https://myportfolio-b2023-default-rtdb.firebaseio.com",
+    projectId: "myportfolio-b2023",
+    storageBucket: "myportfolio-b2023.firebasestorage.app",
+    messagingSenderId: "370271052034",
+    appId: "1:370271052034:web:8ea49f8fc2fa70ae40621b",
+    measurementId: "G-6QD21JCWXM"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let currentUser = null;
+  let projectsUnsubscribe = null;
+
+  // DOM elements
+  const loginSection = document.getElementById('loginSection');
+  const adminControls = document.getElementById('adminControls');
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const addProjectBtn = document.getElementById('addProjectBtn');
+  const editAvatarBtn = document.getElementById('editAvatarBtn');
+  const projectsGrid = document.getElementById('projectsGrid');
+  const profileAvatar = document.getElementById('profileAvatar');
+  const authStateInfo = document.getElementById('authStateInfo');
+
+  const projectModal = document.getElementById('projectModal');
+  const avatarModal = document.getElementById('avatarModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const projectTitleInput = document.getElementById('projectTitle');
+  const projectDescInput = document.getElementById('projectDesc');
+  const projectImageInput = document.getElementById('projectImageInput');
+  const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+  const removeImageBtn = document.getElementById('removeImageBtn');
+  const modalSaveBtn = document.getElementById('modalSaveBtn');
+  const modalCancelBtn = document.getElementById('modalCancelBtn');
+  const avatarInput = document.getElementById('avatarInput');
+  const avatarPreviewContainer = document.getElementById('avatarPreviewContainer');
+  const avatarSaveBtn = document.getElementById('avatarSaveBtn');
+  const avatarCancelBtn = document.getElementById('avatarCancelBtn');
+
+  let currentEditId = null;
+  let pendingImageDataUrl = null;
+  let originalImageUrlForEdit = null;
+
+  // Helper: file to base64
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Load profile picture from Firestore
+  async function loadProfilePicture() {
+    try {
+      const profileCollection = collection(db, "profile");
+      const snapshot = await getDocs(profileCollection);
+      let avatarUrl = null;
+      if (!snapshot.empty) {
+        const data = snapshot.docs[0].data();
+        avatarUrl = data.avatarUrl;
+      }
+      if (avatarUrl && avatarUrl.startsWith('data:image')) {
+        profileAvatar.src = avatarUrl;
+      } else {
+        profileAvatar.src = "https://placehold.co/100x100/e2e8f0/475569?text=Ahmed";
+      }
+    } catch (err) {
+      console.warn("Error loading profile pic:", err);
+    }
+  }
+
+  async function updateProfilePicture(base64Image) {
+    const profileRef = doc(db, "profile", "main");
+    await setDoc(profileRef, { avatarUrl: base64Image }, { merge: true });
+    profileAvatar.src = base64Image;
+  }
+
+  // Load projects realtime
+  function loadProjectsRealtime() {
+    if (projectsUnsubscribe) projectsUnsubscribe();
+    const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));
+    projectsUnsubscribe = onSnapshot(q, (snapshot) => {
+      const projectsList = [];
+      snapshot.forEach(doc => {
+        projectsList.push({ id: doc.id, ...doc.data() });
+      });
+      renderProjects(projectsList);
+    }, (error) => {
+      console.error("Firestore error:", error);
+      projectsGrid.innerHTML = `<p style="color:red;">Error loading projects. Make sure Firestore rules allow read and you have created 'projects' collection.</p>`;
+    });
+  }
+
+  function renderProjects(projectsArray) {
+    if (!projectsArray.length) {
+      projectsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">No projects yet. Admin can add projects.</div>`;
+      return;
+    }
+    projectsGrid.innerHTML = '';
+    projectsArray.forEach(proj => {
+      const card = document.createElement('div');
+      card.className = 'project-card';
+      const imgSrc = proj.imageUrl && proj.imageUrl.trim() ? proj.imageUrl : 'https://placehold.co/400x240/e2e8f0/475569?text=Project+Image';
+      card.innerHTML = `
+        <img class="project-img" src="${imgSrc}" alt="${escapeHtml(proj.title)}" onerror="this.src='https://placehold.co/400x240/e2e8f0/475569?text=Image+Error'">
+        <div class="project-content">
+          <div class="project-title">${escapeHtml(proj.title)}</div>
+          <div class="project-desc">${escapeHtml(proj.description).replace(/\n/g, '<br>')}</div>
+          ${currentUser ? `<div class="card-actions">
+            <button class="edit-btn" data-id="${proj.id}"><i class="fas fa-edit"></i> Edit</button>
+            <button class="delete-btn" data-id="${proj.id}"><i class="fas fa-trash"></i> Delete</button>
+          </div>` : ''}
+        </div>
+      `;
+      projectsGrid.appendChild(card);
+    });
+    if (currentUser) {
+      document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = btn.getAttribute('data-id');
+          openEditProjectModal(id, projectsArray.find(p => p.id == id));
+        });
+      });
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const id = btn.getAttribute('data-id');
+          if (confirm('Delete this project permanently?')) {
+            await deleteDoc(doc(db, "projects", id));
+          }
+        });
+      });
+    }
+  }
+
+  async function addOrUpdateProject(title, desc, imageBase64, docId = null) {
+    const data = {
+      title: title.trim(),
+      description: desc.trim(),
+      imageUrl: imageBase64 || null,
+      updatedAt: new Date().toISOString()
+    };
+    if (docId) {
+      await updateDoc(doc(db, "projects", docId), data);
+    } else {
+      await addDoc(collection(db, "projects"), { ...data, createdAt: new Date().toISOString() });
+    }
+  }
+
+  function openEditProjectModal(id, project) {
+    currentEditId = id;
+    modalTitle.innerText = "Edit Project";
+    projectTitleInput.value = project.title;
+    projectDescInput.value = project.description;
+    originalImageUrlForEdit = project.imageUrl || null;
+    pendingImageDataUrl = originalImageUrlForEdit;
+    updateImagePreview(pendingImageDataUrl);
+    projectImageInput.value = '';
+    projectModal.style.display = 'flex';
+  }
+
+  function openAddProjectModal() {
+    currentEditId = null;
+    modalTitle.innerText = "Add New Project";
+    projectTitleInput.value = '';
+    projectDescInput.value = '';
+    pendingImageDataUrl = null;
+    updateImagePreview(null);
+    projectImageInput.value = '';
+    projectModal.style.display = 'flex';
+  }
+
+  function updateImagePreview(src) {
+    imagePreviewContainer.innerHTML = '';
+    if (src && src.trim()) {
+      const img = document.createElement('img');
+      img.src = src;
+      img.className = 'image-preview';
+      imagePreviewContainer.appendChild(img);
+    } else {
+      const div = document.createElement('div');
+      div.className = 'image-preview';
+      div.style.display = 'flex';
+      div.style.alignItems = 'center';
+      div.style.justifyContent = 'center';
+      div.innerText = 'No image preview';
+      div.style.background = '#f1f5f9';
+      imagePreviewContainer.appendChild(div);
+    }
+  }
+
+  async function handleProjectSave() {
+    const title = projectTitleInput.value.trim();
+    const desc = projectDescInput.value.trim();
+    if (!title) { alert("Title required"); return; }
+    let finalImage = pendingImageDataUrl;
+    if (currentEditId) {
+      await addOrUpdateProject(title, desc, finalImage, currentEditId);
+    } else {
+      await addOrUpdateProject(title, desc, finalImage);
+    }
+    closeProjectModal();
+  }
+
+  function closeProjectModal() {
+    projectModal.style.display = 'none';
+    currentEditId = null;
+    pendingImageDataUrl = null;
+  }
+
+  // Avatar modal handlers
+  function openAvatarModal() {
+    avatarInput.value = '';
+    avatarPreviewContainer.innerHTML = '';
+    avatarModal.style.display = 'flex';
+  }
+
+  avatarInput.addEventListener('change', async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (!file.type.startsWith('image/')) { alert("Only images"); return; }
+      const base64 = await fileToBase64(file);
+      avatarPreviewContainer.innerHTML = `<img src="${base64}" class="image-preview" style="max-height:150px;">`;
+      avatarSaveBtn.onclick = async () => {
+        await updateProfilePicture(base64);
+        avatarModal.style.display = 'none';
+      };
+    }
+  });
+
+  avatarCancelBtn.addEventListener('click', () => avatarModal.style.display = 'none');
+
+  removeImageBtn.addEventListener('click', () => {
+    pendingImageDataUrl = null;
+    updateImagePreview(null);
+    projectImageInput.value = '';
+  });
+
+  projectImageInput.addEventListener('change', async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (!file.type.startsWith('image/')) { alert("Invalid image"); return; }
+      const base64 = await fileToBase64(file);
+      pendingImageDataUrl = base64;
+      updateImagePreview(base64);
+    }
+  });
+
+  // Auth logic
+  loginBtn.addEventListener('click', async () => {
+    const email = document.getElementById('loginEmail').value;
+    const pwd = document.getElementById('loginPassword').value;
+    try {
+      await signInWithEmailAndPassword(auth, email, pwd);
+    } catch (err) {
+      alert("Login failed: " + err.message + "\n\nMake sure Firebase Auth is enabled and user exists.");
+    }
+  });
+
+  logoutBtn.addEventListener('click', async () => {
+    await signOut(auth);
+  });
+
+  onAuthStateChanged(auth, async (user) => {
+    currentUser = user;
+    if (user) {
+      loginSection.style.display = 'none';
+      adminControls.style.display = 'flex';
+      authStateInfo.innerText = '✅ Admin online';
+      addProjectBtn.onclick = openAddProjectModal;
+      editAvatarBtn.onclick = openAvatarModal;
+      await loadProfilePicture();
+      loadProjectsRealtime();
+    } else {
+      loginSection.style.display = 'flex';
+      adminControls.style.display = 'none';
+      authStateInfo.innerText = '🔐 Not logged in (admin only)';
+      profileAvatar.src = "https://placehold.co/100x100/e2e8f0/475569?text=Ahmed";
+      if (projectsUnsubscribe) projectsUnsubscribe();
+      loadProjectsRealtime();
+    }
+  });
+
+  modalSaveBtn.addEventListener('click', handleProjectSave);
+  modalCancelBtn.addEventListener('click', closeProjectModal);
+
+  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+
+  // Initial load
+  loadProjectsRealtime();
+  loadProfilePicture();
+</script>
 </body>
 </html>
