@@ -64,7 +64,7 @@
   <div id="authPanel" class="auth-panel">
     <div id="loginSection">
       <div class="login-form">
-        <input type="email" id="loginEmail" placeholder="Email" value="admin@example.com">
+        <input type="email" id="loginEmail" placeholder="Email" value="Email">
         <input type="password" id="loginPassword" placeholder="Password">
         <button id="loginBtn" class="login-btn"><i class="fas fa-sign-in-alt"></i> Admin Login</button>
       </div>
@@ -110,7 +110,7 @@
     <h2><i class="fas fa-project-diagram"></i> My Projects</h2>
     <div id="projectsGrid" class="projects-grid">Loading projects...</div>
   </div>
-  <footer>© 2025 Ahmed Hassan — Secure Firebase Admin Panel | <span id="authStateInfo"></span></footer>
+  <footer>© 2026 Ahmed Hassan | <span id="authStateInfo"></span></footer>
 </div>
 
 <!-- Modal for Add/Edit Project -->
@@ -220,7 +220,7 @@
       if (avatarUrl && avatarUrl.startsWith('data:image')) {
         profileAvatar.src = avatarUrl;
       } else {
-        profileAvatar.src = "https://placehold.co/100x100/e2e8f0/475569?text=Ahmed";
+        profileAvatar.src = "pic.jpg";
       }
     } catch (err) {
       console.warn("Error loading profile pic:", err);
