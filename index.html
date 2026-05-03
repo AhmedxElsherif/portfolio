@@ -6,7 +6,7 @@
   <title>Ahmed Hassan | Embedded Systems Engineer Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Google Model Viewer -->
+  <!-- Import map for model-viewer -->
   <script type="importmap">
     {
       "imports": {
@@ -81,6 +81,9 @@
     .cancel-btn { background: #e2e8f0; }
     .remove-img-btn { background: #f1f5f9; color: #b91c1c; border: 1px solid #ddd; margin-bottom: 0.5rem; }
     footer { margin-top: 3rem; text-align: center; color: #475569; font-size: 0.8rem; }
+    .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: white; animation: spin 0.8s linear infinite; margin-right: 0.5rem; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
     @media (max-width: 680px) { body { padding: 1rem; } .profile-header { flex-direction: column; align-items: flex-start; } }
   </style>
 </head>
@@ -150,25 +153,29 @@
     <div class="field-group"><label for="projectModelUrl">3D Model URL (GLB/GLTF)</label><input type="text" id="projectModelUrl" placeholder="https://..."></div>
     <div class="field-group"><label for="projectImageInput">Project Image</label><input type="file" id="projectImageInput" accept="image/*"></div>
     <div id="imagePreviewContainer"></div>
-    <button type="button" id="removeImageBtn" class="remove-img-btn"><i class="fas fa-trash-alt"></i> Remove Image</button>
+    <button type="button" id="removeImageBtn" class="remove-img-btn" style="display:none;"><i class="fas fa-trash-alt"></i> Remove Image</button>
     <div class="modal-buttons"><button id="modalSaveBtn" class="save-btn">Save</button><button id="modalCancelBtn" class="cancel-btn">Cancel</button></div>
+    <div id="projectLoader" style="display:none; text-align:center; margin-top:10px;"><span class="spinner"></span> Uploading image...</div>
   </div>
 </div>
 
 <div id="avatarModal" class="modal">
   <div class="modal-content">
     <h3>Update Profile Picture</h3>
-    <div class="field-group"><label for="avatarInput">Choose new profile picture</label><input type="file" id="avatarInput" accept="image/*"></div>
+    <div class="field-group"><label for="avatarInput">Choose new profile picture (max 5MB)</label><input type="file" id="avatarInput" accept="image/*"></div>
     <div id="avatarPreviewContainer"></div>
     <div class="modal-buttons"><button id="avatarSaveBtn" class="save-btn">Upload & Save</button><button id="avatarCancelBtn" class="cancel-btn">Cancel</button></div>
+    <div id="avatarLoader" style="display:none; text-align:center; margin-top:10px;"><span class="spinner"></span> Uploading...</div>
   </div>
 </div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, addDoc, updateDoc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-  
+  import { getFirestore, collection, doc, deleteDoc, onSnapshot, addDoc, updateDoc, query, orderBy, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+  import "@google/model-viewer";
+
   const firebaseConfig = {
     apiKey: "AIzaSyD8zn6GYvChn7sh69hNhUhcB7qdW8Nsuzs",
     authDomain: "myportfolio-b2023.firebaseapp.com",
@@ -183,9 +190,11 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
+  const storage = getStorage(app);
 
   let currentUser = null;
   let projectsUnsubscribe = null;
+  let avatarUnsubscribe = null;
   let allProjects = [];
 
   // DOM elements
@@ -219,52 +228,129 @@
   const detailTitle = document.getElementById('detailTitle');
   const detailBody = document.getElementById('detailBody');
   const closeDetailBtn = document.getElementById('closeDetailBtn');
+  const projectLoader = document.getElementById('projectLoader');
+  const avatarLoader = document.getElementById('avatarLoader');
 
   let currentEditId = null;
-  let pendingImageDataUrl = null;
+  let currentImageFile = null;
+  let currentAvatarFile = null;
 
-  function fileToBase64(file) {
+  // Helper: Compress and resize image (max 1024px width, quality 0.7)
+  async function compressImage(file, maxWidth = 1024, quality = 0.7) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob((blob) => {
+            if (!blob) reject(new Error('Compression failed'));
+            const compressedFile = new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() });
+            resolve(compressedFile);
+          }, 'image/jpeg', quality);
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });
   }
 
-  async function loadProfilePicture() {
+  // Upload image to Firebase Storage and return download URL
+  async function uploadImage(file, path) {
+    if (!file) return null;
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) throw new Error('Image size must be less than 5MB');
+    const compressed = await compressImage(file);
+    const storageRef = ref(storage, path);
+    const uploadTask = uploadBytesResumable(storageRef, compressed);
+    return new Promise((resolve, reject) => {
+      uploadTask.on('state_changed', null, reject, async () => {
+        const url = await getDownloadURL(uploadTask.snapshot.ref);
+        resolve(url);
+      });
+    });
+  }
+
+  // Delete old image from storage (if needed)
+  async function deleteOldImage(url) {
+    if (!url || !url.includes('firebasestorage.googleapis.com')) return;
     try {
-      const snapshot = await getDocs(collection(db, "profile"));
-      let avatarUrl = null;
-      if (!snapshot.empty) avatarUrl = snapshot.docs[0].data().avatarUrl;
-      profileAvatar.src = (avatarUrl && avatarUrl.startsWith('data:image')) ? avatarUrl : "https://placehold.co/100x100/e2e8f0/475569?text=Ahmed";
-    } catch (err) { console.warn(err); }
+      const decodedUrl = decodeURIComponent(url);
+      const startToken = '/o/';
+      const endToken = '?';
+      let start = decodedUrl.indexOf(startToken);
+      if (start === -1) return;
+      start += startToken.length;
+      let end = decodedUrl.indexOf(endToken);
+      if (end === -1) end = decodedUrl.length;
+      const filePath = decodedUrl.substring(start, end);
+      const fileRef = ref(storage, filePath);
+      await deleteObject(fileRef);
+    } catch (err) { console.warn('Error deleting old image:', err); }
   }
 
-  async function updateProfilePicture(base64Image) {
-    await setDoc(doc(db, "profile", "main"), { avatarUrl: base64Image }, { merge: true });
-    profileAvatar.src = base64Image;
+  // Profile picture realtime listener
+  function listenToProfilePicture() {
+    if (avatarUnsubscribe) avatarUnsubscribe();
+    const profileDocRef = doc(db, 'profile', 'main');
+    avatarUnsubscribe = onSnapshot(profileDocRef, (docSnap) => {
+      if (docSnap.exists() && docSnap.data().avatarUrl) {
+        profileAvatar.src = docSnap.data().avatarUrl;
+      } else {
+        profileAvatar.src = 'https://placehold.co/100x100/e2e8f0/475569?text=Ahmed';
+      }
+    }, (err) => console.warn('Profile snapshot error:', err));
   }
 
+  async function updateProfilePicture(file) {
+    if (!file) return;
+    try {
+      const url = await uploadImage(file, `avatars/${Date.now()}_${file.name}`);
+      await setDoc(doc(db, 'profile', 'main'), { avatarUrl: url }, { merge: true });
+      return url;
+    } catch (err) {
+      alert('Failed to update avatar: ' + err.message);
+      throw err;
+    }
+  }
+
+  // Projects realtime
   function loadProjectsRealtime() {
     if (projectsUnsubscribe) projectsUnsubscribe();
-    const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));
+    const q = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
     projectsUnsubscribe = onSnapshot(q, (snapshot) => {
-      allProjects = [];
-      snapshot.forEach(doc => allProjects.push({ id: doc.id, ...doc.data() }));
+      allProjects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       renderProjects(allProjects);
-    }, (error) => { projectsGrid.innerHTML = `<p style="color:red;">Error loading projects.</p>`; });
+    }, (error) => {
+      projectsGrid.innerHTML = '<p style="color:red;">Error loading projects. Check console.</p>';
+      console.error(error);
+    });
   }
 
   function renderProjects(projectsArray) {
-    if (!projectsArray.length) { projectsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">No projects yet. Admin can add projects.</div>`; return; }
+    if (!projectsArray.length) {
+      projectsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">No projects yet. Admin can add projects.</div>`;
+      return;
+    }
     projectsGrid.innerHTML = '';
     projectsArray.forEach(proj => {
       const card = document.createElement('div');
       card.className = 'project-card';
       const imgSrc = proj.imageUrl || 'https://placehold.co/400x240/e2e8f0/475569?text=Project+Image';
       card.innerHTML = `
-        <img class="project-img" src="${imgSrc}" alt="${escapeHtml(proj.title)}" onerror="this.src='https://placehold.co/400x240/e2e8f0/475569?text=Image+Error'">
+        <img class="project-img" src="${escapeHtml(imgSrc)}" alt="${escapeHtml(proj.title)}" onerror="this.src='https://placehold.co/400x240/e2e8f0/475569?text=Image+Error'">
         <div class="project-content">
           <div class="project-title">${escapeHtml(proj.title)}</div>
           <div class="project-desc">${escapeHtml(proj.description).replace(/\n/g, '<br>')}</div>
@@ -285,7 +371,11 @@
       }));
       document.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', async (e) => {
         e.stopPropagation();
-        if (confirm('Delete permanently?')) await deleteDoc(doc(db, "projects", btn.getAttribute('data-id')));
+        if (!confirm('Delete permanently?')) return;
+        const projectId = btn.getAttribute('data-id');
+        const project = allProjects.find(p => p.id == projectId);
+        if (project && project.imageUrl) await deleteOldImage(project.imageUrl);
+        await deleteDoc(doc(db, 'projects', projectId));
       }));
     }
   }
@@ -296,13 +386,13 @@
     detailTitle.innerText = project.title;
     const imageUrl = project.imageUrl || 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
     const modelUrl = project.model3dUrl && project.model3dUrl.trim() ? project.model3dUrl : null;
-    const modelHtml = modelUrl ? `<model-viewer id="detail-model-viewer" src="${modelUrl}" camera-controls auto-rotate background-color="#eef2ff" shadow-intensity="1" style="width:100%; height:100%; min-height:400px;"></model-viewer>` : `<div style="background:#eef2ff; width:100%; min-height:400px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p>No 3D model available.<br>Add a GLB/GLTF URL when editing.</p></div>`;
+    const modelHtml = modelUrl ? `<model-viewer id="detail-model-viewer" src="${escapeHtml(modelUrl)}" camera-controls auto-rotate background-color="#eef2ff" shadow-intensity="1" style="width:100%; height:100%; min-height:400px;"></model-viewer>` : `<div style="background:#eef2ff; width:100%; min-height:400px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p>No 3D model available.<br>Add a GLB/GLTF URL when editing.</p></div>`;
     detailBody.innerHTML = `
       <div class="detail-info">
         <div class="detail-field"><strong>📝 Description</strong><p>${escapeHtml(project.description).replace(/\n/g, '<br>')}</p></div>
         <div class="detail-field"><strong>🎯 Field of Use</strong><p>${escapeHtml(project.fieldOfUse) || 'Not specified'}</p></div>
         <div class="detail-field"><strong>🛠️ Tools Used</strong><p>${escapeHtml(project.toolsUsed) || 'Not specified'}</p></div>
-        <div class="detail-image"><strong>📸 Project Image</strong><br><img src="${imageUrl}" alt="${escapeHtml(project.title)}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image+Error'"></div>
+        <div class="detail-image"><strong>📸 Project Image</strong><br><img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(project.title)}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image+Error'"></div>
         <button class="back-to-gallery" id="backToGalleryBtn"><i class="fas fa-arrow-left"></i> Back to gallery</button>
       </div>
       <div class="detail-model">
@@ -311,54 +401,59 @@
     `;
     detailModal.style.display = 'flex';
     document.getElementById('backToGalleryBtn')?.addEventListener('click', () => detailModal.style.display = 'none');
-    // Force model-viewer reload if exists
-    if (modelUrl) {
-      setTimeout(async () => {
-        const mv = document.getElementById('detail-model-viewer');
-        if (mv) {
-          await customElements.whenDefined('model-viewer');
-          customElements.upgrade(mv);
-          const src = mv.getAttribute('src');
-          mv.setAttribute('src', '');
-          setTimeout(() => mv.setAttribute('src', src), 30);
-        }
-      }, 100);
-    }
   }
 
-  async function addOrUpdateProject(title, desc, imageBase64, docId = null, extra = {}) {
+  async function saveProject(title, description, imageFile, docId, extra) {
+    let imageUrl = null;
+    if (imageFile) {
+      const path = `projects/${Date.now()}_${imageFile.name}`;
+      imageUrl = await uploadImage(imageFile, path);
+    }
     const data = {
-      title: title.trim(), description: desc.trim(), imageUrl: imageBase64 || null,
-      fieldOfUse: extra.fieldOfUse || '', toolsUsed: extra.toolsUsed || '',
-      model3dUrl: extra.model3dUrl || '', updatedAt: new Date().toISOString()
+      title: title.trim(),
+      description: description.trim(),
+      fieldOfUse: extra.fieldOfUse || '',
+      toolsUsed: extra.toolsUsed || '',
+      model3dUrl: extra.model3dUrl || '',
+      updatedAt: new Date().toISOString()
     };
-    if (docId) await updateDoc(doc(db, "projects", docId), data);
-    else await addDoc(collection(db, "projects"), { ...data, createdAt: new Date().toISOString() });
+    if (imageUrl) data.imageUrl = imageUrl;
+    else if (docId) {
+      // keep existing imageUrl if no new file
+      const existing = allProjects.find(p => p.id == docId);
+      if (existing && existing.imageUrl) data.imageUrl = existing.imageUrl;
+    }
+    if (docId) {
+      await updateDoc(doc(db, 'projects', docId), data);
+    } else {
+      data.createdAt = new Date().toISOString();
+      await addDoc(collection(db, 'projects'), data);
+    }
   }
 
   function openEditProjectModal(id, project) {
     currentEditId = id;
-    modalTitle.innerText = "Edit Project";
+    modalTitle.innerText = 'Edit Project';
     projectTitleInput.value = project.title;
     projectDescInput.value = project.description;
     projectFieldOfUse.value = project.fieldOfUse || '';
     projectToolsUsed.value = project.toolsUsed || '';
     projectModelUrl.value = project.model3dUrl || '';
-    pendingImageDataUrl = project.imageUrl || null;
-    updateImagePreview(pendingImageDataUrl);
+    currentImageFile = null;
+    updateImagePreview(project.imageUrl || null);
     projectImageInput.value = '';
     projectModal.style.display = 'flex';
   }
 
   function openAddProjectModal() {
     currentEditId = null;
-    modalTitle.innerText = "Add New Project";
+    modalTitle.innerText = 'Add New Project';
     projectTitleInput.value = '';
     projectDescInput.value = '';
     projectFieldOfUse.value = '';
     projectToolsUsed.value = '';
     projectModelUrl.value = '';
-    pendingImageDataUrl = null;
+    currentImageFile = null;
     updateImagePreview(null);
     projectImageInput.value = '';
     projectModal.style.display = 'flex';
@@ -371,54 +466,100 @@
       img.src = src;
       img.className = 'image-preview';
       imagePreviewContainer.appendChild(img);
+      removeImageBtn.style.display = 'inline-block';
     } else {
       const div = document.createElement('div');
       div.className = 'image-preview';
       div.style.cssText = 'display:flex; align-items:center; justify-content:center; background:#f1f5f9;';
-      div.innerText = 'No image preview';
+      div.innerText = 'No image selected';
       imagePreviewContainer.appendChild(div);
+      removeImageBtn.style.display = 'none';
     }
   }
 
   async function handleProjectSave() {
     const title = projectTitleInput.value.trim();
-    if (!title) { alert("Title required"); return; }
+    if (!title) { alert('Project title is required'); return; }
     const extra = {
       fieldOfUse: projectFieldOfUse.value.trim(),
       toolsUsed: projectToolsUsed.value.trim(),
       model3dUrl: projectModelUrl.value.trim()
     };
-    if (currentEditId) await addOrUpdateProject(title, projectDescInput.value.trim(), pendingImageDataUrl, currentEditId, extra);
-    else await addOrUpdateProject(title, projectDescInput.value.trim(), pendingImageDataUrl, null, extra);
-    closeProjectModal();
+    try {
+      modalSaveBtn.disabled = true;
+      projectLoader.style.display = 'block';
+      await saveProject(title, projectDescInput.value.trim(), currentImageFile, currentEditId, extra);
+      closeProjectModal();
+    } catch (err) {
+      alert('Error saving project: ' + err.message);
+    } finally {
+      modalSaveBtn.disabled = false;
+      projectLoader.style.display = 'none';
+    }
   }
 
-  function closeProjectModal() { projectModal.style.display = 'none'; currentEditId = null; pendingImageDataUrl = null; }
-  function openAvatarModal() { avatarInput.value = ''; avatarPreviewContainer.innerHTML = ''; avatarModal.style.display = 'flex'; }
-  
-  avatarInput.addEventListener('change', async (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      if (!file.type.startsWith('image/')) { alert("Only images"); return; }
-      const base64 = await fileToBase64(file);
-      avatarPreviewContainer.innerHTML = `<img src="${base64}" class="image-preview" style="max-height:150px;">`;
-      avatarSaveBtn.onclick = async () => { await updateProfilePicture(base64); avatarModal.style.display = 'none'; };
+  function closeProjectModal() {
+    projectModal.style.display = 'none';
+    currentEditId = null;
+    currentImageFile = null;
+  }
+
+  function openAvatarModal() {
+    avatarInput.value = '';
+    avatarPreviewContainer.innerHTML = '';
+    currentAvatarFile = null;
+    avatarModal.style.display = 'flex';
+  }
+
+  async function handleAvatarSave() {
+    if (!currentAvatarFile) { alert('Please choose an image'); return; }
+    try {
+      avatarSaveBtn.disabled = true;
+      avatarLoader.style.display = 'block';
+      await updateProfilePicture(currentAvatarFile);
+      avatarModal.style.display = 'none';
+    } catch (err) {
+      alert('Error updating avatar: ' + err.message);
+    } finally {
+      avatarSaveBtn.disabled = false;
+      avatarLoader.style.display = 'none';
     }
-  });
-  avatarCancelBtn.addEventListener('click', () => avatarModal.style.display = 'none');
-  removeImageBtn.addEventListener('click', () => { pendingImageDataUrl = null; updateImagePreview(null); projectImageInput.value = ''; });
+  }
+
+  // Event listeners
   projectImageInput.addEventListener('change', async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      if (!file.type.startsWith('image/')) { alert("Invalid image"); return; }
-      pendingImageDataUrl = await fileToBase64(file);
-      updateImagePreview(pendingImageDataUrl);
+      if (!file.type.startsWith('image/')) { alert('Please select an image file'); return; }
+      if (file.size > 5 * 1024 * 1024) { alert('Image size must be less than 5MB'); return; }
+      currentImageFile = file;
+      const previewUrl = URL.createObjectURL(file);
+      updateImagePreview(previewUrl);
+      URL.revokeObjectURL(previewUrl);
+    }
+  });
+  removeImageBtn.addEventListener('click', () => {
+    currentImageFile = null;
+    updateImagePreview(null);
+    projectImageInput.value = '';
+  });
+  avatarInput.addEventListener('change', async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (!file.type.startsWith('image/')) { alert('Please select an image'); return; }
+      if (file.size > 5 * 1024 * 1024) { alert('Image size must be less than 5MB'); return; }
+      currentAvatarFile = file;
+      const previewUrl = URL.createObjectURL(file);
+      avatarPreviewContainer.innerHTML = `<img src="${previewUrl}" class="image-preview" style="max-height:150px;">`;
+      URL.revokeObjectURL(previewUrl);
     }
   });
   loginBtn.addEventListener('click', async () => {
     const email = document.getElementById('loginEmail').value;
     const pwd = document.getElementById('loginPassword').value;
-    try { await signInWithEmailAndPassword(auth, email, pwd); } catch (err) { alert("Login failed: " + err.message); }
+    try {
+      await signInWithEmailAndPassword(auth, email, pwd);
+    } catch (err) { alert('Login failed: ' + err.message); }
   });
   logoutBtn.addEventListener('click', async () => { await signOut(auth); });
   onAuthStateChanged(auth, async (user) => {
@@ -429,24 +570,29 @@
       authStateInfo.innerText = '✅ Admin online';
       addProjectBtn.onclick = openAddProjectModal;
       editAvatarBtn.onclick = openAvatarModal;
-      await loadProfilePicture();
+      listenToProfilePicture();
       loadProjectsRealtime();
     } else {
       loginSection.style.display = 'flex';
       adminControls.style.display = 'none';
       authStateInfo.innerText = '🔐 Not logged in';
-      profileAvatar.src = "https://placehold.co/100x100/e2e8f0/475569?text=Ahmed";
+      profileAvatar.src = 'https://placehold.co/100x100/e2e8f0/475569?text=Ahmed';
+      if (avatarUnsubscribe) avatarUnsubscribe();
       if (projectsUnsubscribe) projectsUnsubscribe();
       loadProjectsRealtime();
     }
   });
   modalSaveBtn.addEventListener('click', handleProjectSave);
   modalCancelBtn.addEventListener('click', closeProjectModal);
+  avatarSaveBtn.addEventListener('click', handleAvatarSave);
+  avatarCancelBtn.addEventListener('click', () => avatarModal.style.display = 'none');
   closeDetailBtn.addEventListener('click', () => detailModal.style.display = 'none');
   window.addEventListener('click', (e) => { if (e.target === detailModal) detailModal.style.display = 'none'; });
   function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+  
+  // Initial load without user just projects
   loadProjectsRealtime();
-  loadProfilePicture();
+  // Profile picture listener will start only when admin logs in to save reads
 </script>
 </body>
 </html>
