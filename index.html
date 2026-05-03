@@ -6,7 +6,6 @@
   <title>Ahmed Hassan | Embedded Systems Engineer Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Google Model Viewer for 3D models -->
   <script type="importmap">
     {
       "imports": {
@@ -18,7 +17,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background: #f1f5f9; color: #0f172a; line-height: 1.5; padding: 2rem 1.5rem; }
     .container { max-width: 1300px; margin: 0 auto; }
-    .profile-card { background: white; border-radius: 2rem; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.05); transition: all 0.2s; }
+    .profile-card { background: white; border-radius: 2rem; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
     .profile-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
     .profile-main { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
     .profile-avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #2563eb; background: #e2e8f0; }
@@ -44,7 +43,7 @@
     .status { font-size: 0.9rem; color: #166534; background: #dcfce7; padding: 0.3rem 1rem; border-radius: 30px; }
     .projects-section h2 { font-size: 1.8rem; margin-bottom: 1.5rem; font-weight: 700; }
     .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.8rem; }
-    .project-card { background: white; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; display: flex; flex-direction: column; }
+    .project-card { background: white; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s; cursor: pointer; display: flex; flex-direction: column; }
     .project-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.2); }
     .project-img { width: 100%; height: 200px; object-fit: cover; background: #cbd5e1; }
     .project-content { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
@@ -54,7 +53,6 @@
     .edit-btn, .delete-btn { border: none; padding: 0.4rem 1rem; border-radius: 30px; font-weight: 500; cursor: pointer; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.4rem; }
     .edit-btn { background: #fef9c3; color: #854d0e; }
     .delete-btn { background: #fee2e2; color: #b91c1c; }
-    /* Project Detail Modal (full size) */
     .detail-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 1001; overflow-y: auto; padding: 1rem; }
     .detail-content { background: white; max-width: 1200px; width: 100%; border-radius: 2rem; overflow-y: auto; max-height: 95vh; position: relative; }
     .detail-header { background: #0f172a; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
@@ -62,18 +60,13 @@
     .close-detail { background: none; border: none; color: white; font-size: 2rem; cursor: pointer; line-height: 1; }
     .detail-body { padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
     .detail-info { display: flex; flex-direction: column; gap: 1.2rem; }
-    .detail-info p { margin-top: 0; }
     .detail-field { background: #f8fafc; padding: 1rem; border-radius: 1rem; }
     .detail-field strong { display: block; margin-bottom: 0.5rem; color: #1e40af; }
-    .detail-model { background: #eef2ff; border-radius: 1.5rem; overflow: hidden; min-height: 400px; width: 100%; position: relative; }
-    model-viewer { width: 100%; height: 100%; min-height: 400px; background: #eef2ff; display: block; }
-    .detail-image { margin-top: 1rem; border-radius: 1rem; overflow: hidden; }
-    .detail-image img { width: 100%; max-height: 250px; object-fit: cover; }
+    .detail-model { background: #eef2ff; border-radius: 1.5rem; overflow: hidden; min-height: 450px; width: 100%; position: relative; }
+    model-viewer { width: 100%; height: 100%; min-height: 450px; background: #eef2ff; display: block; }
+    .detail-image img { width: 100%; max-height: 250px; object-fit: cover; border-radius: 1rem; margin-top: 0.5rem; }
     .back-to-gallery { background: #2563eb; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 2rem; cursor: pointer; margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; }
-    @media (max-width: 768px) {
-      .detail-body { grid-template-columns: 1fr; }
-      .detail-model { min-height: 300px; }
-    }
+    @media (max-width: 768px) { .detail-body { grid-template-columns: 1fr; } .detail-model { min-height: 300px; } }
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1000; }
     .modal-content { background: white; max-width: 650px; width: 90%; border-radius: 1.5rem; padding: 1.8rem; max-height: 90vh; overflow-y: auto; }
     .modal-content .field-group { margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.3rem; }
@@ -92,18 +85,11 @@
 </head>
 <body>
 <div class="container">
-  <!-- Authentication Panel -->
   <div id="authPanel" class="auth-panel">
     <div id="loginSection">
       <div class="login-form">
-        <div class="field-group">
-          <label for="loginEmail">Email</label>
-          <input type="email" id="loginEmail" placeholder="Email" value="admin@example.com">
-        </div>
-        <div class="field-group">
-          <label for="loginPassword">Password</label>
-          <input type="password" id="loginPassword" placeholder="Password">
-        </div>
+        <div class="field-group"><label for="loginEmail">Email</label><input type="email" id="loginEmail" value="admin@example.com"></div>
+        <div class="field-group"><label for="loginPassword">Password</label><input type="password" id="loginPassword"></div>
         <button id="loginBtn" class="login-btn"><i class="fas fa-sign-in-alt"></i> Admin Login</button>
       </div>
     </div>
@@ -117,23 +103,17 @@
     </div>
   </div>
 
-  <!-- Profile Card -->
   <div class="profile-card">
     <div class="profile-header">
       <div class="profile-main">
-        <div class="avatar-container">
-          <img id="profileAvatar" class="profile-avatar" src="https://placehold.co/100x100/e2e8f0/475569?text=Avatar" alt="Avatar">
-        </div>
-        <div class="name-title">
-          <h1>Ahmed Hassan Muhamad</h1>
-          <p><i class="fas fa-microchip"></i> Embedded Systems Engineer</p>
-        </div>
+        <img id="profileAvatar" class="profile-avatar" src="https://placehold.co/100x100/e2e8f0/475569?text=Avatar" alt="Avatar">
+        <div class="name-title"><h1>Ahmed Hassan Muhamad</h1><p><i class="fas fa-microchip"></i> Embedded Systems Engineer</p></div>
       </div>
       <div class="contact-info">
         <span><i class="fas fa-phone-alt"></i> +201024254110</span>
         <span><i class="fas fa-map-marker-alt"></i> Cairo, Egypt</span>
         <span><i class="fas fa-envelope"></i> ahmedxelsherif@outlook.com</span>
-        <span><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/ahmedxelsherif/" target="_blank" style="text-decoration:none;">ahmedxelsherif</a></span>
+        <span><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/ahmedxelsherif/" target="_blank">ahmedxelsherif</a></span>
       </div>
     </div>
     <div class="details-grid">
@@ -143,78 +123,42 @@
     </div>
   </div>
 
-  <!-- Projects Section -->
   <div class="projects-section">
     <h2><i class="fas fa-project-diagram"></i> My Projects</h2>
     <div id="projectsGrid" class="projects-grid">Loading projects...</div>
   </div>
 
-  <!-- Project Detail Modal -->
   <div id="projectDetailModal" class="detail-modal">
     <div class="detail-content">
-      <div class="detail-header">
-        <h2 id="detailTitle">Project Details</h2>
-        <button class="close-detail" id="closeDetailBtn">&times;</button>
-      </div>
-      <div class="detail-body" id="detailBody">
-        <!-- filled dynamically -->
-      </div>
+      <div class="detail-header"><h2 id="detailTitle">Project Details</h2><button class="close-detail" id="closeDetailBtn">&times;</button></div>
+      <div class="detail-body" id="detailBody"></div>
     </div>
   </div>
 
   <footer>© 2025 Ahmed Hassan — Secure Firebase Admin Panel | <span id="authStateInfo"></span></footer>
 </div>
 
-<!-- Modal for Add/Edit Project -->
 <div id="projectModal" class="modal">
   <div class="modal-content">
     <h3 id="modalTitle">Add Project</h3>
-    <div class="field-group">
-      <label for="projectTitle">Project Title *</label>
-      <input type="text" id="projectTitle" placeholder="Project Title" required>
-    </div>
-    <div class="field-group">
-      <label for="projectDesc">Project Description</label>
-      <textarea id="projectDesc" placeholder="Project description (full details)"></textarea>
-    </div>
-    <div class="field-group">
-      <label for="projectFieldOfUse">Field of Use</label>
-      <input type="text" id="projectFieldOfUse" placeholder="e.g. Industrial Automation, Consumer Electronics">
-    </div>
-    <div class="field-group">
-      <label for="projectToolsUsed">Tools Used</label>
-      <input type="text" id="projectToolsUsed" placeholder="e.g. STM32, FreeRTOS, Python">
-    </div>
-    <div class="field-group">
-      <label for="projectModelUrl">3D Model URL (GLB/GLTF) - optional</label>
-      <input type="text" id="projectModelUrl" placeholder="https://...">
-    </div>
-    <div class="field-group">
-      <label for="projectImageInput">Project Image</label>
-      <input type="file" id="projectImageInput" accept="image/*">
-    </div>
+    <div class="field-group"><label for="projectTitle">Project Title *</label><input type="text" id="projectTitle" placeholder="Project Title" required></div>
+    <div class="field-group"><label for="projectDesc">Project Description</label><textarea id="projectDesc" placeholder="Project description (full details)"></textarea></div>
+    <div class="field-group"><label for="projectFieldOfUse">Field of Use</label><input type="text" id="projectFieldOfUse" placeholder="e.g. Industrial Automation, Consumer Electronics"></div>
+    <div class="field-group"><label for="projectToolsUsed">Tools Used</label><input type="text" id="projectToolsUsed" placeholder="e.g. STM32, FreeRTOS, Python"></div>
+    <div class="field-group"><label for="projectModelUrl">3D Model URL (GLB/GLTF) - optional</label><input type="text" id="projectModelUrl" placeholder="https://..."></div>
+    <div class="field-group"><label for="projectImageInput">Project Image</label><input type="file" id="projectImageInput" accept="image/*"></div>
     <div id="imagePreviewContainer"></div>
     <button type="button" id="removeImageBtn" class="remove-img-btn"><i class="fas fa-trash-alt"></i> Remove Image</button>
-    <div class="modal-buttons">
-      <button id="modalSaveBtn" class="save-btn">Save</button>
-      <button id="modalCancelBtn" class="cancel-btn">Cancel</button>
-    </div>
+    <div class="modal-buttons"><button id="modalSaveBtn" class="save-btn">Save</button><button id="modalCancelBtn" class="cancel-btn">Cancel</button></div>
   </div>
 </div>
 
-<!-- Avatar Edit Modal -->
 <div id="avatarModal" class="modal">
   <div class="modal-content">
     <h3>Update Profile Picture</h3>
-    <div class="field-group">
-      <label for="avatarInput">Choose new profile picture</label>
-      <input type="file" id="avatarInput" accept="image/*">
-    </div>
+    <div class="field-group"><label for="avatarInput">Choose new profile picture</label><input type="file" id="avatarInput" accept="image/*"></div>
     <div id="avatarPreviewContainer"></div>
-    <div class="modal-buttons">
-      <button id="avatarSaveBtn" class="save-btn">Upload & Save</button>
-      <button id="avatarCancelBtn" class="cancel-btn">Cancel</button>
-    </div>
+    <div class="modal-buttons"><button id="avatarSaveBtn" class="save-btn">Upload & Save</button><button id="avatarCancelBtn" class="cancel-btn">Cancel</button></div>
   </div>
 </div>
 
@@ -242,7 +186,6 @@
   let projectsUnsubscribe = null;
   let allProjects = [];
 
-  // DOM elements
   const loginSection = document.getElementById('loginSection');
   const adminControls = document.getElementById('adminControls');
   const loginBtn = document.getElementById('loginBtn');
@@ -269,7 +212,6 @@
   const avatarPreviewContainer = document.getElementById('avatarPreviewContainer');
   const avatarSaveBtn = document.getElementById('avatarSaveBtn');
   const avatarCancelBtn = document.getElementById('avatarCancelBtn');
-  
   const detailModal = document.getElementById('projectDetailModal');
   const detailTitle = document.getElementById('detailTitle');
   const detailBody = document.getElementById('detailBody');
@@ -294,22 +236,14 @@
       const snapshot = await getDocs(profileCollection);
       let avatarUrl = null;
       if (!snapshot.empty) {
-        const data = snapshot.docs[0].data();
-        avatarUrl = data.avatarUrl;
+        avatarUrl = snapshot.docs[0].data().avatarUrl;
       }
-      if (avatarUrl && avatarUrl.startsWith('data:image')) {
-        profileAvatar.src = avatarUrl;
-      } else {
-        profileAvatar.src = "https://placehold.co/100x100/e2e8f0/475569?text=Ahmed";
-      }
-    } catch (err) {
-      console.warn("Error loading profile pic:", err);
-    }
+      profileAvatar.src = (avatarUrl && avatarUrl.startsWith('data:image')) ? avatarUrl : "https://placehold.co/100x100/e2e8f0/475569?text=Ahmed";
+    } catch (err) { console.warn(err); }
   }
 
   async function updateProfilePicture(base64Image) {
-    const profileRef = doc(db, "profile", "main");
-    await setDoc(profileRef, { avatarUrl: base64Image }, { merge: true });
+    await setDoc(doc(db, "profile", "main"), { avatarUrl: base64Image }, { merge: true });
     profileAvatar.src = base64Image;
   }
 
@@ -318,35 +252,24 @@
     const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));
     projectsUnsubscribe = onSnapshot(q, (snapshot) => {
       allProjects = [];
-      snapshot.forEach(doc => {
-        allProjects.push({ id: doc.id, ...doc.data() });
-      });
+      snapshot.forEach(doc => allProjects.push({ id: doc.id, ...doc.data() }));
       renderProjects(allProjects);
-    }, (error) => {
-      console.error("Firestore error:", error);
-      projectsGrid.innerHTML = `<p style="color:red;">Error loading projects. Make sure Firestore rules allow read and you have created 'projects' collection.</p>`;
-    });
+    }, (error) => { projectsGrid.innerHTML = `<p style="color:red;">Error loading projects.</p>`; });
   }
 
   function renderProjects(projectsArray) {
-    if (!projectsArray.length) {
-      projectsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">No projects yet. Admin can add projects.</div>`;
-      return;
-    }
+    if (!projectsArray.length) { projectsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">No projects yet. Admin can add projects.</div>`; return; }
     projectsGrid.innerHTML = '';
     projectsArray.forEach(proj => {
       const card = document.createElement('div');
       card.className = 'project-card';
-      const imgSrc = proj.imageUrl && proj.imageUrl.trim() ? proj.imageUrl : 'https://placehold.co/400x240/e2e8f0/475569?text=Project+Image';
+      const imgSrc = proj.imageUrl || 'https://placehold.co/400x240/e2e8f0/475569?text=Project+Image';
       card.innerHTML = `
         <img class="project-img" src="${imgSrc}" alt="${escapeHtml(proj.title)}" onerror="this.src='https://placehold.co/400x240/e2e8f0/475569?text=Image+Error'">
         <div class="project-content">
           <div class="project-title">${escapeHtml(proj.title)}</div>
           <div class="project-desc">${escapeHtml(proj.description).replace(/\n/g, '<br>')}</div>
-          ${currentUser ? `<div class="card-actions">
-            <button class="edit-btn" data-id="${proj.id}"><i class="fas fa-edit"></i> Edit</button>
-            <button class="delete-btn" data-id="${proj.id}"><i class="fas fa-trash"></i> Delete</button>
-          </div>` : ''}
+          ${currentUser ? `<div class="card-actions"><button class="edit-btn" data-id="${proj.id}"><i class="fas fa-edit"></i> Edit</button><button class="delete-btn" data-id="${proj.id}"><i class="fas fa-trash"></i> Delete</button></div>` : ''}
         </div>
       `;
       card.addEventListener('click', (e) => {
@@ -356,118 +279,74 @@
       projectsGrid.appendChild(card);
     });
     if (currentUser) {
-      document.querySelectorAll('.edit-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const id = btn.getAttribute('data-id');
-          const project = allProjects.find(p => p.id == id);
-          if (project) openEditProjectModal(id, project);
-        });
-      });
-      document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          e.stopPropagation();
-          const id = btn.getAttribute('data-id');
-          if (confirm('Delete this project permanently?')) {
-            await deleteDoc(doc(db, "projects", id));
-          }
-        });
-      });
+      document.querySelectorAll('.edit-btn').forEach(btn => btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-id');
+        const project = allProjects.find(p => p.id == id);
+        if (project) openEditProjectModal(id, project);
+      }));
+      document.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        if (confirm('Delete permanently?')) await deleteDoc(doc(db, "projects", btn.getAttribute('data-id')));
+      }));
     }
   }
 
-  // Improved showProjectDetail with forced reload for model-viewer
+  // FINAL FIX: Using innerHTML with model-viewer and forcing reinitialization
   function showProjectDetail(projectId) {
-    console.log("Opening project:", projectId);
     const project = allProjects.find(p => p.id == projectId);
-    if (!project) {
-      console.error("Project not found:", projectId);
-      return;
+    if (!project) return;
+    detailTitle.innerText = project.title;
+    
+    const imageUrl = project.imageUrl || 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
+    const modelUrl = project.model3dUrl && project.model3dUrl.trim() ? project.model3dUrl : null;
+    
+    let modelHtml = '';
+    if (modelUrl) {
+      modelHtml = `<model-viewer id="detail-model-viewer" src="${modelUrl}" camera-controls auto-rotate background-color="#eef2ff" shadow-intensity="1" style="width:100%; min-height:450px;"></model-viewer>`;
+    } else {
+      modelHtml = `<div style="background:#eef2ff; width:100%; min-height:450px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p>No 3D model available.<br>Add a GLB/GLTF URL when editing.</p></div>`;
     }
     
-    detailTitle.innerText = project.title;
-    detailBody.innerHTML = ''; // Clear previous content
-    
-    // Create left column (info)
-    const infoDiv = document.createElement('div');
-    infoDiv.className = 'detail-info';
-    const imageUrl = (project.imageUrl && project.imageUrl.trim()) ? project.imageUrl : 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
-    infoDiv.innerHTML = `
-      <div class="detail-field"><strong>📝 Description</strong><p>${escapeHtml(project.description).replace(/\n/g, '<br>')}</p></div>
-      <div class="detail-field"><strong>🎯 Field of Use</strong><p>${escapeHtml(project.fieldOfUse) || 'Not specified'}</p></div>
-      <div class="detail-field"><strong>🛠️ Tools Used</strong><p>${escapeHtml(project.toolsUsed) || 'Not specified'}</p></div>
-      <div class="detail-image"><strong>📸 Project Image</strong><br><img src="${imageUrl}" alt="${escapeHtml(project.title)}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image+Error'"></div>
-      <button class="back-to-gallery" id="backToGalleryBtn"><i class="fas fa-arrow-left"></i> Back to gallery</button>
+    detailBody.innerHTML = `
+      <div class="detail-info">
+        <div class="detail-field"><strong>📝 Description</strong><p>${escapeHtml(project.description).replace(/\n/g, '<br>')}</p></div>
+        <div class="detail-field"><strong>🎯 Field of Use</strong><p>${escapeHtml(project.fieldOfUse) || 'Not specified'}</p></div>
+        <div class="detail-field"><strong>🛠️ Tools Used</strong><p>${escapeHtml(project.toolsUsed) || 'Not specified'}</p></div>
+        <div class="detail-image"><strong>📸 Project Image</strong><br><img src="${imageUrl}" alt="${escapeHtml(project.title)}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image+Error'"></div>
+        <button class="back-to-gallery" id="backToGalleryBtn"><i class="fas fa-arrow-left"></i> Back to gallery</button>
+      </div>
+      <div class="detail-model">
+        ${modelHtml}
+      </div>
     `;
     
-    // Create right column (3D model)
-    const modelDiv = document.createElement('div');
-    modelDiv.className = 'detail-model';
-    
-    const modelUrl = (project.model3dUrl && project.model3dUrl.trim()) ? project.model3dUrl : null;
+    // Force upgrade and reload for model-viewer if exists
     if (modelUrl) {
-      // Create model-viewer element
-      const modelViewer = document.createElement('model-viewer');
-      modelViewer.setAttribute('src', modelUrl);
-      modelViewer.setAttribute('camera-controls', '');
-      modelViewer.setAttribute('auto-rotate', '');
-      modelViewer.setAttribute('background-color', '#eef2ff');
-      modelViewer.setAttribute('shadow-intensity', '1');
-      modelViewer.style.width = '100%';
-      modelViewer.style.height = '100%';
-      modelViewer.style.minHeight = '400px';
-      modelDiv.appendChild(modelViewer);
-      
-      // Force reload after a short delay (trick for dynamically added model-viewer)
-      setTimeout(() => {
-        const currentSrc = modelViewer.getAttribute('src');
-        if (currentSrc) {
+      setTimeout(async () => {
+        const modelViewer = document.getElementById('detail-model-viewer');
+        if (modelViewer) {
+          await customElements.whenDefined('model-viewer');
+          customElements.upgrade(modelViewer);
+          const src = modelViewer.getAttribute('src');
           modelViewer.setAttribute('src', '');
-          setTimeout(() => {
-            modelViewer.setAttribute('src', currentSrc);
-            console.log("Model reloaded:", currentSrc);
-          }, 20);
+          setTimeout(() => { modelViewer.setAttribute('src', src); }, 30);
         }
       }, 100);
-      
-      // Log errors if any
-      modelViewer.addEventListener('error', (e) => {
-        console.error("Model-viewer error:", e);
-      });
-    } else {
-      modelDiv.innerHTML = `<div style="background:#eef2ff; width:100%; min-height:400px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p style="color:#475569;">No 3D model available.<br>Add a GLB/GLTF URL when editing.</p></div>`;
     }
     
-    detailBody.appendChild(infoDiv);
-    detailBody.appendChild(modelDiv);
-    
-    // Show the modal
     detailModal.style.display = 'flex';
-    
-    // Handle back button
-    const backBtn = document.getElementById('backToGalleryBtn');
-    if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        detailModal.style.display = 'none';
-      });
-    }
+    document.getElementById('backToGalleryBtn')?.addEventListener('click', () => detailModal.style.display = 'none');
   }
 
-  async function addOrUpdateProject(title, desc, imageBase64, docId = null, extraFields = {}) {
+  async function addOrUpdateProject(title, desc, imageBase64, docId = null, extra = {}) {
     const data = {
-      title: title.trim(),
-      description: desc.trim(),
-      imageUrl: imageBase64 || null,
-      fieldOfUse: extraFields.fieldOfUse || '',
-      toolsUsed: extraFields.toolsUsed || '',
-      model3dUrl: extraFields.model3dUrl || '',
-      updatedAt: new Date().toISOString()
+      title: title.trim(), description: desc.trim(), imageUrl: imageBase64 || null,
+      fieldOfUse: extra.fieldOfUse || '', toolsUsed: extra.toolsUsed || '',
+      model3dUrl: extra.model3dUrl || '', updatedAt: new Date().toISOString()
     };
-    if (docId) {
-      await updateDoc(doc(db, "projects", docId), data);
-    } else {
-      await addDoc(collection(db, "projects"), { ...data, createdAt: new Date().toISOString() });
-    }
+    if (docId) await updateDoc(doc(db, "projects", docId), data);
+    else await addDoc(collection(db, "projects"), { ...data, createdAt: new Date().toISOString() });
   }
 
   function openEditProjectModal(id, project) {
@@ -478,8 +357,7 @@
     projectFieldOfUse.value = project.fieldOfUse || '';
     projectToolsUsed.value = project.toolsUsed || '';
     projectModelUrl.value = project.model3dUrl || '';
-    originalImageUrlForEdit = project.imageUrl || null;
-    pendingImageDataUrl = originalImageUrlForEdit;
+    pendingImageDataUrl = project.imageUrl || null;
     updateImagePreview(pendingImageDataUrl);
     projectImageInput.value = '';
     projectModal.style.display = 'flex';
@@ -509,90 +387,53 @@
     } else {
       const div = document.createElement('div');
       div.className = 'image-preview';
-      div.style.display = 'flex';
-      div.style.alignItems = 'center';
-      div.style.justifyContent = 'center';
+      div.style.cssText = 'display:flex; align-items:center; justify-content:center; background:#f1f5f9;';
       div.innerText = 'No image preview';
-      div.style.background = '#f1f5f9';
       imagePreviewContainer.appendChild(div);
     }
   }
 
   async function handleProjectSave() {
     const title = projectTitleInput.value.trim();
-    const desc = projectDescInput.value.trim();
     if (!title) { alert("Title required"); return; }
-    let finalImage = pendingImageDataUrl;
     const extra = {
       fieldOfUse: projectFieldOfUse.value.trim(),
       toolsUsed: projectToolsUsed.value.trim(),
       model3dUrl: projectModelUrl.value.trim()
     };
-    if (currentEditId) {
-      await addOrUpdateProject(title, desc, finalImage, currentEditId, extra);
-    } else {
-      await addOrUpdateProject(title, desc, finalImage, null, extra);
-    }
+    if (currentEditId) await addOrUpdateProject(title, projectDescInput.value.trim(), pendingImageDataUrl, currentEditId, extra);
+    else await addOrUpdateProject(title, projectDescInput.value.trim(), pendingImageDataUrl, null, extra);
     closeProjectModal();
   }
 
-  function closeProjectModal() {
-    projectModal.style.display = 'none';
-    currentEditId = null;
-    pendingImageDataUrl = null;
-  }
-
-  function openAvatarModal() {
-    avatarInput.value = '';
-    avatarPreviewContainer.innerHTML = '';
-    avatarModal.style.display = 'flex';
-  }
-
+  function closeProjectModal() { projectModal.style.display = 'none'; currentEditId = null; pendingImageDataUrl = null; }
+  function openAvatarModal() { avatarInput.value = ''; avatarPreviewContainer.innerHTML = ''; avatarModal.style.display = 'flex'; }
+  
   avatarInput.addEventListener('change', async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       if (!file.type.startsWith('image/')) { alert("Only images"); return; }
       const base64 = await fileToBase64(file);
       avatarPreviewContainer.innerHTML = `<img src="${base64}" class="image-preview" style="max-height:150px;">`;
-      avatarSaveBtn.onclick = async () => {
-        await updateProfilePicture(base64);
-        avatarModal.style.display = 'none';
-      };
+      avatarSaveBtn.onclick = async () => { await updateProfilePicture(base64); avatarModal.style.display = 'none'; };
     }
   });
-
   avatarCancelBtn.addEventListener('click', () => avatarModal.style.display = 'none');
-
-  removeImageBtn.addEventListener('click', () => {
-    pendingImageDataUrl = null;
-    updateImagePreview(null);
-    projectImageInput.value = '';
-  });
-
+  removeImageBtn.addEventListener('click', () => { pendingImageDataUrl = null; updateImagePreview(null); projectImageInput.value = ''; });
   projectImageInput.addEventListener('change', async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       if (!file.type.startsWith('image/')) { alert("Invalid image"); return; }
-      const base64 = await fileToBase64(file);
-      pendingImageDataUrl = base64;
-      updateImagePreview(base64);
+      pendingImageDataUrl = await fileToBase64(file);
+      updateImagePreview(pendingImageDataUrl);
     }
   });
-
   loginBtn.addEventListener('click', async () => {
     const email = document.getElementById('loginEmail').value;
     const pwd = document.getElementById('loginPassword').value;
-    try {
-      await signInWithEmailAndPassword(auth, email, pwd);
-    } catch (err) {
-      alert("Login failed: " + err.message);
-    }
+    try { await signInWithEmailAndPassword(auth, email, pwd); } catch (err) { alert("Login failed: " + err.message); }
   });
-
-  logoutBtn.addEventListener('click', async () => {
-    await signOut(auth);
-  });
-
+  logoutBtn.addEventListener('click', async () => { await signOut(auth); });
   onAuthStateChanged(auth, async (user) => {
     currentUser = user;
     if (user) {
@@ -612,14 +453,11 @@
       loadProjectsRealtime();
     }
   });
-
   modalSaveBtn.addEventListener('click', handleProjectSave);
   modalCancelBtn.addEventListener('click', closeProjectModal);
   closeDetailBtn.addEventListener('click', () => detailModal.style.display = 'none');
   window.addEventListener('click', (e) => { if (e.target === detailModal) detailModal.style.display = 'none'; });
-
-  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
-
+  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
   loadProjectsRealtime();
   loadProfilePicture();
 </script>
