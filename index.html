@@ -6,6 +6,7 @@
   <title>Ahmed Hassan | Embedded Systems Engineer Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Model Viewer -->
   <script type="importmap">
     {
       "imports": {
@@ -62,8 +63,8 @@
     .detail-info { display: flex; flex-direction: column; gap: 1.2rem; }
     .detail-field { background: #f8fafc; padding: 1rem; border-radius: 1rem; }
     .detail-field strong { display: block; margin-bottom: 0.5rem; color: #1e40af; }
-    .detail-model { background: #eef2ff; border-radius: 1.5rem; overflow: hidden; min-height: 450px; width: 100%; position: relative; }
-    model-viewer { width: 100%; height: 100%; min-height: 450px; background: #eef2ff; display: block; }
+    .detail-model { background: #eef2ff; border-radius: 1.5rem; overflow: hidden; min-height: 400px; width: 100%; position: relative; }
+    model-viewer { width: 100%; height: 100%; min-height: 400px; background: #eef2ff; display: block; }
     .detail-image img { width: 100%; max-height: 250px; object-fit: cover; border-radius: 1rem; margin-top: 0.5rem; }
     .back-to-gallery { background: #2563eb; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 2rem; cursor: pointer; margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; }
     @media (max-width: 768px) { .detail-body { grid-template-columns: 1fr; } .detail-model { min-height: 300px; } }
@@ -138,6 +139,7 @@
   <footer>© 2025 Ahmed Hassan — Secure Firebase Admin Panel | <span id="authStateInfo"></span></footer>
 </div>
 
+<!-- Modals -->
 <div id="projectModal" class="modal">
   <div class="modal-content">
     <h3 id="modalTitle">Add Project</h3>
@@ -145,7 +147,7 @@
     <div class="field-group"><label for="projectDesc">Project Description</label><textarea id="projectDesc" placeholder="Project description (full details)"></textarea></div>
     <div class="field-group"><label for="projectFieldOfUse">Field of Use</label><input type="text" id="projectFieldOfUse" placeholder="e.g. Industrial Automation, Consumer Electronics"></div>
     <div class="field-group"><label for="projectToolsUsed">Tools Used</label><input type="text" id="projectToolsUsed" placeholder="e.g. STM32, FreeRTOS, Python"></div>
-    <div class="field-group"><label for="projectModelUrl">3D Model URL (GLB/GLTF) - optional</label><input type="text" id="projectModelUrl" placeholder="https://..."></div>
+    <div class="field-group"><label for="projectModelUrl">3D Model URL (GLB/GLTF)</label><input type="text" id="projectModelUrl" placeholder="https://..."></div>
     <div class="field-group"><label for="projectImageInput">Project Image</label><input type="file" id="projectImageInput" accept="image/*"></div>
     <div id="imagePreviewContainer"></div>
     <button type="button" id="removeImageBtn" class="remove-img-btn"><i class="fas fa-trash-alt"></i> Remove Image</button>
@@ -186,6 +188,7 @@
   let projectsUnsubscribe = null;
   let allProjects = [];
 
+  // DOM elements
   const loginSection = document.getElementById('loginSection');
   const adminControls = document.getElementById('adminControls');
   const loginBtn = document.getElementById('loginBtn');
@@ -219,7 +222,6 @@
 
   let currentEditId = null;
   let pendingImageDataUrl = null;
-  let originalImageUrlForEdit = null;
 
   function fileToBase64(file) {
     return new Promise((resolve, reject) => {
@@ -232,12 +234,9 @@
 
   async function loadProfilePicture() {
     try {
-      const profileCollection = collection(db, "profile");
-      const snapshot = await getDocs(profileCollection);
+      const snapshot = await getDocs(collection(db, "profile"));
       let avatarUrl = null;
-      if (!snapshot.empty) {
-        avatarUrl = snapshot.docs[0].data().avatarUrl;
-      }
+      if (!snapshot.empty) avatarUrl = snapshot.docs[0].data().avatarUrl;
       profileAvatar.src = (avatarUrl && avatarUrl.startsWith('data:image')) ? avatarUrl : "https://placehold.co/100x100/e2e8f0/475569?text=Ahmed";
     } catch (err) { console.warn(err); }
   }
@@ -281,9 +280,8 @@
     if (currentUser) {
       document.querySelectorAll('.edit-btn').forEach(btn => btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        const id = btn.getAttribute('data-id');
-        const project = allProjects.find(p => p.id == id);
-        if (project) openEditProjectModal(id, project);
+        const project = allProjects.find(p => p.id == btn.getAttribute('data-id'));
+        if (project) openEditProjectModal(project.id, project);
       }));
       document.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', async (e) => {
         e.stopPropagation();
@@ -292,22 +290,13 @@
     }
   }
 
-  // FINAL FIX: Using innerHTML with model-viewer and forcing reinitialization
   function showProjectDetail(projectId) {
     const project = allProjects.find(p => p.id == projectId);
     if (!project) return;
     detailTitle.innerText = project.title;
-    
     const imageUrl = project.imageUrl || 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
     const modelUrl = project.model3dUrl && project.model3dUrl.trim() ? project.model3dUrl : null;
-    
-    let modelHtml = '';
-    if (modelUrl) {
-      modelHtml = `<model-viewer id="detail-model-viewer" src="${modelUrl}" camera-controls auto-rotate background-color="#eef2ff" shadow-intensity="1" style="width:100%; min-height:450px;"></model-viewer>`;
-    } else {
-      modelHtml = `<div style="background:#eef2ff; width:100%; min-height:450px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p>No 3D model available.<br>Add a GLB/GLTF URL when editing.</p></div>`;
-    }
-    
+    const modelHtml = modelUrl ? `<model-viewer id="detail-model-viewer" src="${modelUrl}" camera-controls auto-rotate background-color="#eef2ff" shadow-intensity="1" style="width:100%; height:100%; min-height:400px;"></model-viewer>` : `<div style="background:#eef2ff; width:100%; min-height:400px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p>No 3D model available.<br>Add a GLB/GLTF URL when editing.</p></div>`;
     detailBody.innerHTML = `
       <div class="detail-info">
         <div class="detail-field"><strong>📝 Description</strong><p>${escapeHtml(project.description).replace(/\n/g, '<br>')}</p></div>
@@ -320,23 +309,21 @@
         ${modelHtml}
       </div>
     `;
-    
-    // Force upgrade and reload for model-viewer if exists
+    detailModal.style.display = 'flex';
+    document.getElementById('backToGalleryBtn')?.addEventListener('click', () => detailModal.style.display = 'none');
+    // Force model-viewer reload if exists
     if (modelUrl) {
       setTimeout(async () => {
-        const modelViewer = document.getElementById('detail-model-viewer');
-        if (modelViewer) {
+        const mv = document.getElementById('detail-model-viewer');
+        if (mv) {
           await customElements.whenDefined('model-viewer');
-          customElements.upgrade(modelViewer);
-          const src = modelViewer.getAttribute('src');
-          modelViewer.setAttribute('src', '');
-          setTimeout(() => { modelViewer.setAttribute('src', src); }, 30);
+          customElements.upgrade(mv);
+          const src = mv.getAttribute('src');
+          mv.setAttribute('src', '');
+          setTimeout(() => mv.setAttribute('src', src), 30);
         }
       }, 100);
     }
-    
-    detailModal.style.display = 'flex';
-    document.getElementById('backToGalleryBtn')?.addEventListener('click', () => detailModal.style.display = 'none');
   }
 
   async function addOrUpdateProject(title, desc, imageBase64, docId = null, extra = {}) {
