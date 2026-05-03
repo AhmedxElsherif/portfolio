@@ -223,7 +223,6 @@
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, addDoc, updateDoc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
   
-  // Firebase configuration (updated API key)
   const firebaseConfig = {
     apiKey: "AIzaSyD8zn6GYvChn7sh69hNhUhcB7qdW8Nsuzs",
     authDomain: "myportfolio-b2023.firebaseapp.com",
@@ -271,7 +270,6 @@
   const avatarSaveBtn = document.getElementById('avatarSaveBtn');
   const avatarCancelBtn = document.getElementById('avatarCancelBtn');
   
-  // Detail modal
   const detailModal = document.getElementById('projectDetailModal');
   const detailTitle = document.getElementById('detailTitle');
   const detailBody = document.getElementById('detailBody');
@@ -378,37 +376,36 @@
     }
   }
 
-  // Improved showProjectDetail with proper custom element handling and force reinitialization
-  async function showProjectDetail(projectId) {
+  // SIMPLIFIED AND ROBUST showProjectDetail
+  function showProjectDetail(projectId) {
+    console.log("Opening project:", projectId);
     const project = allProjects.find(p => p.id == projectId);
-    if (!project) return;
+    if (!project) {
+      console.error("Project not found:", projectId);
+      return;
+    }
     
     detailTitle.innerText = project.title;
+    detailBody.innerHTML = ''; // Clear previous content
     
-    // Clear the detail body
-    detailBody.innerHTML = '';
-    
-    // Create info column
+    // Create left column (info)
     const infoDiv = document.createElement('div');
     infoDiv.className = 'detail-info';
-    const imageUrl = project.imageUrl && project.imageUrl.trim() ? project.imageUrl : 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
+    const imageUrl = (project.imageUrl && project.imageUrl.trim()) ? project.imageUrl : 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
     infoDiv.innerHTML = `
       <div class="detail-field"><strong>📝 Description</strong><p>${escapeHtml(project.description).replace(/\n/g, '<br>')}</p></div>
       <div class="detail-field"><strong>🎯 Field of Use</strong><p>${escapeHtml(project.fieldOfUse) || 'Not specified'}</p></div>
       <div class="detail-field"><strong>🛠️ Tools Used</strong><p>${escapeHtml(project.toolsUsed) || 'Not specified'}</p></div>
-      <div class="detail-image"><strong>📸 Project Image</strong><br><img src="${imageUrl}" alt="${escapeHtml(project.title)}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image+Not+Available'"></div>
+      <div class="detail-image"><strong>📸 Project Image</strong><br><img src="${imageUrl}" alt="${escapeHtml(project.title)}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image+Error'"></div>
       <button class="back-to-gallery" id="backToGalleryBtn"><i class="fas fa-arrow-left"></i> Back to gallery</button>
     `;
     
-    // Create model column
+    // Create right column (3D model)
     const modelDiv = document.createElement('div');
     modelDiv.className = 'detail-model';
     
-    const modelUrl = project.model3dUrl && project.model3dUrl.trim() ? project.model3dUrl : null;
+    const modelUrl = (project.model3dUrl && project.model3dUrl.trim()) ? project.model3dUrl : null;
     if (modelUrl) {
-      // Wait for the custom element to be defined and upgrade it
-      await customElements.whenDefined('model-viewer');
-      
       // Create model-viewer element
       const modelViewer = document.createElement('model-viewer');
       modelViewer.setAttribute('src', modelUrl);
@@ -419,30 +416,24 @@
       modelViewer.style.width = '100%';
       modelViewer.style.height = '100%';
       modelViewer.style.minHeight = '400px';
-      
-      // Upgrade the custom element explicitly
-      customElements.upgrade(modelViewer);
-      
-      // Append to DOM
       modelDiv.appendChild(modelViewer);
-      
-      // Force reinitialization by resetting src
-      const originalSrc = modelViewer.getAttribute('src');
-      modelViewer.setAttribute('src', null);
-      setTimeout(() => {
-        modelViewer.setAttribute('src', originalSrc);
-      }, 10);
     } else {
-      modelDiv.innerHTML = `<div style="background:#eef2ff; width:100%; height:100%; min-height:400px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p style="color:#475569;">No 3D model available for this project.<br>You can add a GLB/GLTF URL when editing.</p></div>`;
+      modelDiv.innerHTML = `<div style="background:#eef2ff; width:100%; min-height:400px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p style="color:#475569;">No 3D model available.<br>Add a GLB/GLTF URL when editing.</p></div>`;
     }
     
     detailBody.appendChild(infoDiv);
     detailBody.appendChild(modelDiv);
     
+    // Show the modal
     detailModal.style.display = 'flex';
     
+    // Handle back button
     const backBtn = document.getElementById('backToGalleryBtn');
-    if (backBtn) backBtn.addEventListener('click', () => detailModal.style.display = 'none');
+    if (backBtn) {
+      backBtn.addEventListener('click', () => {
+        detailModal.style.display = 'none';
+      });
+    }
   }
 
   async function addOrUpdateProject(title, desc, imageBase64, docId = null, extraFields = {}) {
@@ -577,7 +568,7 @@
     try {
       await signInWithEmailAndPassword(auth, email, pwd);
     } catch (err) {
-      alert("Login failed: " + err.message + "\n\nMake sure Firebase Auth is enabled and user exists.");
+      alert("Login failed: " + err.message);
     }
   });
 
@@ -598,7 +589,7 @@
     } else {
       loginSection.style.display = 'flex';
       adminControls.style.display = 'none';
-      authStateInfo.innerText = '🔐 Not logged in (admin only)';
+      authStateInfo.innerText = '🔐 Not logged in';
       profileAvatar.src = "https://placehold.co/100x100/e2e8f0/475569?text=Ahmed";
       if (projectsUnsubscribe) projectsUnsubscribe();
       loadProjectsRealtime();
