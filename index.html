@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Ahmed Hassan | Executive Portfolio</title>
+  <title>Ahmed Hassan | Embedded Systems Engineer Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script type="importmap">
@@ -14,38 +14,24 @@
     }
   </script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    /* ===== الألوان العامة كما هي (مريحة للعين) ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
-      background: #0b0d10;
-      background-image: radial-gradient(circle at 25% 30%, rgba(199, 162, 51, 0.08) 0%, rgba(0, 0, 0, 0) 60%);
-      color: #eef2f5;
+      background: #eef2f5;
+      color: #1e2a3e;
       line-height: 1.5;
       padding: 2rem 1.5rem;
     }
-
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    /* البطاقة الرئيسية - glassmorphism فاخر */
+    .container { max-width: 1300px; margin: 0 auto; }
     .profile-card {
-      background: rgba(18, 22, 28, 0.65);
-      backdrop-filter: blur(14px);
-      border-radius: 2rem;
+      background: white;
+      border-radius: 1.8rem;
       padding: 2rem;
       margin-bottom: 2rem;
-      border: 1px solid rgba(199, 162, 51, 0.3);
-      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
-      transition: all 0.3s;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(44, 125, 160, 0.15);
     }
-
     .profile-header {
       display: flex;
       flex-wrap: wrap;
@@ -54,110 +40,63 @@
       gap: 1.5rem;
       margin-bottom: 1.5rem;
     }
-
-    .profile-main {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
+    .profile-main { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
     .profile-avatar {
-      width: 110px;
-      height: 110px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid #d4af37;
-      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
-      background: #1e2229;
+      border: 3px solid #2c7da0;
+      background: #e9ecef;
     }
-
     .name-title h1 {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 700;
-      background: linear-gradient(135deg, #f5e7c8, #d4af37);
+      background: linear-gradient(135deg, #1f5068, #0b3b4f);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      letter-spacing: -0.02em;
     }
-
-    .name-title p {
-      font-size: 1.2rem;
-      color: #bfbfbf;
-      font-weight: 500;
-      margin-top: 0.25rem;
-      letter-spacing: 0.3px;
-    }
-
+    .name-title p { font-size: 1.2rem; color: #2c3e50; font-weight: 500; margin-top: 0.25rem; }
     .contact-info {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(4px);
-      padding: 0.7rem 1.2rem;
+      background: #f8fafc;
+      padding: 0.8rem 1.2rem;
       border-radius: 2rem;
-      border: 1px solid rgba(212, 175, 55, 0.2);
     }
-
-    .contact-info span {
-      font-size: 0.9rem;
-      color: #ddd;
-    }
-
-    .contact-info i {
-      margin-right: 0.4rem;
-      color: #d4af37;
-    }
-
+    .contact-info span { font-size: 0.9rem; color: #2c3e50; }
+    .contact-info i { margin-right: 0.4rem; color: #2c7da0; }
     .details-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 1.8rem;
-      margin-top: 1.5rem;
-      border-top: 1px solid rgba(212, 175, 55, 0.3);
+      margin-top: 1.2rem;
+      border-top: 1px solid #e2e8f0;
       padding-top: 1.5rem;
     }
-
-    .summary,
-    .education,
-    .skills {
-      flex: 1;
-      min-width: 200px;
-    }
-
+    .summary, .education, .skills { flex: 1; min-width: 200px; }
     .details-grid h3 {
       font-size: 1.1rem;
       font-weight: 600;
       margin-bottom: 0.6rem;
-      color: #f0e6d2;
-      border-left: 3px solid #d4af37;
+      color: #1e2a3e;
+      border-left: 4px solid #2c7da0;
       padding-left: 0.75rem;
     }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 0.5rem;
-    }
-
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
     .skill-tags span {
-      background: rgba(212, 175, 55, 0.12);
-      padding: 0.3rem 0.9rem;
+      background: #d9e6f2;
+      padding: 0.25rem 0.8rem;
       border-radius: 30px;
       font-size: 0.8rem;
       font-weight: 500;
-      color: #e6d5b3;
-      border: 0.5px solid rgba(212, 175, 55, 0.3);
+      color: #0b3b4f;
     }
-
-    /* لوحة التحكم الذهبية */
     .auth-panel {
-      background: rgba(10, 12, 16, 0.8);
-      backdrop-filter: blur(12px);
-      border-radius: 2rem;
+      background: white;
+      border-radius: 1.5rem;
       padding: 1.2rem 1.8rem;
       margin-bottom: 2rem;
       display: flex;
@@ -165,202 +104,181 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
-      border: 1px solid rgba(212, 175, 55, 0.25);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
     }
-
-    .login-form {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      align-items: flex-end;
-    }
-
-    .login-form .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    .login-form label {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #cdcdcd;
-    }
-
+    .login-form { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: flex-end; }
+    .login-form .field-group { display: flex; flex-direction: column; gap: 0.3rem; }
+    .login-form label { font-size: 0.8rem; font-weight: 500; color: #2c3e50; }
     .login-form input {
       padding: 0.6rem 1rem;
       border-radius: 2rem;
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      background: #11141a;
-      color: #fff;
+      border: 1px solid #cfdfed;
       font-family: inherit;
       transition: 0.2s;
     }
-
-    .login-form input:focus {
-      outline: none;
-      border-color: #d4af37;
-      box-shadow: 0 0 6px rgba(212, 175, 55, 0.3);
-    }
-
-    .login-btn,
-    .logout-btn,
-    .edit-avatar-btn,
-    .add-project-btn {
-      background: #d4af37;
+    .login-form input:focus { outline: none; border-color: #2c7da0; }
+    .login-btn, .logout-btn, .edit-avatar-btn, .add-project-btn {
+      background: #2c7da0;
       border: none;
-      padding: 0.6rem 1.4rem;
+      padding: 0.6rem 1.2rem;
       border-radius: 40px;
-      color: #0a0c10;
-      font-weight: 700;
+      color: white;
+      font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      transition: all 0.2s;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      gap: 0.5rem;
+      transition: 0.2s;
     }
-
-    .login-btn:hover,
-    .add-project-btn:hover {
-      background: #e6bf3c;
-      transform: scale(1.02);
-    }
-
-    .logout-btn {
-      background: #2a2e36;
-      color: #f0e6d2;
-    }
-
-    .logout-btn:hover {
-      background: #3e4350;
-    }
-
-    .edit-avatar-btn {
-      background: #2c2b26;
-      color: #d4af37;
-      border: 1px solid #d4af37;
-    }
-
-    .admin-actions {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
+    .logout-btn { background: #a03e3e; }
+    .edit-avatar-btn { background: #3a6b47; font-size: 0.8rem; padding: 0.4rem 1rem; }
+    .login-btn:hover, .add-project-btn:hover { background: #1f5e7a; }
+    .admin-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
     .status {
       font-size: 0.9rem;
-      color: #cfb87c;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(4px);
+      color: #1f5e2d;
+      background: #e0f2e9;
       padding: 0.3rem 1rem;
       border-radius: 30px;
-      border: 0.5px solid #d4af37;
     }
-
-    /* المشاريع */
+    
+    /* ===== قسم المشاريع بشكل جديد (بطاقات محسّنة) ===== */
     .projects-section h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
       font-weight: 700;
-      color: #e8ddc4;
-      border-left: 5px solid #d4af37;
-      padding-left: 1rem;
+      color: #1e2a3e;
+      position: relative;
+      display: inline-block;
     }
-
+    .projects-section h2:after {
+      content: '';
+      display: block;
+      width: 60%;
+      height: 3px;
+      background: #2c7da0;
+      margin-top: 0.4rem;
+      border-radius: 4px;
+    }
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
       gap: 2rem;
     }
-
     .project-card {
-      background: rgba(20, 24, 30, 0.7);
-      backdrop-filter: blur(8px);
-      border-radius: 1.8rem;
+      background: white;
+      border-radius: 1.5rem;
       overflow: hidden;
-      box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.4);
-      transition: transform 0.25s ease, box-shadow 0.3s;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      border: 1px solid rgba(212, 175, 55, 0.25);
+      border: 1px solid rgba(44, 125, 160, 0.2);
     }
-
     .project-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 25px 40px -14px rgba(0, 0, 0, 0.6);
-      border-color: rgba(212, 175, 55, 0.6);
+      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
+      border-color: rgba(44, 125, 160, 0.4);
     }
-
     .project-img {
       width: 100%;
-      height: 210px;
+      height: 220px;
       object-fit: cover;
-      background: #171b22;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      background: #cddfe9;
+      transition: transform 0.4s;
     }
-
+    .project-card:hover .project-img {
+      transform: scale(1.02);
+    }
     .project-content {
-      padding: 1.5rem;
+      padding: 1.5rem 1.5rem 1.2rem;
       flex: 1;
       display: flex;
       flex-direction: column;
     }
-
     .project-title {
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 700;
-      margin-bottom: 0.75rem;
-      color: #eeddbb;
+      margin-bottom: 0.5rem;
+      color: #0b3b4f;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
     }
-
+    .project-title i {
+      color: #2c7da0;
+      font-size: 1.2rem;
+      opacity: 0.7;
+    }
     .project-desc {
-      color: #cbd5e6;
+      color: #334155;
       font-size: 0.9rem;
-      margin-bottom: 1.2rem;
       line-height: 1.5;
+      margin-bottom: 1rem;
       flex: 1;
-      max-height: 180px;
-      overflow-y: auto;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 0.75rem 0 0.5rem;
+      font-size: 0.75rem;
+      color: #4a627a;
+      border-top: 1px solid #edf2f7;
+      padding-top: 0.75rem;
+    }
+    .project-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .project-meta i {
+      font-size: 0.7rem;
+      color: #2c7da0;
+    }
     .card-actions {
       display: flex;
       gap: 0.8rem;
-      margin-top: 0.5rem;
+      margin-top: 0.8rem;
+      justify-content: flex-end;
       pointer-events: auto;
     }
-
-    .edit-btn,
-    .delete-btn {
+    .edit-btn, .delete-btn {
       border: none;
       padding: 0.4rem 1rem;
       border-radius: 30px;
       font-weight: 600;
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(4px);
+      gap: 0.5rem;
+      transition: 0.2s;
     }
-
     .edit-btn {
-      background: rgba(212, 175, 55, 0.2);
-      color: #f5e2b0;
-      border: 0.5px solid #d4af37;
+      background: #eef2ff;
+      color: #1e40af;
     }
-
+    .edit-btn:hover {
+      background: #e0e7ff;
+    }
     .delete-btn {
-      background: rgba(180, 70, 70, 0.25);
-      color: #f5b5b5;
-      border: 0.5px solid #c96;
+      background: #fee2e2;
+      color: #b91c1c;
     }
-
-    /* نافذة التفاصيل */
+    .delete-btn:hover {
+      background: #fecaca;
+    }
+    
+    /* ===== باقي الأنماط (النوافذ المنبثقة، المودالات) دون تغيير ===== */
     .detail-modal {
       display: none;
       position: fixed;
@@ -368,30 +286,27 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.75);
       align-items: center;
       justify-content: center;
       z-index: 1001;
       overflow-y: auto;
       padding: 1.5rem;
     }
-
     .detail-content {
-      background: #0f1117;
-      max-width: 1200px;
+      background: white;
+      max-width: 1100px;
       width: 100%;
       border-radius: 2rem;
       overflow-y: auto;
       max-height: 90vh;
       position: relative;
-      box-shadow: 0 30px 45px -10px black;
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      box-shadow: 0 25px 40px rgba(0, 0, 0, 0.2);
+      margin: auto;
     }
-
     .detail-header {
-      background: #06080c;
-      color: #e9d6b0;
+      background: #0b3b4f;
+      color: white;
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
@@ -399,79 +314,51 @@
       position: sticky;
       top: 0;
       z-index: 10;
-      border-bottom: 1px solid #d4af37;
+      border-radius: 2rem 2rem 0 0;
     }
-
-    .detail-header h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
-
+    .detail-header h2 { font-size: 1.5rem; font-weight: 700; }
     .close-detail {
       background: none;
       border: none;
-      color: #d4af37;
+      color: white;
       font-size: 2rem;
       cursor: pointer;
       line-height: 1;
+      transition: 0.1s;
     }
-
+    .close-detail:hover { opacity: 0.7; }
     .detail-body {
       padding: 2rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2rem;
     }
-
-    .detail-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-
+    .detail-info { display: flex; flex-direction: column; gap: 1.2rem; }
     .detail-field {
-      background: rgba(255, 255, 255, 0.04);
+      background: #f8fafc;
       padding: 1rem;
       border-radius: 1rem;
-      border-left: 3px solid #d4af37;
     }
-
-    .detail-field strong {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: #e5d5af;
-    }
-
+    .detail-field strong { display: block; margin-bottom: 0.5rem; color: #0b3b4f; }
     .detail-model {
-      background: #0a0c10;
-      border-radius: 1rem;
+      background: #ecf2f7;
+      border-radius: 1.5rem;
       overflow: hidden;
       min-height: 400px;
       width: 100%;
       position: relative;
-      border: 1px solid #2c2a24;
     }
-
-    model-viewer {
-      width: 100%;
-      height: 100%;
-      min-height: 400px;
-      background: #0a0c10;
-      display: block;
-    }
-
+    model-viewer { width: 100%; height: 100%; min-height: 400px; background: #ecf2f7; display: block; }
     .detail-image img {
       width: 100%;
       max-height: 250px;
       object-fit: cover;
       border-radius: 1rem;
       margin-top: 0.5rem;
-      border: 1px solid #3d3522;
     }
-
     .back-to-gallery {
-      background: #d4af37;
-      color: #0e1015;
+      background: #2c7da0;
+      color: white;
       border: none;
       padding: 0.6rem 1.2rem;
       border-radius: 2rem;
@@ -480,19 +367,11 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      font-weight: 600;
     }
-
     @media (max-width: 768px) {
-      .detail-body {
-        grid-template-columns: 1fr;
-      }
-      .detail-model {
-        min-height: 300px;
-      }
+      .detail-body { grid-template-columns: 1fr; }
+      .detail-model { min-height: 300px; }
     }
-
-    /* المودال العادي */
     .modal {
       display: none;
       position: fixed;
@@ -500,154 +379,81 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.6);
       align-items: center;
       justify-content: center;
       z-index: 1000;
     }
-
     .modal-content {
-      background: #101217;
+      background: white;
       max-width: 550px;
       width: 90%;
-      border-radius: 2rem;
+      border-radius: 1.8rem;
       padding: 1.8rem;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      box-shadow: 0 25px 40px rgba(0, 0, 0, 0.15);
     }
-
-    .modal-content h3 {
-      color: #e6d5b0;
-      margin-bottom: 1rem;
-    }
-
-    .modal-content .field-group {
-      margin-bottom: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    .modal-content label {
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: #d1c7ae;
-    }
-
-    .modal-content input,
-    .modal-content textarea {
+    .modal-content .field-group { margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.3rem; }
+    .modal-content label { font-weight: 600; font-size: 0.9rem; color: #1e2a3e; }
+    .modal-content input, .modal-content textarea {
       width: 100%;
       padding: 0.8rem;
-      border: 1px solid #3d3522;
+      border: 1px solid #cfdfed;
       border-radius: 1rem;
       font-family: inherit;
-      background: #1b1e26;
-      color: #f0f0f0;
+      transition: 0.2s;
     }
-
-    .modal-content input:focus,
-    .modal-content textarea:focus {
-      border-color: #d4af37;
+    .modal-content input:focus, .modal-content textarea:focus {
+      border-color: #2c7da0;
       outline: none;
     }
-
+    .modal-content textarea { min-height: 80px; }
     .image-preview {
       width: 100%;
       max-height: 160px;
       object-fit: cover;
       border-radius: 1rem;
       margin: 0.5rem 0;
-      background: #1e2129;
+      background: #ecf2f7;
     }
-
-    .modal-buttons {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.8rem;
-      margin-top: 1.2rem;
-    }
-
-    .save-btn,
-    .cancel-btn,
-    .remove-img-btn {
+    .modal-buttons { display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1.2rem; }
+    .save-btn, .cancel-btn, .remove-img-btn {
       padding: 0.5rem 1.2rem;
       border-radius: 2rem;
       border: none;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 500;
     }
-
-    .save-btn {
-      background: #d4af37;
-      color: #0b0d10;
-    }
-
-    .save-btn:hover {
-      background: #e6bf3c;
-    }
-
-    .cancel-btn {
-      background: #2a2d36;
-      color: #e0e0e0;
-    }
-
+    .save-btn { background: #2c7da0; color: white; }
+    .save-btn:hover { background: #1f5e7a; }
+    .cancel-btn { background: #e2e8f0; color: #334155; }
     .remove-img-btn {
-      background: #2f2121;
-      color: #e6a0a0;
-      border: 1px solid #9c7a3a;
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+      margin-bottom: 0.5rem;
     }
-
-    footer {
-      margin-top: 3rem;
-      text-align: center;
-      color: #7e8c8f;
-      font-size: 0.8rem;
-    }
-
+    footer { margin-top: 3rem; text-align: center; color: #4a627a; font-size: 0.8rem; }
     .spinner {
       display: inline-block;
       width: 20px;
       height: 20px;
-      border: 2px solid rgba(212, 175, 55, 0.3);
+      border: 2px solid rgba(255,255,255,0.3);
       border-radius: 50%;
-      border-top-color: #d4af37;
+      border-top-color: white;
       animation: spin 0.8s linear infinite;
       margin-right: 0.5rem;
       vertical-align: middle;
     }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
+    @keyframes spin { to { transform: rotate(360deg); } }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
     @media (max-width: 680px) {
-      body {
-        padding: 1rem;
-      }
-
-      .profile-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .detail-content {
-        max-height: 95vh;
-      }
-
-      .detail-body {
-        padding: 1.2rem;
-        gap: 1rem;
-      }
+      body { padding: 1rem; }
+      .profile-header { flex-direction: column; align-items: flex-start; }
+      .detail-content { max-height: 95vh; }
+      .detail-body { padding: 1.2rem; gap: 1rem; }
+      .projects-grid { gap: 1.2rem; }
     }
   </style>
 </head>
@@ -686,7 +492,7 @@
     </div>
     <div class="details-grid">
       <div class="summary"><h3><i class="fas fa-user-astronaut"></i> Summary</h3><p>Embedded Systems Engineer with strong experience in embedded Linux, PCB design, analog circuits, and product development. Skilled in designing end-to-end embedded solutions from concept to production, with additional expertise in R&D and IoT systems.</p></div>
-      <div class="education"><h3><i class="fas fa-graduation-cap"></i> Education</h3><p>B.Sc. in Electronics and Communications Engineering - Thebes Academy (2019 – 2025)<br><strong></strong></p></div>
+      <div class="education"><h3><i class="fas fa-graduation-cap"></i> Education</h3><p>B.Sc. in Electronics and Communications Engineering - Thebes Academy (2019 – 2025)<br><strong>Military status:</strong> In Progress</p></div>
       <div class="skills"><h3><i class="fas fa-code"></i> Technical Skills</h3><div class="skill-tags"><span>Embedded C/C++</span><span>Embedded Linux</span><span>PCB Design (KiCad)</span><span>UART/I²C/SPI</span><span>C/C++/Python/Bash</span><span>ESP32/AVR/RPi</span><span>IoT Systems</span><span>AI Integration</span></div></div>
     </div>
   </div>
@@ -703,7 +509,7 @@
     </div>
   </div>
 
-  <footer>© 2026 Ahmed Hassan | <span id="authStateInfo"></span></footer>
+  <footer>© 2025 Ahmed Hassan — Secure Firebase Admin Panel | <span id="authStateInfo"></span></footer>
 </div>
 
 <!-- Modals -->
@@ -734,7 +540,6 @@
 </div>
 
 <script type="module">
-  // جميع أكواد JavaScript كما هي دون تغيير (لأنها تعمل بشكل صحيح)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, collection, doc, deleteDoc, onSnapshot, addDoc, updateDoc, query, orderBy, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -798,6 +603,7 @@
   let pendingImageBase64 = null;
   let pendingAvatarBase64 = null;
 
+  // Helper: compress image and return Base64
   async function compressImageToBase64(file, maxWidth = 1024, quality = 0.7, maxSizeKB = 900) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -864,6 +670,7 @@
     });
   }
 
+  // ************** دالة renderProjects المعدلة (شكل البطاقات الجديد) **************
   function renderProjects(projectsArray) {
     if (!projectsArray.length) {
       projectsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">No projects yet. Admin can add projects.</div>`;
@@ -874,11 +681,17 @@
       const card = document.createElement('div');
       card.className = 'project-card';
       const imgSrc = proj.imageUrl || 'https://placehold.co/400x240/e2e8f0/475569?text=Project+Image';
+      const toolsHtml = proj.toolsUsed ? `<span><i class="fas fa-tools"></i> ${escapeHtml(proj.toolsUsed.substring(0, 35))}${proj.toolsUsed.length > 35 ? '...' : ''}</span>` : '';
+      const fieldHtml = proj.fieldOfUse ? `<span><i class="fas fa-bullseye"></i> ${escapeHtml(proj.fieldOfUse.substring(0, 30))}${proj.fieldOfUse.length > 30 ? '...' : ''}</span>` : '';
       card.innerHTML = `
         <img class="project-img" src="${escapeHtml(imgSrc)}" alt="${escapeHtml(proj.title)}" onerror="this.src='https://placehold.co/400x240/e2e8f0/475569?text=Image+Error'">
         <div class="project-content">
-          <div class="project-title">${escapeHtml(proj.title)}</div>
+          <div class="project-title">${escapeHtml(proj.title)} <i class="fas fa-microchip"></i></div>
           <div class="project-desc">${escapeHtml(proj.description).replace(/\n/g, '<br>')}</div>
+          <div class="project-meta">
+            ${toolsHtml}
+            ${fieldHtml}
+          </div>
           ${currentUser ? `<div class="card-actions"><button class="edit-btn" data-id="${proj.id}"><i class="fas fa-edit"></i> Edit</button><button class="delete-btn" data-id="${proj.id}"><i class="fas fa-trash"></i> Delete</button></div>` : ''}
         </div>
       `;
@@ -908,13 +721,13 @@
     detailTitle.innerText = project.title;
     const imageUrl = project.imageUrl || 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
     const modelUrl = project.model3dUrl && project.model3dUrl.trim() ? project.model3dUrl : null;
-    const modelHtml = modelUrl ? `<model-viewer id="detail-model-viewer" src="${escapeHtml(modelUrl)}" camera-controls auto-rotate background-color="#0a0c10" shadow-intensity="1" style="width:100%; height:100%; min-height:400px;"></model-viewer>` : `<div style="background:#0a0c10; width:100%; min-height:400px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p>No 3D model available.<br>Add a GLB/GLTF URL when editing.</p></div>`;
+    const modelHtml = modelUrl ? `<model-viewer id="detail-model-viewer" src="${escapeHtml(modelUrl)}" camera-controls auto-rotate background-color="#ecf2f7" shadow-intensity="1" style="width:100%; height:100%; min-height:400px;"></model-viewer>` : `<div style="background:#ecf2f7; width:100%; min-height:400px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p>No 3D model available.<br>Add a GLB/GLTF URL when editing.</p></div>`;
     detailBody.innerHTML = `
       <div class="detail-info">
-        <div class="detail-field"><strong>Description</strong><p>${escapeHtml(project.description).replace(/\n/g, '<br>')}</p></div>
-        <div class="detail-field"><strong>Field of Use</strong><p>${escapeHtml(project.fieldOfUse) || 'Not specified'}</p></div>
-        <div class="detail-field"><strong>Tools Used</strong><p>${escapeHtml(project.toolsUsed) || 'Not specified'}</p></div>
-        <div class="detail-image"><strong>Project Image</strong><br><img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(project.title)}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image+Error'"></div>
+        <div class="detail-field"><strong>📝 Description</strong><p>${escapeHtml(project.description).replace(/\n/g, '<br>')}</p></div>
+        <div class="detail-field"><strong>🎯 Field of Use</strong><p>${escapeHtml(project.fieldOfUse) || 'Not specified'}</p></div>
+        <div class="detail-field"><strong>🛠️ Tools Used</strong><p>${escapeHtml(project.toolsUsed) || 'Not specified'}</p></div>
+        <div class="detail-image"><strong>📸 Project Image</strong><br><img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(project.title)}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image+Error'"></div>
         <button class="back-to-gallery" id="backToGalleryBtn"><i class="fas fa-arrow-left"></i> Back to gallery</button>
       </div>
       <div class="detail-model">
@@ -1042,6 +855,7 @@
     }
   }
 
+  // Event listeners
   projectImageInput.addEventListener('change', async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
