@@ -14,77 +14,364 @@
     }
   </script>
   <style>
-    /* نفس الأنماط السابقة مع إضافة بعض التحسينات */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background: #f1f5f9; color: #0f172a; line-height: 1.5; padding: 2rem 1.5rem; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #eef2f5; /* خلفية ناعمة مريحة */
+      color: #1e2a3e;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+    }
     .container { max-width: 1300px; margin: 0 auto; }
-    .profile-card { background: white; border-radius: 2rem; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
-    .profile-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+    
+    /* البطاقة الرئيسية للملف الشخصي */
+    .profile-card {
+      background: white;
+      border-radius: 1.8rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(44, 125, 160, 0.15);
+    }
+    .profile-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
     .profile-main { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
-    .profile-avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #2563eb; background: #e2e8f0; }
-    .name-title h1 { font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, #1e3c72, #2a5298); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .name-title p { font-size: 1.2rem; color: #334155; font-weight: 500; margin-top: 0.25rem; }
-    .contact-info { display: flex; flex-wrap: wrap; gap: 1rem; background: #f8fafc; padding: 0.8rem 1.2rem; border-radius: 2rem; }
-    .contact-info span { font-size: 0.9rem; color: #1e293b; }
-    .contact-info i { margin-right: 0.4rem; color: #2563eb; }
-    .details-grid { display: flex; flex-wrap: wrap; gap: 1.8rem; margin-top: 1.2rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem; }
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #2c7da0;
+      background: #e9ecef;
+    }
+    .name-title h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1f5068, #0b3b4f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .name-title p { font-size: 1.2rem; color: #2c3e50; font-weight: 500; margin-top: 0.25rem; }
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: #f8fafc;
+      padding: 0.8rem 1.2rem;
+      border-radius: 2rem;
+    }
+    .contact-info span { font-size: 0.9rem; color: #2c3e50; }
+    .contact-info i { margin-right: 0.4rem; color: #2c7da0; }
+    .details-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.8rem;
+      margin-top: 1.2rem;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 1.5rem;
+    }
     .summary, .education, .skills { flex: 1; min-width: 200px; }
-    .details-grid h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.6rem; color: #0f172a; border-left: 4px solid #2563eb; padding-left: 0.75rem; }
+    .details-grid h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: #1e2a3e;
+      border-left: 4px solid #2c7da0;
+      padding-left: 0.75rem;
+    }
     .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
-    .skill-tags span { background: #e6f0ff; padding: 0.25rem 0.8rem; border-radius: 30px; font-size: 0.8rem; font-weight: 500; color: #1e40af; }
-    .auth-panel { background: white; border-radius: 1.5rem; padding: 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .skill-tags span {
+      background: #d9e6f2;
+      padding: 0.25rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #0b3b4f;
+    }
+    
+    /* لوحة التحكم */
+    .auth-panel {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.2rem 1.8rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    }
     .login-form { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: flex-end; }
     .login-form .field-group { display: flex; flex-direction: column; gap: 0.3rem; }
-    .login-form label { font-size: 0.8rem; font-weight: 500; color: #334155; }
-    .login-form input { padding: 0.6rem 1rem; border-radius: 2rem; border: 1px solid #cbd5e1; font-family: inherit; }
-    .login-btn, .logout-btn, .edit-avatar-btn, .add-project-btn { background: #2563eb; border: none; padding: 0.6rem 1.2rem; border-radius: 40px; color: white; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: 0.2s; }
-    .logout-btn { background: #dc2626; }
-    .edit-avatar-btn { background: #475569; font-size: 0.8rem; padding: 0.4rem 1rem; }
+    .login-form label { font-size: 0.8rem; font-weight: 500; color: #2c3e50; }
+    .login-form input {
+      padding: 0.6rem 1rem;
+      border-radius: 2rem;
+      border: 1px solid #cfdfed;
+      font-family: inherit;
+      transition: 0.2s;
+    }
+    .login-form input:focus { outline: none; border-color: #2c7da0; }
+    .login-btn, .logout-btn, .edit-avatar-btn, .add-project-btn {
+      background: #2c7da0;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: 0.2s;
+    }
+    .logout-btn { background: #a03e3e; }
+    .edit-avatar-btn { background: #3a6b47; font-size: 0.8rem; padding: 0.4rem 1rem; }
+    .login-btn:hover, .add-project-btn:hover { background: #1f5e7a; }
     .admin-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
-    .status { font-size: 0.9rem; color: #166534; background: #dcfce7; padding: 0.3rem 1rem; border-radius: 30px; }
-    .projects-section h2 { font-size: 1.8rem; margin-bottom: 1.5rem; font-weight: 700; }
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.8rem; }
-    .project-card { background: white; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s; cursor: pointer; display: flex; flex-direction: column; }
-    .project-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.2); }
-    .project-img { width: 100%; height: 200px; object-fit: cover; background: #cbd5e1; }
+    .status {
+      font-size: 0.9rem;
+      color: #1f5e2d;
+      background: #e0f2e9;
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+    }
+    
+    /* المشاريع */
+    .projects-section h2 { font-size: 1.8rem; margin-bottom: 1.5rem; font-weight: 700; color: #1e2a3e; }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.8rem;
+    }
+    .project-card {
+      background: white;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #eef2f5;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 26px -10px rgba(0, 0, 0, 0.12);
+    }
+    .project-img { width: 100%; height: 200px; object-fit: cover; background: #cddfe9; }
     .project-content { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
-    .project-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
-    .project-desc { color: #334155; font-size: 0.9rem; margin-bottom: 1.2rem; line-height: 1.5; flex: 1; max-height: 180px; overflow-y: auto; }
+    .project-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; color: #0b3b4f; }
+    .project-desc {
+      color: #2c3e50;
+      font-size: 0.9rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+      flex: 1;
+      max-height: 180px;
+      overflow-y: auto;
+    }
     .card-actions { display: flex; gap: 0.8rem; margin-top: 0.5rem; pointer-events: auto; }
-    .edit-btn, .delete-btn { border: none; padding: 0.4rem 1rem; border-radius: 30px; font-weight: 500; cursor: pointer; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.4rem; }
-    .edit-btn { background: #fef9c3; color: #854d0e; }
-    .delete-btn { background: #fee2e2; color: #b91c1c; }
-    .detail-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 1001; overflow-y: auto; padding: 1rem; }
-    .detail-content { background: white; max-width: 1200px; width: 100%; border-radius: 2rem; overflow-y: auto; max-height: 95vh; position: relative; }
-    .detail-header { background: #0f172a; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
+    .edit-btn, .delete-btn {
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .edit-btn { background: #faedd2; color: #8a611c; }
+    .delete-btn { background: #ffe6e5; color: #aa2e2e; }
+    
+    /* نافذة التفاصيل المنبثقة */
+    .detail-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+      overflow-y: auto;
+      padding: 1.5rem;
+    }
+    .detail-content {
+      background: white;
+      max-width: 1100px;
+      width: 100%;
+      border-radius: 2rem;
+      overflow-y: auto;
+      max-height: 90vh;
+      position: relative;
+      box-shadow: 0 25px 40px rgba(0, 0, 0, 0.2);
+      margin: auto;
+    }
+    .detail-header {
+      background: #0b3b4f;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-radius: 2rem 2rem 0 0;
+    }
     .detail-header h2 { font-size: 1.5rem; font-weight: 700; }
-    .close-detail { background: none; border: none; color: white; font-size: 2rem; cursor: pointer; line-height: 1; }
-    .detail-body { padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .close-detail {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: 0.1s;
+    }
+    .close-detail:hover { opacity: 0.7; }
+    .detail-body {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
     .detail-info { display: flex; flex-direction: column; gap: 1.2rem; }
-    .detail-field { background: #f8fafc; padding: 1rem; border-radius: 1rem; }
-    .detail-field strong { display: block; margin-bottom: 0.5rem; color: #1e40af; }
-    .detail-model { background: #eef2ff; border-radius: 1.5rem; overflow: hidden; min-height: 400px; width: 100%; position: relative; }
-    model-viewer { width: 100%; height: 100%; min-height: 400px; background: #eef2ff; display: block; }
-    .detail-image img { width: 100%; max-height: 250px; object-fit: cover; border-radius: 1rem; margin-top: 0.5rem; }
-    .back-to-gallery { background: #2563eb; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 2rem; cursor: pointer; margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; }
-    @media (max-width: 768px) { .detail-body { grid-template-columns: 1fr; } .detail-model { min-height: 300px; } }
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1000; }
-    .modal-content { background: white; max-width: 650px; width: 90%; border-radius: 1.5rem; padding: 1.8rem; max-height: 90vh; overflow-y: auto; }
+    .detail-field {
+      background: #f8fafc;
+      padding: 1rem;
+      border-radius: 1rem;
+    }
+    .detail-field strong { display: block; margin-bottom: 0.5rem; color: #0b3b4f; }
+    .detail-model {
+      background: #ecf2f7;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      min-height: 400px;
+      width: 100%;
+      position: relative;
+    }
+    model-viewer { width: 100%; height: 100%; min-height: 400px; background: #ecf2f7; display: block; }
+    .detail-image img {
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 1rem;
+      margin-top: 0.5rem;
+    }
+    .back-to-gallery {
+      background: #2c7da0;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .detail-body { grid-template-columns: 1fr; }
+      .detail-model { min-height: 300px; }
+    }
+    
+    /* المودال العادي (إضافة مشروع، تعديل) */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: white;
+      max-width: 550px;
+      width: 90%;
+      border-radius: 1.8rem;
+      padding: 1.8rem;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 40px rgba(0, 0, 0, 0.15);
+    }
     .modal-content .field-group { margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.3rem; }
-    .modal-content label { font-weight: 600; font-size: 0.9rem; color: #0f172a; }
-    .modal-content input, .modal-content textarea { width: 100%; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 1rem; font-family: inherit; }
+    .modal-content label { font-weight: 600; font-size: 0.9rem; color: #1e2a3e; }
+    .modal-content input, .modal-content textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #cfdfed;
+      border-radius: 1rem;
+      font-family: inherit;
+      transition: 0.2s;
+    }
+    .modal-content input:focus, .modal-content textarea:focus {
+      border-color: #2c7da0;
+      outline: none;
+    }
     .modal-content textarea { min-height: 80px; }
-    .image-preview { width: 100%; max-height: 160px; object-fit: cover; border-radius: 1rem; margin: 0.5rem 0; background: #eef2ff; }
-    .modal-buttons { display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1rem; }
-    .save-btn, .cancel-btn, .remove-img-btn { padding: 0.5rem 1.2rem; border-radius: 2rem; border: none; cursor: pointer; font-weight: 500; }
-    .save-btn { background: #2563eb; color: white; }
-    .cancel-btn { background: #e2e8f0; }
-    .remove-img-btn { background: #f1f5f9; color: #b91c1c; border: 1px solid #ddd; margin-bottom: 0.5rem; }
-    footer { margin-top: 3rem; text-align: center; color: #475569; font-size: 0.8rem; }
-    .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: white; animation: spin 0.8s linear infinite; margin-right: 0.5rem; vertical-align: middle; }
+    .image-preview {
+      width: 100%;
+      max-height: 160px;
+      object-fit: cover;
+      border-radius: 1rem;
+      margin: 0.5rem 0;
+      background: #ecf2f7;
+    }
+    .modal-buttons { display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1.2rem; }
+    .save-btn, .cancel-btn, .remove-img-btn {
+      padding: 0.5rem 1.2rem;
+      border-radius: 2rem;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .save-btn { background: #2c7da0; color: white; }
+    .save-btn:hover { background: #1f5e7a; }
+    .cancel-btn { background: #e2e8f0; color: #334155; }
+    .remove-img-btn {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+      margin-bottom: 0.5rem;
+    }
+    footer { margin-top: 3rem; text-align: center; color: #4a627a; font-size: 0.8rem; }
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
     @keyframes spin { to { transform: rotate(360deg); } }
     button:disabled { opacity: 0.6; cursor: not-allowed; }
-    @media (max-width: 680px) { body { padding: 1rem; } .profile-header { flex-direction: column; align-items: flex-start; } }
+    @media (max-width: 680px) {
+      body { padding: 1rem; }
+      .profile-header { flex-direction: column; align-items: flex-start; }
+      .detail-content { max-height: 95vh; }
+      .detail-body { padding: 1.2rem; gap: 1rem; }
+    }
   </style>
 </head>
 <body>
@@ -170,6 +457,7 @@
 </div>
 
 <script type="module">
+  // جميع أكواد JavaScript كما هي دون تغيير (لأنها تعمل بشكل صحيح)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, collection, doc, deleteDoc, onSnapshot, addDoc, updateDoc, query, orderBy, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -233,7 +521,6 @@
   let pendingImageBase64 = null;
   let pendingAvatarBase64 = null;
 
-  // Helper: compress image and return Base64 (or null if too large)
   async function compressImageToBase64(file, maxWidth = 1024, quality = 0.7, maxSizeKB = 900) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -253,7 +540,6 @@
           ctx.drawImage(img, 0, 0, width, height);
           canvas.toBlob((blob) => {
             if (!blob) reject(new Error('Compression failed'));
-            // Check blob size
             if (blob.size > maxSizeKB * 1024) {
               reject(new Error(`Image too large after compression (${(blob.size/1024).toFixed(0)}KB). Please choose a smaller image.`));
               return;
@@ -272,7 +558,6 @@
     });
   }
 
-  // Profile picture realtime listener
   function listenToProfilePicture() {
     if (avatarUnsubscribe) avatarUnsubscribe();
     const profileDocRef = doc(db, 'profile', 'main');
@@ -290,7 +575,6 @@
     await setDoc(doc(db, 'profile', 'main'), { avatarUrl: base64Image }, { merge: true });
   }
 
-  // Projects realtime
   function loadProjectsRealtime() {
     if (projectsUnsubscribe) projectsUnsubscribe();
     const q = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
@@ -347,7 +631,7 @@
     detailTitle.innerText = project.title;
     const imageUrl = project.imageUrl || 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
     const modelUrl = project.model3dUrl && project.model3dUrl.trim() ? project.model3dUrl : null;
-    const modelHtml = modelUrl ? `<model-viewer id="detail-model-viewer" src="${escapeHtml(modelUrl)}" camera-controls auto-rotate background-color="#eef2ff" shadow-intensity="1" style="width:100%; height:100%; min-height:400px;"></model-viewer>` : `<div style="background:#eef2ff; width:100%; min-height:400px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p>No 3D model available.<br>Add a GLB/GLTF URL when editing.</p></div>`;
+    const modelHtml = modelUrl ? `<model-viewer id="detail-model-viewer" src="${escapeHtml(modelUrl)}" camera-controls auto-rotate background-color="#ecf2f7" shadow-intensity="1" style="width:100%; height:100%; min-height:400px;"></model-viewer>` : `<div style="background:#ecf2f7; width:100%; min-height:400px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p>No 3D model available.<br>Add a GLB/GLTF URL when editing.</p></div>`;
     detailBody.innerHTML = `
       <div class="detail-info">
         <div class="detail-field"><strong>📝 Description</strong><p>${escapeHtml(project.description).replace(/\n/g, '<br>')}</p></div>
@@ -481,7 +765,6 @@
     }
   }
 
-  // Event listeners
   projectImageInput.addEventListener('change', async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -561,7 +844,6 @@
   window.addEventListener('click', (e) => { if (e.target === detailModal) detailModal.style.display = 'none'; });
   function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
   
-  // Initial load (projects only, profile will be loaded when admin logs in)
   loadProjectsRealtime();
 </script>
 </body>
