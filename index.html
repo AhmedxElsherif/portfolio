@@ -63,14 +63,14 @@
     .detail-info p { margin-top: 0; }
     .detail-field { background: #f8fafc; padding: 1rem; border-radius: 1rem; }
     .detail-field strong { display: block; margin-bottom: 0.5rem; color: #1e40af; }
-    .detail-model { background: #eef2ff; border-radius: 1.5rem; overflow: hidden; aspect-ratio: 1 / 1; width: 100%; }
-    model-viewer { width: 100%; height: 100%; background: #eef2ff; }
+    .detail-model { background: #eef2ff; border-radius: 1.5rem; overflow: hidden; min-height: 400px; width: 100%; position: relative; }
+    model-viewer { width: 100%; height: 100%; min-height: 400px; background: #eef2ff; display: block; }
     .detail-image { margin-top: 1rem; border-radius: 1rem; overflow: hidden; }
     .detail-image img { width: 100%; max-height: 250px; object-fit: cover; }
     .back-to-gallery { background: #2563eb; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 2rem; cursor: pointer; margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; }
     @media (max-width: 768px) {
       .detail-body { grid-template-columns: 1fr; }
-      .detail-model { aspect-ratio: 4/3; }
+      .detail-model { min-height: 300px; }
     }
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1000; }
     .modal-content { background: white; max-width: 650px; width: 90%; border-radius: 1.5rem; padding: 1.8rem; max-height: 90vh; overflow-y: auto; }
@@ -193,7 +193,7 @@
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, addDoc, updateDoc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
   
-  // Firebase configuration (unchanged)
+  // Firebase configuration (updated API key)
   const firebaseConfig = {
     apiKey: "AIzaSyD8zn6GYvChn7sh69hNhUhcB7qdW8Nsuzs",
     authDomain: "myportfolio-b2023.firebaseapp.com",
@@ -211,7 +211,7 @@
 
   let currentUser = null;
   let projectsUnsubscribe = null;
-  let allProjects = []; // keep a copy for detail view
+  let allProjects = [];
 
   // DOM elements
   const loginSection = document.getElementById('loginSection');
@@ -251,7 +251,6 @@
   let pendingImageDataUrl = null;
   let originalImageUrlForEdit = null;
 
-  // Helper: file to base64
   function fileToBase64(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -261,7 +260,6 @@
     });
   }
 
-  // Load profile picture from Firestore
   async function loadProfilePicture() {
     try {
       const profileCollection = collection(db, "profile");
@@ -287,7 +285,6 @@
     profileAvatar.src = base64Image;
   }
 
-  // Load projects realtime
   function loadProjectsRealtime() {
     if (projectsUnsubscribe) projectsUnsubscribe();
     const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));
@@ -324,9 +321,7 @@
           </div>` : ''}
         </div>
       `;
-      // Make entire card clickable to show details, but prevent if clicking on edit/delete buttons
       card.addEventListener('click', (e) => {
-        // If click originated from edit/delete button, do not open detail
         if (e.target.closest('.edit-btn') || e.target.closest('.delete-btn')) return;
         showProjectDetail(proj.id);
       });
@@ -353,26 +348,62 @@
     }
   }
 
-  // Show project details in modal (with 3D model)
+  // Improved showProjectDetail with manual DOM creation
   function showProjectDetail(projectId) {
     const project = allProjects.find(p => p.id == projectId);
     if (!project) return;
+    
     detailTitle.innerText = project.title;
-    const modelUrl = project.model3dUrl && project.model3dUrl.trim() ? project.model3dUrl : null;
+    
+    // Clear the detail body
+    detailBody.innerHTML = '';
+    
+    // Create info column
+    const infoDiv = document.createElement('div');
+    infoDiv.className = 'detail-info';
     const imageUrl = project.imageUrl && project.imageUrl.trim() ? project.imageUrl : 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
-    detailBody.innerHTML = `
-      <div class="detail-info">
-        <div class="detail-field"><strong>📝 Description</strong><p>${escapeHtml(project.description).replace(/\n/g, '<br>')}</p></div>
-        <div class="detail-field"><strong>🎯 Field of Use</strong><p>${escapeHtml(project.fieldOfUse) || 'Not specified'}</p></div>
-        <div class="detail-field"><strong>🛠️ Tools Used</strong><p>${escapeHtml(project.toolsUsed) || 'Not specified'}</p></div>
-        <div class="detail-image"><strong>📸 Project Image</strong><br><img src="${imageUrl}" alt="${escapeHtml(project.title)}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image+Not+Available'"></div>
-        <button class="back-to-gallery" id="backToGalleryBtn"><i class="fas fa-arrow-left"></i> Back to gallery</button>
-      </div>
-      <div class="detail-model">
-        ${modelUrl ? `<model-viewer src="${modelUrl}" camera-controls auto-rotate disable-zoom ar style="width:100%; height:100%;" background-color="#eef2ff" shadow-intensity="1"></model-viewer>` : `<div style="background:#eef2ff; width:100%; height:100%; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p style="color:#475569;">No 3D model available for this project.<br>You can add a GLB/GLTF URL when editing.</p></div>`}
-      </div>
+    infoDiv.innerHTML = `
+      <div class="detail-field"><strong>📝 Description</strong><p>${escapeHtml(project.description).replace(/\n/g, '<br>')}</p></div>
+      <div class="detail-field"><strong>🎯 Field of Use</strong><p>${escapeHtml(project.fieldOfUse) || 'Not specified'}</p></div>
+      <div class="detail-field"><strong>🛠️ Tools Used</strong><p>${escapeHtml(project.toolsUsed) || 'Not specified'}</p></div>
+      <div class="detail-image"><strong>📸 Project Image</strong><br><img src="${imageUrl}" alt="${escapeHtml(project.title)}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image+Not+Available'"></div>
+      <button class="back-to-gallery" id="backToGalleryBtn"><i class="fas fa-arrow-left"></i> Back to gallery</button>
     `;
+    
+    // Create model column
+    const modelDiv = document.createElement('div');
+    modelDiv.className = 'detail-model';
+    
+    const modelUrl = project.model3dUrl && project.model3dUrl.trim() ? project.model3dUrl : null;
+    if (modelUrl) {
+      // Create model-viewer element properly
+      const modelViewer = document.createElement('model-viewer');
+      modelViewer.setAttribute('src', modelUrl);
+      modelViewer.setAttribute('camera-controls', '');
+      modelViewer.setAttribute('auto-rotate', '');
+      modelViewer.setAttribute('background-color', '#eef2ff');
+      modelViewer.setAttribute('shadow-intensity', '1');
+      modelViewer.style.width = '100%';
+      modelViewer.style.height = '100%';
+      modelViewer.style.minHeight = '400px';
+      modelDiv.appendChild(modelViewer);
+      
+      // Force re-evaluation of the component after a short delay
+      setTimeout(() => {
+        const currentSrc = modelViewer.getAttribute('src');
+        if (currentSrc) {
+          modelViewer.setAttribute('src', currentSrc);
+        }
+      }, 50);
+    } else {
+      modelDiv.innerHTML = `<div style="background:#eef2ff; width:100%; height:100%; min-height:400px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p style="color:#475569;">No 3D model available for this project.<br>You can add a GLB/GLTF URL when editing.</p></div>`;
+    }
+    
+    detailBody.appendChild(infoDiv);
+    detailBody.appendChild(modelDiv);
+    
     detailModal.style.display = 'flex';
+    
     const backBtn = document.getElementById('backToGalleryBtn');
     if (backBtn) backBtn.addEventListener('click', () => detailModal.style.display = 'none');
   }
@@ -466,7 +497,6 @@
     pendingImageDataUrl = null;
   }
 
-  // Avatar modal handlers
   function openAvatarModal() {
     avatarInput.value = '';
     avatarPreviewContainer.innerHTML = '';
@@ -504,7 +534,6 @@
     }
   });
 
-  // Auth logic
   loginBtn.addEventListener('click', async () => {
     const email = document.getElementById('loginEmail').value;
     const pwd = document.getElementById('loginPassword').value;
@@ -546,7 +575,6 @@
 
   function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
-  // Initial load
   loadProjectsRealtime();
   loadProfilePicture();
 </script>
