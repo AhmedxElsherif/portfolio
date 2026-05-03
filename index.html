@@ -46,7 +46,6 @@
     .edit-btn, .delete-btn { border: none; padding: 0.4rem 1rem; border-radius: 30px; font-weight: 500; cursor: pointer; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.4rem; }
     .edit-btn { background: #fef9c3; color: #854d0e; }
     .delete-btn { background: #fee2e2; color: #b91c1c; }
-    /* Project Detail Modal */
     .detail-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 1001; overflow-y: auto; padding: 1rem; }
     .detail-content { background: white; max-width: 1200px; width: 100%; border-radius: 2rem; overflow-y: auto; max-height: 95vh; position: relative; }
     .detail-header { background: #0f172a; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
@@ -162,7 +161,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, addDoc, updateDoc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, addDoc, updateDoc, query, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
   
   const firebaseConfig = {
     apiKey: "AIzaSyD8zn6GYvChn7sh69hNhUhcB7qdW8Nsuzs",
@@ -218,6 +217,22 @@
   let currentEditId = null;
   let pendingImageDataUrl = null;
 
+  // Helper: secure escape for HTML content (prevents XSS)
+  function escapeHtml(str) { 
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    }).replace(/["']/g, function(m) {
+      if (m === '"') return '&quot;';
+      if (m === "'") return '&#39;';
+      return m;
+    });
+  }
+
+  // Helper: file to base64
   function fileToBase64(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -227,21 +242,29 @@
     });
   }
 
+  // Load profile picture from Firestore (using main doc)
   async function loadProfilePicture() {
     try {
-      const profileCollection = collection(db, "profile");
-      const snapshot = await getDocs(profileCollection);
+      const profileDocRef = doc(db, "profile", "main");
+      const docSnap = await getDoc(profileDocRef);
       let avatarUrl = null;
-      if (!snapshot.empty) avatarUrl = snapshot.docs[0].data().avatarUrl;
+      if (docSnap.exists()) avatarUrl = docSnap.data().avatarUrl;
       profileAvatar.src = (avatarUrl && avatarUrl.startsWith('data:image')) ? avatarUrl : "https://placehold.co/100x100/e2e8f0/475569?text=Ahmed";
-    } catch (err) { console.warn(err); }
+    } catch (err) { console.warn("Profile load error:", err); }
   }
 
+  // Update profile picture in Firestore
   async function updateProfilePicture(base64Image) {
+    if (!base64Image || !base64Image.startsWith('data:image')) {
+      console.warn("Invalid image data");
+      return false;
+    }
     await setDoc(doc(db, "profile", "main"), { avatarUrl: base64Image }, { merge: true });
     profileAvatar.src = base64Image;
+    return true;
   }
 
+  // Real-time projects listener
   function loadProjectsRealtime() {
     if (projectsUnsubscribe) projectsUnsubscribe();
     const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));
@@ -249,21 +272,31 @@
       allProjects = [];
       snapshot.forEach(doc => allProjects.push({ id: doc.id, ...doc.data() }));
       renderProjects(allProjects);
-    }, (error) => { projectsGrid.innerHTML = `<p style="color:red;">Error loading projects.</p>`; });
+    }, (error) => { 
+      console.error("Firestore error:", error);
+      projectsGrid.innerHTML = `<p style="color:red;">Error loading projects. Check console.</p>`; 
+    });
   }
 
+  // Render projects grid
   function renderProjects(projectsArray) {
-    if (!projectsArray.length) { projectsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">No projects yet. Admin can add projects.</div>`; return; }
+    if (!projectsArray.length) { 
+      projectsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">No projects yet. Admin can add projects.</div>`; 
+      return; 
+    }
     projectsGrid.innerHTML = '';
     projectsArray.forEach(proj => {
       const card = document.createElement('div');
       card.className = 'project-card';
-      const imgSrc = proj.imageUrl || 'https://placehold.co/400x240/e2e8f0/475569?text=Project+Image';
+      const rawImgSrc = proj.imageUrl || 'https://placehold.co/400x240/e2e8f0/475569?text=Project+Image';
+      const safeImgSrc = escapeHtml(rawImgSrc);
+      const safeTitle = escapeHtml(proj.title);
+      const safeDesc = escapeHtml(proj.description).replace(/\n/g, '<br>');
       card.innerHTML = `
-        <img class="project-img" src="${imgSrc}" alt="${escapeHtml(proj.title)}" onerror="this.src='https://placehold.co/400x240/e2e8f0/475569?text=Image+Error'">
+        <img class="project-img" src="${safeImgSrc}" alt="${safeTitle}" onerror="this.src='https://placehold.co/400x240/e2e8f0/475569?text=Image+Error'">
         <div class="project-content">
-          <div class="project-title">${escapeHtml(proj.title)}</div>
-          <div class="project-desc">${escapeHtml(proj.description).replace(/\n/g, '<br>')}</div>
+          <div class="project-title">${safeTitle}</div>
+          <div class="project-desc">${safeDesc}</div>
           ${currentUser ? `<div class="card-actions"><button class="edit-btn" data-id="${proj.id}"><i class="fas fa-edit"></i> Edit</button><button class="delete-btn" data-id="${proj.id}"><i class="fas fa-trash"></i> Delete</button></div>` : ''}
         </div>
       `;
@@ -286,7 +319,7 @@
     }
   }
 
-  // ---- CRITICAL FIX: Use iframe with srcdoc to embed model-viewer ----
+  // Generate HTML for 3D viewer (model-viewer)
   function getModelViewerHtml(modelUrl) {
     return `
       <!DOCTYPE html>
@@ -313,29 +346,36 @@
     `;
   }
 
+  // Show project detail modal with fixed iframe srcdoc encoding
   function showProjectDetail(projectId) {
     const project = allProjects.find(p => p.id == projectId);
     if (!project) return;
-    detailTitle.innerText = project.title;
+    detailTitle.innerText = escapeHtml(project.title);
     
     const imageUrl = project.imageUrl || 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
-    const modelUrl = project.model3dUrl && project.model3dUrl.trim() ? project.model3dUrl : null;
+    const safeImageUrl = escapeHtml(imageUrl);
+    const modelUrl = project.model3dUrl && project.model3dUrl.trim() ? project.model3dUrl.trim() : null;
     
     let modelHtml = '';
     if (modelUrl) {
-      // Use iframe with srcdoc to avoid dynamic component issues
       const viewerHtml = getModelViewerHtml(modelUrl);
-      modelHtml = `<iframe srcdoc="${escapeHtml(viewerHtml)}" style="width:100%; height:450px; border:none; background:#eef2ff; border-radius:1.5rem;"></iframe>`;
+      // CRITICAL FIX: use encodeURIComponent for srcdoc attribute to properly escape HTML
+      const encodedSrcdoc = encodeURIComponent(viewerHtml);
+      modelHtml = `<iframe srcdoc="${encodedSrcdoc}" style="width:100%; height:450px; border:none; background:#eef2ff; border-radius:1.5rem;"></iframe>`;
     } else {
       modelHtml = `<div style="background:#eef2ff; width:100%; min-height:450px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p>No 3D model available.<br>Add a GLB/GLTF URL when editing.</p></div>`;
     }
     
+    const safeFieldOfUse = escapeHtml(project.fieldOfUse) || 'Not specified';
+    const safeToolsUsed = escapeHtml(project.toolsUsed) || 'Not specified';
+    const safeDescription = escapeHtml(project.description).replace(/\n/g, '<br>');
+    
     detailBody.innerHTML = `
       <div class="detail-info">
-        <div class="detail-field"><strong>📝 Description</strong><p>${escapeHtml(project.description).replace(/\n/g, '<br>')}</p></div>
-        <div class="detail-field"><strong>🎯 Field of Use</strong><p>${escapeHtml(project.fieldOfUse) || 'Not specified'}</p></div>
-        <div class="detail-field"><strong>🛠️ Tools Used</strong><p>${escapeHtml(project.toolsUsed) || 'Not specified'}</p></div>
-        <div class="detail-image"><strong>📸 Project Image</strong><br><img src="${imageUrl}" alt="${escapeHtml(project.title)}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image+Error'"></div>
+        <div class="detail-field"><strong>📝 Description</strong><p>${safeDescription}</p></div>
+        <div class="detail-field"><strong>🎯 Field of Use</strong><p>${safeFieldOfUse}</p></div>
+        <div class="detail-field"><strong>🛠️ Tools Used</strong><p>${safeToolsUsed}</p></div>
+        <div class="detail-image"><strong>📸 Project Image</strong><br><img src="${safeImageUrl}" alt="${escapeHtml(project.title)}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image+Error'"></div>
         <button class="back-to-gallery" id="backToGalleryBtn"><i class="fas fa-arrow-left"></i> Back to gallery</button>
       </div>
       <div class="detail-model">
@@ -348,14 +388,22 @@
     if (backBtn) backBtn.addEventListener('click', () => detailModal.style.display = 'none');
   }
 
+  // Add or update project
   async function addOrUpdateProject(title, desc, imageBase64, docId = null, extra = {}) {
     const data = {
-      title: title.trim(), description: desc.trim(), imageUrl: imageBase64 || null,
-      fieldOfUse: extra.fieldOfUse || '', toolsUsed: extra.toolsUsed || '',
-      model3dUrl: extra.model3dUrl || '', updatedAt: new Date().toISOString()
+      title: title.trim(),
+      description: desc.trim(),
+      imageUrl: imageBase64 || null,
+      fieldOfUse: extra.fieldOfUse || '',
+      toolsUsed: extra.toolsUsed || '',
+      model3dUrl: extra.model3dUrl || '',
+      updatedAt: new Date().toISOString()
     };
-    if (docId) await updateDoc(doc(db, "projects", docId), data);
-    else await addDoc(collection(db, "projects"), { ...data, createdAt: new Date().toISOString() });
+    if (docId) {
+      await updateDoc(doc(db, "projects", docId), data);
+    } else {
+      await addDoc(collection(db, "projects"), { ...data, createdAt: new Date().toISOString() });
+    }
   }
 
   function openEditProjectModal(id, project) {
@@ -396,7 +444,7 @@
     } else {
       const div = document.createElement('div');
       div.className = 'image-preview';
-      div.style.cssText = 'display:flex; align-items:center; justify-content:center; background:#f1f5f9;';
+      div.style.cssText = 'display:flex; align-items:center; justify-content:center; background:#f1f5f9; color:#64748b;';
       div.innerText = 'No image preview';
       imagePreviewContainer.appendChild(div);
     }
@@ -410,25 +458,69 @@
       toolsUsed: projectToolsUsed.value.trim(),
       model3dUrl: projectModelUrl.value.trim()
     };
-    if (currentEditId) await addOrUpdateProject(title, projectDescInput.value.trim(), pendingImageDataUrl, currentEditId, extra);
-    else await addOrUpdateProject(title, projectDescInput.value.trim(), pendingImageDataUrl, null, extra);
-    closeProjectModal();
+    try {
+      if (currentEditId) {
+        await addOrUpdateProject(title, projectDescInput.value.trim(), pendingImageDataUrl, currentEditId, extra);
+      } else {
+        await addOrUpdateProject(title, projectDescInput.value.trim(), pendingImageDataUrl, null, extra);
+      }
+      closeProjectModal();
+    } catch (err) {
+      alert("Save error: " + err.message);
+    }
   }
 
-  function closeProjectModal() { projectModal.style.display = 'none'; currentEditId = null; pendingImageDataUrl = null; }
-  function openAvatarModal() { avatarInput.value = ''; avatarPreviewContainer.innerHTML = ''; avatarModal.style.display = 'flex'; }
+  function closeProjectModal() { 
+    projectModal.style.display = 'none'; 
+    currentEditId = null; 
+    pendingImageDataUrl = null; 
+  }
+
+  // Avatar modal handlers (fixed)
+  function openAvatarModal() { 
+    avatarInput.value = ''; 
+    avatarPreviewContainer.innerHTML = ''; 
+    avatarModal.style.display = 'flex'; 
+  }
+  
+  let pendingAvatarBase64 = null;
   
   avatarInput.addEventListener('change', async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      if (!file.type.startsWith('image/')) { alert("Only images"); return; }
-      const base64 = await fileToBase64(file);
-      avatarPreviewContainer.innerHTML = `<img src="${base64}" class="image-preview" style="max-height:150px;">`;
-      avatarSaveBtn.onclick = async () => { await updateProfilePicture(base64); avatarModal.style.display = 'none'; };
+      if (!file.type.startsWith('image/')) { alert("Only images are allowed"); return; }
+      pendingAvatarBase64 = await fileToBase64(file);
+      avatarPreviewContainer.innerHTML = `<img src="${pendingAvatarBase64}" class="image-preview" style="max-height:150px;">`;
+    } else {
+      pendingAvatarBase64 = null;
+      avatarPreviewContainer.innerHTML = '';
     }
   });
-  avatarCancelBtn.addEventListener('click', () => avatarModal.style.display = 'none');
-  removeImageBtn.addEventListener('click', () => { pendingImageDataUrl = null; updateImagePreview(null); projectImageInput.value = ''; });
+  
+  // Fixed: Save button always works with the pending image or does nothing
+  avatarSaveBtn.onclick = async () => {
+    if (pendingAvatarBase64) {
+      await updateProfilePicture(pendingAvatarBase64);
+      pendingAvatarBase64 = null;
+    } else {
+      alert("Please select an image first.");
+      return;
+    }
+    avatarModal.style.display = 'none';
+  };
+  
+  avatarCancelBtn.addEventListener('click', () => {
+    avatarModal.style.display = 'none';
+    pendingAvatarBase64 = null;
+    avatarPreviewContainer.innerHTML = '';
+  });
+  
+  removeImageBtn.addEventListener('click', () => { 
+    pendingImageDataUrl = null; 
+    updateImagePreview(null); 
+    projectImageInput.value = ''; 
+  });
+  
   projectImageInput.addEventListener('change', async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -437,12 +529,22 @@
       updateImagePreview(pendingImageDataUrl);
     }
   });
+  
   loginBtn.addEventListener('click', async () => {
     const email = document.getElementById('loginEmail').value;
     const pwd = document.getElementById('loginPassword').value;
-    try { await signInWithEmailAndPassword(auth, email, pwd); } catch (err) { alert("Login failed: " + err.message); }
+    try { 
+      await signInWithEmailAndPassword(auth, email, pwd); 
+    } catch (err) { 
+      alert("Login failed: " + err.message); 
+    }
   });
-  logoutBtn.addEventListener('click', async () => { await signOut(auth); });
+  
+  logoutBtn.addEventListener('click', async () => { 
+    await signOut(auth); 
+  });
+  
+  // Auth state handler
   onAuthStateChanged(auth, async (user) => {
     currentUser = user;
     if (user) {
@@ -462,23 +564,13 @@
       loadProjectsRealtime();
     }
   });
+  
   modalSaveBtn.addEventListener('click', handleProjectSave);
   modalCancelBtn.addEventListener('click', closeProjectModal);
   closeDetailBtn.addEventListener('click', () => detailModal.style.display = 'none');
   window.addEventListener('click', (e) => { if (e.target === detailModal) detailModal.style.display = 'none'; });
   
-  function escapeHtml(str) { 
-    if (!str) return '';
-    return str.replace(/[&<>]/g, function(m) {
-      if (m === '&') return '&amp;';
-      if (m === '<') return '&lt;';
-      if (m === '>') return '&gt;';
-      return m;
-    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-      return c;
-    });
-  }
-  
+  // Initial load
   loadProjectsRealtime();
   loadProfilePicture();
 </script>
