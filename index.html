@@ -34,6 +34,8 @@
     .skill-tags span { background: #e6f0ff; padding: 0.25rem 0.8rem; border-radius: 30px; font-size: 0.8rem; font-weight: 500; color: #1e40af; }
     .auth-panel { background: white; border-radius: 1.5rem; padding: 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
     .login-form { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; }
+    .login-form .field-group { display: flex; flex-direction: column; gap: 0.3rem; }
+    .login-form label { font-size: 0.8rem; font-weight: 500; color: #334155; }
     .login-form input { padding: 0.6rem 1rem; border-radius: 2rem; border: 1px solid #cbd5e1; font-family: inherit; }
     .login-btn, .logout-btn, .edit-avatar-btn, .add-project-btn { background: #2563eb; border: none; padding: 0.6rem 1.2rem; border-radius: 40px; color: white; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: 0.2s; }
     .logout-btn { background: #dc2626; }
@@ -74,7 +76,9 @@
     }
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1000; }
     .modal-content { background: white; max-width: 650px; width: 90%; border-radius: 1.5rem; padding: 1.8rem; max-height: 90vh; overflow-y: auto; }
-    .modal-content input, .modal-content textarea { width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid #cbd5e1; border-radius: 1rem; font-family: inherit; }
+    .modal-content .field-group { margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.3rem; }
+    .modal-content label { font-weight: 600; font-size: 0.9rem; color: #0f172a; }
+    .modal-content input, .modal-content textarea { width: 100%; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 1rem; font-family: inherit; }
     .modal-content textarea { min-height: 80px; }
     .image-preview { width: 100%; max-height: 160px; object-fit: cover; border-radius: 1rem; margin: 0.5rem 0; background: #eef2ff; }
     .modal-buttons { display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1rem; }
@@ -92,8 +96,14 @@
   <div id="authPanel" class="auth-panel">
     <div id="loginSection">
       <div class="login-form">
-        <input type="email" id="loginEmail" placeholder="Email" value="admin@example.com">
-        <input type="password" id="loginPassword" placeholder="Password">
+        <div class="field-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" placeholder="Email" value="admin@example.com">
+        </div>
+        <div class="field-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Password">
+        </div>
         <button id="loginBtn" class="login-btn"><i class="fas fa-sign-in-alt"></i> Admin Login</button>
       </div>
     </div>
@@ -155,17 +165,34 @@
   <footer>© 2025 Ahmed Hassan — Secure Firebase Admin Panel | <span id="authStateInfo"></span></footer>
 </div>
 
-<!-- Modal for Add/Edit Project (modified with new fields) -->
+<!-- Modal for Add/Edit Project (with labels) -->
 <div id="projectModal" class="modal">
   <div class="modal-content">
     <h3 id="modalTitle">Add Project</h3>
-    <input type="text" id="projectTitle" placeholder="Project Title" required>
-    <textarea id="projectDesc" placeholder="Project description (full details)"></textarea>
-    <input type="text" id="projectFieldOfUse" placeholder="Field of use (e.g. Industrial Automation, Consumer Electronics)">
-    <input type="text" id="projectToolsUsed" placeholder="Tools used (e.g. STM32, FreeRTOS, Python)">
-    <input type="text" id="projectModelUrl" placeholder="3D Model URL (GLB/GLTF) - optional">
-    <label><i class="fas fa-image"></i> Project Image</label>
-    <input type="file" id="projectImageInput" accept="image/*">
+    <div class="field-group">
+      <label for="projectTitle">Project Title *</label>
+      <input type="text" id="projectTitle" placeholder="Project Title" required>
+    </div>
+    <div class="field-group">
+      <label for="projectDesc">Project Description</label>
+      <textarea id="projectDesc" placeholder="Project description (full details)"></textarea>
+    </div>
+    <div class="field-group">
+      <label for="projectFieldOfUse">Field of Use</label>
+      <input type="text" id="projectFieldOfUse" placeholder="e.g. Industrial Automation, Consumer Electronics">
+    </div>
+    <div class="field-group">
+      <label for="projectToolsUsed">Tools Used</label>
+      <input type="text" id="projectToolsUsed" placeholder="e.g. STM32, FreeRTOS, Python">
+    </div>
+    <div class="field-group">
+      <label for="projectModelUrl">3D Model URL (GLB/GLTF) - optional</label>
+      <input type="text" id="projectModelUrl" placeholder="https://...">
+    </div>
+    <div class="field-group">
+      <label for="projectImageInput">Project Image</label>
+      <input type="file" id="projectImageInput" accept="image/*">
+    </div>
     <div id="imagePreviewContainer"></div>
     <button type="button" id="removeImageBtn" class="remove-img-btn"><i class="fas fa-trash-alt"></i> Remove Image</button>
     <div class="modal-buttons">
@@ -179,7 +206,10 @@
 <div id="avatarModal" class="modal">
   <div class="modal-content">
     <h3>Update Profile Picture</h3>
-    <input type="file" id="avatarInput" accept="image/*">
+    <div class="field-group">
+      <label for="avatarInput">Choose new profile picture</label>
+      <input type="file" id="avatarInput" accept="image/*">
+    </div>
     <div id="avatarPreviewContainer"></div>
     <div class="modal-buttons">
       <button id="avatarSaveBtn" class="save-btn">Upload & Save</button>
