@@ -165,7 +165,7 @@
   <footer>© 2025 Ahmed Hassan — Secure Firebase Admin Panel | <span id="authStateInfo"></span></footer>
 </div>
 
-<!-- Modal for Add/Edit Project (with labels) -->
+<!-- Modal for Add/Edit Project -->
 <div id="projectModal" class="modal">
   <div class="modal-content">
     <h3 id="modalTitle">Add Project</h3>
@@ -376,7 +376,7 @@
     }
   }
 
-  // SIMPLIFIED AND ROBUST showProjectDetail
+  // Improved showProjectDetail with forced reload for model-viewer
   function showProjectDetail(projectId) {
     console.log("Opening project:", projectId);
     const project = allProjects.find(p => p.id == projectId);
@@ -417,6 +417,23 @@
       modelViewer.style.height = '100%';
       modelViewer.style.minHeight = '400px';
       modelDiv.appendChild(modelViewer);
+      
+      // Force reload after a short delay (trick for dynamically added model-viewer)
+      setTimeout(() => {
+        const currentSrc = modelViewer.getAttribute('src');
+        if (currentSrc) {
+          modelViewer.setAttribute('src', '');
+          setTimeout(() => {
+            modelViewer.setAttribute('src', currentSrc);
+            console.log("Model reloaded:", currentSrc);
+          }, 20);
+        }
+      }, 100);
+      
+      // Log errors if any
+      modelViewer.addEventListener('error', (e) => {
+        console.error("Model-viewer error:", e);
+      });
     } else {
       modelDiv.innerHTML = `<div style="background:#eef2ff; width:100%; min-height:400px; display:flex; align-items:center; justify-content:center; border-radius:1.5rem;"><p style="color:#475569;">No 3D model available.<br>Add a GLB/GLTF URL when editing.</p></div>`;
     }
