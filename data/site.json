@@ -155,7 +155,7 @@
       "models": [
         {
           "label": "PCB (Smart Pills Box)",
-          "url": "models/timer_relay.wrl",
+          "url": "models/smart_pillbox_pcb.wrl",
           "rotation": [
             0,
             0,
