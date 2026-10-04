@@ -105,13 +105,18 @@
       "category": "PCB Design,IOT Device",
       "year": "2026",
       "status": "Completed",
-      "featured": false,
+      "featured": true,
       "summary": "Smart Timer Relay Board Based on ESP32-DevKitC V4 with HLK Power Supply and API Control",
       "description": "This project presents an electronic timer relay board designed to control high-voltage appliances (220–230 V AC) through commands received from a computer software via API. The system is built around the ESP32-DevKitC V4 development board, which acts as the main processing and communication unit, handling Wi-Fi connectivity and executing the API requests. Power is supplied through an HLK-series AC-DC converter module, which steps down the mains voltage from 230 V AC to a regulated 5 V DC to feed the ESP32 and the rest of the low-voltage control circuitry safely and efficiently. The relay is driven by the ESP32 through an appropriate driver stage (transistor or optocoupler), allowing the low-power logic side to switch the relay coil without direct electrical risk. Based on the API commands received from the computer software, the ESP32 energizes or de-energizes the relay, thereby turning the connected 220–230 V appliance ON or OFF. This design effectively combines power conversion, isolation, wireless communication, and relay switching into a compact and reliable control solution suitable for home automation, industrial timing, and remote load management applications.",
       "features": [
         "PCB Design,IOT Device,Power Electronics"
       ],
-      "tags": [],
+      "tags": [
+        "ESP32-DevKitc-V4",
+        "PCB",
+        "IoT",
+        "Firmware"
+      ],
       "tools": [
         "KiCad",
         "ESP32"
@@ -140,7 +145,7 @@
       "title": "Smart Pills Box",
       "id": "smart-pills-box",
       "category": "IoT Device",
-      "year": "",
+      "year": "2025",
       "status": "Completed",
       "featured": true,
       "summary": "ESP32-C3 medication manager with custom PCB, 10 schedulable slots, RTC timing and multi-modal alerts.",
@@ -264,10 +269,10 @@
       }
     },
     {
-      "id": "voltage-guard-pro",
       "title": "Voltage Guard Pro",
+      "id": "voltage-guard-pro",
       "category": "Power Electronics",
-      "year": "",
+      "year": "2025",
       "status": "Completed",
       "featured": false,
       "summary": "Low-cost ATtiny85 mains protector that disconnects appliances outside the 190–250 V window.",
@@ -277,6 +282,13 @@
         "Instant disconnect below 190 V or above 250 V",
         "Low-cost single-MCU design"
       ],
+      "tags": [
+        "ATtiny85",
+        "AC Mains",
+        "Protection"
+      ],
+      "tools": [],
+      "cover": "",
       "specs": [
         {
           "key": "MCU",
@@ -287,15 +299,8 @@
           "value": "190 – 250 V AC"
         }
       ],
-      "tags": [
-        "ATtiny85",
-        "AC Mains",
-        "Protection"
-      ],
-      "tools": [],
-      "cover": "",
-      "gallery": [],
       "models": [],
+      "gallery": [],
       "links": {
         "github": "",
         "video": "",
@@ -303,10 +308,10 @@
       }
     },
     {
-      "id": "smart-bottle-top-dispenser",
       "title": "Smart Bottle-Top Dispenser",
+      "id": "smart-bottle-top-dispenser",
       "category": "Lab Automation",
-      "year": "",
+      "year": "2025",
       "status": "Completed",
       "featured": false,
       "summary": "Precision lab device that automates dispensing of controlled liquid volumes.",
@@ -316,7 +321,6 @@
         "Accuracy and repeatability",
         "Safe chemical handling"
       ],
-      "specs": [],
       "tags": [
         "Automation",
         "Lab",
@@ -324,8 +328,9 @@
       ],
       "tools": [],
       "cover": "",
-      "gallery": [],
+      "specs": [],
       "models": [],
+      "gallery": [],
       "links": {
         "github": "",
         "video": "",
