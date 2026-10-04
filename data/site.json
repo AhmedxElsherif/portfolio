@@ -100,6 +100,43 @@
   },
   "projects": [
     {
+      "title": "Smart Timer Relay Board",
+      "id": "smart-timer-relay-board",
+      "category": "PCB Design,IOT Device",
+      "year": "2026",
+      "status": "Completed",
+      "featured": false,
+      "summary": "Smart Timer Relay Board Based on ESP32-DevKitC V4 with HLK Power Supply and API Control",
+      "description": "This project presents an electronic timer relay board designed to control high-voltage appliances (220–230 V AC) through commands received from a computer software via API. The system is built around the ESP32-DevKitC V4 development board, which acts as the main processing and communication unit, handling Wi-Fi connectivity and executing the API requests. Power is supplied through an HLK-series AC-DC converter module, which steps down the mains voltage from 230 V AC to a regulated 5 V DC to feed the ESP32 and the rest of the low-voltage control circuitry safely and efficiently. The relay is driven by the ESP32 through an appropriate driver stage (transistor or optocoupler), allowing the low-power logic side to switch the relay coil without direct electrical risk. Based on the API commands received from the computer software, the ESP32 energizes or de-energizes the relay, thereby turning the connected 220–230 V appliance ON or OFF. This design effectively combines power conversion, isolation, wireless communication, and relay switching into a compact and reliable control solution suitable for home automation, industrial timing, and remote load management applications.",
+      "features": [
+        "PCB Design,IOT Device,Power Electronics"
+      ],
+      "tags": [],
+      "tools": [
+        "KiCad",
+        "ESP32"
+      ],
+      "cover": "images/smart-timer-relay-board-timer-relay-mutq34hb.jpg",
+      "specs": [],
+      "models": [
+        {
+          "label": "PCB (Smart Timer Relay)",
+          "url": "models/smart-timer-relay-board-timer-relay-mutq0125.wrl",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "gallery": [],
+      "links": {
+        "github": "",
+        "video": "",
+        "docs": ""
+      }
+    },
+    {
       "title": "Smart Pills Box",
       "id": "smart-pills-box",
       "category": "IoT Device",
