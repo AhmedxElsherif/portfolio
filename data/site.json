@@ -1,0 +1,158 @@
+{
+  "profile": {
+    "name": "Ahmed Hassan Muhamad",
+    "title": "Embedded Systems Engineer",
+    "tagline": "Hardware design · Embedded Linux · PCB · IoT",
+    "summary": "Embedded Systems Engineer with strong experience in embedded Linux, PCB design, analog circuits, and product development. Skilled in designing end-to-end embedded solutions from concept to production, with additional expertise in R&D and IoT systems.",
+    "location": "Cairo, Egypt",
+    "email": "ahmedxelsherif@outlook.com",
+    "phone": "+201024254110",
+    "linkedin": "https://www.linkedin.com/in/ahmedxelsherif/",
+    "github": "https://github.com/ahmedxelsherif",
+    "cv": "assets/Ahmed_Hassan_CV.pdf",
+    "avatar": "",
+    "skills": [
+      { "group": "Embedded Systems", "items": ["Embedded C/C++", "Embedded Linux", "Firmware development"] },
+      { "group": "Hardware Design", "items": ["PCB design", "Analog & digital circuit design", "Hardware debugging"] },
+      { "group": "Protocols", "items": ["UART", "I²C", "SPI"] },
+      { "group": "Languages", "items": ["C", "C++", "Python", "Bash"] },
+      { "group": "AI & Automation", "items": ["Embedded AI integration", "Sensor fusion", "IoT systems", "Autonomous systems"] },
+      { "group": "MCUs & Tools", "items": ["AVR", "ESP32", "Raspberry Pi", "Arduino", "KiCad", "Altium Designer", "Proteus", "SolidWorks", "VS Code"] }
+    ],
+    "experience": [
+      {
+        "role": "Electrical Infrastructure Engineer",
+        "org": "Future of Egypt Authority for Sustainable Development",
+        "period": "Mar 2025 – Present",
+        "details": "Supervised MV/LV electrical infrastructure for the New Delta Project (2,200,000 acres): MV distribution equipment (RMUs, switchgear, protection relays), MV/LV power transformers, LV systems, and consultant coordination & document control."
+      },
+      {
+        "role": "Trainee",
+        "org": "National Energy Control Center (NECC)",
+        "period": "Jul 2023 – Aug 2023",
+        "details": ""
+      }
+    ],
+    "education": [
+      { "degree": "B.Sc. Electronics and Communications Engineering", "org": "Thebes Academy", "period": "2019 – 2025" }
+    ],
+    "courses": [
+      "Embedded Systems Standard Diploma — C, Embedded C, AVR interfacing & protocols",
+      "ESP and Arduino boards programming and interfacing",
+      "Embedded Linux Diploma — Python, C++, Linux admin, Bash, Raspberry Pi",
+      "PCB Design with KiCad",
+      "Electronic Circuit Design using Altium Designer"
+    ]
+  },
+  "projects": [
+    {
+      "id": "smart-pills-box",
+      "title": "Smart Pills Box",
+      "category": "IoT Device",
+      "year": "",
+      "status": "Completed",
+      "featured": true,
+      "summary": "ESP32-C3 medication manager with custom PCB, 10 schedulable slots, RTC timing and multi-modal alerts.",
+      "description": "An embedded IoT medication management device developed on **ESP32-C3**. I designed the custom PCB and the 3D mechanical enclosure using KiCad, Proteus and SolidWorks.\n\nThe device schedules up to 10 medication slots with configurable alert windows and keeps real-time tracking with a DS3231 RTC. Reminders are delivered through simultaneous visual (WS2812 LEDs via FastLED) and audio (DFPlayer Mini) alerts, with user feedback through a button and an SH1106 OLED display.\n\nA captive web portal (Access Point) allows wireless configuration of medicine names, times and alert durations; all settings persist via the Preferences library.",
+      "features": [
+        "Up to 10 medication slots with configurable alert windows",
+        "DS3231 real-time clock tracking",
+        "WS2812 LED + DFPlayer Mini audio alerts",
+        "Battery voltage monitoring with charge detection, adaptive calibration and low-pass filtering",
+        "Captive Wi-Fi portal for configuration",
+        "Persistent settings (Preferences)",
+        "SH1106 OLED UI with push-button feedback"
+      ],
+      "specs": [
+        { "key": "MCU", "value": "ESP32-C3" },
+        { "key": "RTC", "value": "DS3231" },
+        { "key": "Display", "value": "SH1106 OLED" },
+        { "key": "Audio", "value": "DFPlayer Mini" },
+        { "key": "LEDs", "value": "WS2812 (FastLED)" }
+      ],
+      "tags": ["ESP32-C3", "PCB", "IoT", "Firmware"],
+      "tools": ["KiCad", "Proteus", "SolidWorks", "Arduino IDE"],
+      "cover": "",
+      "gallery": [],
+      "models": [
+        { "label": "PCB (demo model)", "url": "models/smart-pills-box-demo.glb", "rotation": [0, 0, 0] }
+      ],
+      "links": { "github": "", "video": "", "docs": "" }
+    },
+    {
+      "id": "dddas",
+      "title": "DDDAS — Deaf & Dumb Driving Assistant System",
+      "category": "Embedded AI",
+      "year": "2025",
+      "status": "Graduation Project · Excellent",
+      "featured": true,
+      "summary": "Intelligent autonomous-driving assistant enabling deaf and mute individuals to drive, with on-board AI models and a dedicated GUI.",
+      "description": "Graduation project (Grade: **Excellent**), showcased at the Thebes Academy Projects Exhibition.\n\nDDDAS is an intelligent driving system that enables deaf and mute individuals to experience fully autonomous driving and integrate seamlessly into society. It features multiple custom AI models for real-time driver–passenger chat, road sign recognition, and auditory environment simulation to interpret surrounding sounds.\n\nA dedicated graphical user interface was designed for the system, which also supports satellite-based autonomous driving.",
+      "features": [
+        "Real-time driver–passenger chat AI model",
+        "Road sign recognition",
+        "Auditory environment simulation",
+        "Dedicated GUI",
+        "Satellite-based autonomous driving",
+        "UART and I²C integration"
+      ],
+      "specs": [
+        { "key": "Languages", "value": "C, C++, Python, Bash" },
+        { "key": "Protocols", "value": "UART, I²C" }
+      ],
+      "tags": ["Embedded AI", "Autonomous", "Embedded Linux"],
+      "tools": ["C", "C++", "Python", "Bash"],
+      "cover": "",
+      "gallery": [],
+      "models": [],
+      "links": { "github": "", "video": "", "docs": "" }
+    },
+    {
+      "id": "voltage-guard-pro",
+      "title": "Voltage Guard Pro",
+      "category": "Power Electronics",
+      "year": "",
+      "status": "Completed",
+      "featured": false,
+      "summary": "Low-cost ATtiny85 mains protector that disconnects appliances outside the 190–250 V window.",
+      "description": "A smart, low-cost power protection device designed to safeguard household appliances from dangerous voltage fluctuations.\n\nBuilt around the **ATtiny85** microcontroller, it continuously monitors the AC mains voltage and instantly disconnects connected devices when the voltage drops below 190 V or exceeds 250 V, protecting sensitive electronics from damage.",
+      "features": [
+        "Continuous AC mains voltage monitoring",
+        "Instant disconnect below 190 V or above 250 V",
+        "Low-cost single-MCU design"
+      ],
+      "specs": [
+        { "key": "MCU", "value": "ATtiny85" },
+        { "key": "Safe window", "value": "190 – 250 V AC" }
+      ],
+      "tags": ["ATtiny85", "AC Mains", "Protection"],
+      "tools": [],
+      "cover": "",
+      "gallery": [],
+      "models": [],
+      "links": { "github": "", "video": "", "docs": "" }
+    },
+    {
+      "id": "smart-bottle-top-dispenser",
+      "title": "Smart Bottle-Top Dispenser",
+      "category": "Lab Automation",
+      "year": "",
+      "status": "Completed",
+      "featured": false,
+      "summary": "Precision lab device that automates dispensing of controlled liquid volumes.",
+      "description": "The Bottle-Top Dispenser is a precision laboratory device designed to automate the dispensing of controlled liquid volumes. It provides accuracy, repeatability, and safety for handling chemicals in lab environments.",
+      "features": [
+        "Automated controlled-volume dispensing",
+        "Accuracy and repeatability",
+        "Safe chemical handling"
+      ],
+      "specs": [],
+      "tags": ["Automation", "Lab", "Precision"],
+      "tools": [],
+      "cover": "",
+      "gallery": [],
+      "models": [],
+      "links": { "github": "", "video": "", "docs": "" }
+    }
+  ]
+}
