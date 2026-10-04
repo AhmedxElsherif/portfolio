@@ -154,8 +154,17 @@
       ],
       "models": [
         {
-          "label": "PCB (demo model)",
+          "label": "PCB (Smart Pills Box)",
           "url": "models/timer_relay.wrl",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "label": "",
+          "url": "",
           "rotation": [
             0,
             0,
