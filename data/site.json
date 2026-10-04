@@ -12,12 +12,62 @@
     "cv": "assets/Ahmed_Hassan_CV.pdf",
     "avatar": "",
     "skills": [
-      { "group": "Embedded Systems", "items": ["Embedded C/C++", "Embedded Linux", "Firmware development"] },
-      { "group": "Hardware Design", "items": ["PCB design", "Analog & digital circuit design", "Hardware debugging"] },
-      { "group": "Protocols", "items": ["UART", "I²C", "SPI"] },
-      { "group": "Languages", "items": ["C", "C++", "Python", "Bash"] },
-      { "group": "AI & Automation", "items": ["Embedded AI integration", "Sensor fusion", "IoT systems", "Autonomous systems"] },
-      { "group": "MCUs & Tools", "items": ["AVR", "ESP32", "Raspberry Pi", "Arduino", "KiCad", "Altium Designer", "Proteus", "SolidWorks", "VS Code"] }
+      {
+        "group": "Embedded Systems",
+        "items": [
+          "Embedded C/C++",
+          "Embedded Linux",
+          "Firmware development"
+        ]
+      },
+      {
+        "group": "Hardware Design",
+        "items": [
+          "PCB design",
+          "Analog & digital circuit design",
+          "Hardware debugging"
+        ]
+      },
+      {
+        "group": "Protocols",
+        "items": [
+          "UART",
+          "I²C",
+          "SPI"
+        ]
+      },
+      {
+        "group": "Languages",
+        "items": [
+          "C",
+          "C++",
+          "Python",
+          "Bash"
+        ]
+      },
+      {
+        "group": "AI & Automation",
+        "items": [
+          "Embedded AI integration",
+          "Sensor fusion",
+          "IoT systems",
+          "Autonomous systems"
+        ]
+      },
+      {
+        "group": "MCUs & Tools",
+        "items": [
+          "AVR",
+          "ESP32",
+          "Raspberry Pi",
+          "Arduino",
+          "KiCad",
+          "Altium Designer",
+          "Proteus",
+          "SolidWorks",
+          "VS Code"
+        ]
+      }
     ],
     "experience": [
       {
@@ -34,7 +84,11 @@
       }
     ],
     "education": [
-      { "degree": "B.Sc. Electronics and Communications Engineering", "org": "Thebes Academy", "period": "2019 – 2025" }
+      {
+        "degree": "B.Sc. Electronics and Communications Engineering",
+        "org": "Thebes Academy",
+        "period": "2019 – 2025"
+      }
     ],
     "courses": [
       "Embedded Systems Standard Diploma — C, Embedded C, AVR interfacing & protocols",
@@ -46,8 +100,8 @@
   },
   "projects": [
     {
-      "id": "smart-pills-box",
       "title": "Smart Pills Box",
+      "id": "smart-pills-box",
       "category": "IoT Device",
       "year": "",
       "status": "Completed",
@@ -63,21 +117,58 @@
         "Persistent settings (Preferences)",
         "SH1106 OLED UI with push-button feedback"
       ],
-      "specs": [
-        { "key": "MCU", "value": "ESP32-C3" },
-        { "key": "RTC", "value": "DS3231" },
-        { "key": "Display", "value": "SH1106 OLED" },
-        { "key": "Audio", "value": "DFPlayer Mini" },
-        { "key": "LEDs", "value": "WS2812 (FastLED)" }
+      "tags": [
+        "ESP32-C3",
+        "PCB",
+        "IoT",
+        "Firmware"
       ],
-      "tags": ["ESP32-C3", "PCB", "IoT", "Firmware"],
-      "tools": ["KiCad", "Proteus", "SolidWorks", "Arduino IDE"],
+      "tools": [
+        "KiCad",
+        "Proteus",
+        "SolidWorks",
+        "Arduino IDE"
+      ],
       "cover": "",
-      "gallery": [],
-      "models": [
-        { "label": "PCB (demo model)", "url": "models/smart-pills-box-demo.glb", "rotation": [0, 0, 0] }
+      "specs": [
+        {
+          "key": "MCU",
+          "value": "ESP32-C3"
+        },
+        {
+          "key": "RTC",
+          "value": "DS3231"
+        },
+        {
+          "key": "Display",
+          "value": "SH1106 OLED"
+        },
+        {
+          "key": "Audio",
+          "value": "DFPlayer Mini"
+        },
+        {
+          "key": "LEDs",
+          "value": "WS2812 (FastLED)"
+        }
       ],
-      "links": { "github": "", "video": "", "docs": "" }
+      "models": [
+        {
+          "label": "PCB (demo model)",
+          "url": "models/timer_relay.wrl",
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "gallery": [],
+      "links": {
+        "github": "",
+        "video": "",
+        "docs": ""
+      }
     },
     {
       "id": "dddas",
@@ -97,15 +188,34 @@
         "UART and I²C integration"
       ],
       "specs": [
-        { "key": "Languages", "value": "C, C++, Python, Bash" },
-        { "key": "Protocols", "value": "UART, I²C" }
+        {
+          "key": "Languages",
+          "value": "C, C++, Python, Bash"
+        },
+        {
+          "key": "Protocols",
+          "value": "UART, I²C"
+        }
       ],
-      "tags": ["Embedded AI", "Autonomous", "Embedded Linux"],
-      "tools": ["C", "C++", "Python", "Bash"],
+      "tags": [
+        "Embedded AI",
+        "Autonomous",
+        "Embedded Linux"
+      ],
+      "tools": [
+        "C",
+        "C++",
+        "Python",
+        "Bash"
+      ],
       "cover": "",
       "gallery": [],
       "models": [],
-      "links": { "github": "", "video": "", "docs": "" }
+      "links": {
+        "github": "",
+        "video": "",
+        "docs": ""
+      }
     },
     {
       "id": "voltage-guard-pro",
@@ -122,15 +232,29 @@
         "Low-cost single-MCU design"
       ],
       "specs": [
-        { "key": "MCU", "value": "ATtiny85" },
-        { "key": "Safe window", "value": "190 – 250 V AC" }
+        {
+          "key": "MCU",
+          "value": "ATtiny85"
+        },
+        {
+          "key": "Safe window",
+          "value": "190 – 250 V AC"
+        }
       ],
-      "tags": ["ATtiny85", "AC Mains", "Protection"],
+      "tags": [
+        "ATtiny85",
+        "AC Mains",
+        "Protection"
+      ],
       "tools": [],
       "cover": "",
       "gallery": [],
       "models": [],
-      "links": { "github": "", "video": "", "docs": "" }
+      "links": {
+        "github": "",
+        "video": "",
+        "docs": ""
+      }
     },
     {
       "id": "smart-bottle-top-dispenser",
@@ -147,12 +271,20 @@
         "Safe chemical handling"
       ],
       "specs": [],
-      "tags": ["Automation", "Lab", "Precision"],
+      "tags": [
+        "Automation",
+        "Lab",
+        "Precision"
+      ],
       "tools": [],
       "cover": "",
       "gallery": [],
       "models": [],
-      "links": { "github": "", "video": "", "docs": "" }
+      "links": {
+        "github": "",
+        "video": "",
+        "docs": ""
+      }
     }
   ]
 }
