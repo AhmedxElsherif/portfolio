@@ -122,7 +122,12 @@
         "ESP32"
       ],
       "cover": "images/smart-timer-relay-board-timer-relay-mutq34hb.jpg",
-      "specs": [],
+      "specs": [
+        {
+          "key": "MCU",
+          "value": "ESP32-DevKitc-V4"
+        }
+      ],
       "models": [
         {
           "label": "PCB (Smart Timer Relay)",
@@ -142,8 +147,8 @@
       }
     },
     {
-      "title": "Smart Pills Box",
       "id": "smart-pills-box",
+      "title": "Smart Pills Box",
       "category": "IoT Device",
       "year": "2025",
       "status": "Completed",
@@ -159,19 +164,6 @@
         "Persistent settings (Preferences)",
         "SH1106 OLED UI with push-button feedback"
       ],
-      "tags": [
-        "ESP32-C3",
-        "PCB",
-        "IoT",
-        "Firmware"
-      ],
-      "tools": [
-        "KiCad",
-        "Proteus",
-        "SolidWorks",
-        "Arduino IDE"
-      ],
-      "cover": "images/smart-pills-box-smart-pillbox-top-mutp6s4p.jpg",
       "specs": [
         {
           "key": "MCU",
@@ -194,6 +186,20 @@
           "value": "WS2812 (FastLED)"
         }
       ],
+      "tags": [
+        "ESP32-C3",
+        "PCB",
+        "IoT",
+        "Firmware"
+      ],
+      "tools": [
+        "KiCad",
+        "Proteus",
+        "SolidWorks",
+        "Arduino IDE"
+      ],
+      "cover": "images/smart-pills-box-smart-pillbox-top-mutp6s4p.jpg",
+      "gallery": [],
       "models": [
         {
           "label": "PCB (Smart Pills Box)",
@@ -214,7 +220,6 @@
           ]
         }
       ],
-      "gallery": [],
       "links": {
         "github": "",
         "video": "",
@@ -269,8 +274,8 @@
       }
     },
     {
-      "title": "Voltage Guard Pro",
-      "id": "voltage-guard-pro",
+      "title": "Voltage Guard",
+      "id": "voltage-guard",
       "category": "Power Electronics",
       "year": "2025",
       "status": "Completed",
@@ -287,7 +292,10 @@
         "AC Mains",
         "Protection"
       ],
-      "tools": [],
+      "tools": [
+        "KiCad",
+        "Proteus"
+      ],
       "cover": "",
       "specs": [
         {
@@ -308,8 +316,8 @@
       }
     },
     {
-      "title": "Smart Bottle-Top Dispenser",
       "id": "smart-bottle-top-dispenser",
+      "title": "Smart Bottle-Top Dispenser",
       "category": "Lab Automation",
       "year": "2025",
       "status": "Completed",
@@ -321,6 +329,7 @@
         "Accuracy and repeatability",
         "Safe chemical handling"
       ],
+      "specs": [],
       "tags": [
         "Automation",
         "Lab",
@@ -328,9 +337,8 @@
       ],
       "tools": [],
       "cover": "",
-      "specs": [],
-      "models": [],
       "gallery": [],
+      "models": [],
       "links": {
         "github": "",
         "video": "",
