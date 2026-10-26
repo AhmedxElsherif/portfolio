@@ -9,7 +9,7 @@
     "phone": "+201024254110",
     "linkedin": "https://www.linkedin.com/in/ahmedxelsherif/",
     "github": "https://github.com/ahmedxelsherif",
-    "cv": "assets/Ahmed_Hassan_CV.pdf",
+    "cv": "assets/cv-ahmed-hassan-cv-mvp9iqqz.pdf",
     "avatar": "",
     "skills": [
       {
@@ -316,8 +316,8 @@
       }
     },
     {
-      "title": "Smart Bottle-Top Dispenser",
       "id": "smart-bottle-top-dispenser",
+      "title": "Smart Bottle-Top Dispenser",
       "category": "Lab Automation",
       "year": "2025",
       "status": "Completed",
@@ -329,6 +329,7 @@
         "Accuracy and repeatability",
         "Safe chemical handling"
       ],
+      "specs": [],
       "tags": [
         "Automation",
         "Lab",
@@ -336,7 +337,9 @@
       ],
       "tools": [],
       "cover": "images/smart-bottle-top-dispenser-bottle-dispenser-mvb019uf.jpg",
-      "specs": [],
+      "gallery": [
+        "images/smart-bottle-top-dispenser-bottle-dispenser-back-mvdiykdu.jpg"
+      ],
       "models": [
         {
           "label": "",
@@ -347,9 +350,6 @@
             0
           ]
         }
-      ],
-      "gallery": [
-        "images/smart-bottle-top-dispenser-bottle-dispenser-back-mvdiykdu.jpg"
       ],
       "links": {
         "github": "",
